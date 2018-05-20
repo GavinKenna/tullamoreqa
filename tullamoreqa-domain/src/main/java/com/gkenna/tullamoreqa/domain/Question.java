@@ -44,10 +44,10 @@ public class Question {
     private Date lastUpdatedAt;
 
     @NotBlank
-    private String questionTitle;
+    private String title;
 
     @NotBlank
-    private String questionBody;
+    private String body;
     private int upvotes;
     private int downvotes;
     private int score;
@@ -58,18 +58,18 @@ public class Question {
         this.modifiedBy = new HashSet<User>();
         this.comments = new HashSet<Comment>();
         this.tags = new HashSet<Tag>();
-        this.questionBody = "Body";
-        this.questionTitle = "Title";
+        this.body = "Body";
+        this.title = "Title";
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
     }
 
-    public String getQuestionTitle() {
-        return questionTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setQuestionTitle(String questionTitle) {
-        this.questionTitle = questionTitle;
+    public void setTitle(String questionTitle) {
+        this.title = questionTitle;
     }
 
     public User getAskedBy() {
@@ -128,12 +128,12 @@ public class Question {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
-    public String getQuestionBody() {
-        return questionBody;
+    public String getBody() {
+        return body;
     }
 
-    public void setQuestionBody(String questionBody) {
-        this.questionBody = questionBody;
+    public void setBody(String questionBody) {
+        this.body = questionBody;
     }
 
     public int getUpvotes() {

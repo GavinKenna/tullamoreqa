@@ -1,6 +1,8 @@
 package com.gkenna.tullamoreqa.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,12 +22,22 @@ public class Answer {
     @JoinColumn(name="question_id")
     private Question question;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private Set<Comment> comments;
+
+    @NotBlank
+    private String body;
 
     private boolean chosenAnswer;
     private int upvotes;
     private int downvotes;
+
+    public Answer() {
+        this.body = "Body";
+        this.question = new Question();
+        this.comments = new HashSet<>();
+        this.user = new User();
+    }
 
     public User getUser() {
         return user;
