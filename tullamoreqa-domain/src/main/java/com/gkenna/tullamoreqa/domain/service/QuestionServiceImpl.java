@@ -1,12 +1,18 @@
 package com.gkenna.tullamoreqa.domain.service;
 
 
+import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.User;
 import com.gkenna.tullamoreqa.domain.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
@@ -18,16 +24,35 @@ public class QuestionServiceImpl implements QuestionService {
     private UserRepository userRepository;
 
     public void addQuestion() {
-        User u = new User();
-        u.setUsername("Gavin");
+        User gavin = new User();
+        gavin.setUsername("Gavin");
 
-        userRepository.save(u);
+        User bob = new User();
+        bob.setUsername("Bob");
+
+        User alice = new User();
+        alice.setUsername("Alice");
+
+        userRepository.save(gavin);
+        userRepository.save(bob);
+        userRepository.save(alice);
 
         Question q = new Question();
-        q.setQuestionTitle("Help");
-        q.setAskedBy(u);
+        q.setAskedBy(gavin);
+
+
+        Answer a = new Answer();
+        a.setUser(alice);
+
+        Answer b = new Answer();
+        b.setUser(bob);
+
+        Set<Answer> answers = new HashSet<Answer>();
+        answers.add(a);
+        answers.add(b);
+
+        q.setAnswers(answers);
 
         questionRepository.save(q);
     }
-
 }
