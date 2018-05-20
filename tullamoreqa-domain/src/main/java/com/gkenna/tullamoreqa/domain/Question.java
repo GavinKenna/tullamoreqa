@@ -1,6 +1,7 @@
 package com.gkenna.tullamoreqa.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,18 +23,18 @@ public class Question {
     @ManyToMany
     private List<User> modifiedBy;
 
-    @ManyToOne
-    private List<Answer> answers;
+   /* @ManyToOne
+    private List<Answer> answers;*/
     private int upvotes;
     private int downvotes;
     private int score;
 
-    @ManyToOne
+ /*   @ManyToOne
     private List<Comment> comments;
 
     @ManyToMany
     private List<Tag> tags;
-
+*/
     @NotBlank
     private String questionTitle;
 
@@ -49,4 +50,32 @@ public class Question {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date lastUpdatedAt;
+
+    public Question() {
+       // this.answers = new ArrayList<Answer>();
+        this.askedBy = new User();
+        this.modifiedBy = new ArrayList<User>();
+      //  this.comments = new ArrayList<Comment>();
+       // this.tags = new ArrayList<Tag>();
+        this.questionBody = "Body";
+        this.questionTitle = "Title";
+        this.createdAt = new Date();
+        this.lastUpdatedAt = new Date();
+    }
+
+    public String getQuestionTitle() {
+        return questionTitle;
+    }
+
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
+    }
+
+    public User getAskedBy() {
+        return askedBy;
+    }
+
+    public void setAskedBy(User askedBy) {
+        this.askedBy = askedBy;
+    }
 }
