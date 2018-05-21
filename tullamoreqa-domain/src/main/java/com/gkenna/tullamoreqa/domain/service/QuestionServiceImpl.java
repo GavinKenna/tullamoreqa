@@ -4,6 +4,7 @@ package com.gkenna.tullamoreqa.domain.service;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.domain.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
     public void addQuestion() {
         User gavin = new User();
         gavin.setUsername("Gavin");
@@ -40,6 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
         Question q = new Question();
         q.setAskedBy(gavin);
 
+        questionRepository.save(q);
 
         Answer a = new Answer();
         a.setUser(alice);
@@ -50,6 +55,9 @@ public class QuestionServiceImpl implements QuestionService {
         Set<Answer> answers = new HashSet<Answer>();
         answers.add(a);
         answers.add(b);
+
+
+        answerRepository.saveAll(answers);
 
         q.setAnswers(answers);
 

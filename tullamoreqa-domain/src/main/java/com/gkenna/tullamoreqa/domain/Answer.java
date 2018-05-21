@@ -14,11 +14,11 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(targetEntity=User.class)
+    @ManyToOne//(targetEntity=User.class)
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne(targetEntity=Question.class)
+    @ManyToOne//(targetEntity=Question.class)
     @JoinColumn(name="question_id")
     private Question question;
 
@@ -34,7 +34,7 @@ public class Answer {
 
     public Answer() {
         this.body = "Body";
-        this.question = new Question();
+        //this.question = new Question();
         this.comments = new HashSet<>();
         this.user = new User();
     }

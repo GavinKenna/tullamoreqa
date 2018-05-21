@@ -21,7 +21,7 @@ public class Question {
     @ManyToOne
     private User askedBy;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     private Set<User> modifiedBy;
 
     @OneToMany(cascade = {CascadeType.ALL})
