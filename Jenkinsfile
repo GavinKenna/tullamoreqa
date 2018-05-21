@@ -1,4 +1,3 @@
-
 properties([
 
         parameters([
@@ -13,14 +12,7 @@ properties([
 
 
 
-pipeline {
-  agent {
-    docker {
-      image 'maven'
-    }
-
-  }
-  stages{
+node("jenkins-slave") {
 
 
 
@@ -160,5 +152,4 @@ def version() {
 
     matcher ? matcher[0] : null
 
-}
 }
