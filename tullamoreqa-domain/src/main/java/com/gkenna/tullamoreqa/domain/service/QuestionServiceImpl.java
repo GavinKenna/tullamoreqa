@@ -10,10 +10,7 @@ import com.gkenna.tullamoreqa.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
@@ -42,25 +39,35 @@ public class QuestionServiceImpl implements QuestionService {
         userRepository.save(alice);
 
         Question q = new Question();
-        q.setAskedBy(gavin);
+        q.setUser(gavin);
 
-        questionRepository.save(q);
+        Question qq = new Question();
+        qq.setUser(alice);
 
         Answer a = new Answer();
         a.setUser(alice);
+        a.setQuestion(q);
 
         Answer b = new Answer();
         b.setUser(bob);
+        b.setQuestion(q);
+
+        Answer c = new Answer();
+        c.setUser(gavin);
+        c.setQuestion(qq);
 
         Set<Answer> answers = new HashSet<Answer>();
         answers.add(a);
         answers.add(b);
 
-
-        answerRepository.saveAll(answers);
-
         q.setAnswers(answers);
 
+        qq.setAnswers(Collections.singleton(c));
+
         questionRepository.save(q);
+        answerRepository.saveAll(answers);
+
+        questionRepository.save(qq);
+        answerRepository.save(c);
     }
 }

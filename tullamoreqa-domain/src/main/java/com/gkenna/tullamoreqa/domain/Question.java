@@ -12,19 +12,16 @@ import java.util.Set;
 
 @Entity
 @Table(name = "questions")
-public class Question {
+public class Question extends Entry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @ManyToOne
-    private User askedBy;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     private Set<User> modifiedBy;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "question")
     private Set<Answer> answers;
 
     @OneToMany(cascade = {CascadeType.ALL})
@@ -46,15 +43,14 @@ public class Question {
     @NotBlank
     private String title;
 
-    @NotBlank
-    private String body;
+    /*@NotBlank
+    private String body;*/
     private int upvotes;
     private int downvotes;
     private int score;
 
     public Question() {
         this.answers = new HashSet<Answer>();
-        this.askedBy = new User();
         this.modifiedBy = new HashSet<User>();
         this.comments = new HashSet<Comment>();
         this.tags = new HashSet<Tag>();
@@ -62,6 +58,8 @@ public class Question {
         this.title = "Title";
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
+        this.upvotes = 0;
+        this.downvotes = 0;
     }
 
     public String getTitle() {
@@ -70,14 +68,6 @@ public class Question {
 
     public void setTitle(String questionTitle) {
         this.title = questionTitle;
-    }
-
-    public User getAskedBy() {
-        return askedBy;
-    }
-
-    public void setAskedBy(User askedBy) {
-        this.askedBy = askedBy;
     }
 
     public Set<User> getModifiedBy() {
@@ -158,5 +148,19 @@ public class Question {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    /*public long getId() {
+        return id;
+    }*/
+
+    public void addAnswer(Answer answer){
+        this.answers.add(answer);
+        answer.setQuestion(this);
+    }
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+        //comment.setParent(this);
     }
 }

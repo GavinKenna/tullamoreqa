@@ -3,30 +3,25 @@ package com.gkenna.tullamoreqa.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "answers")
-public class Answer {
+public class Answer extends Entry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne//(targetEntity=User.class)
-    @JoinColumn(name="user_id")
-    private User user;
-
-    @ManyToOne//(targetEntity=Question.class)
-    @JoinColumn(name="question_id")
+    @ManyToOne(targetEntity = Question.class)
+    @JoinColumn(name = "question_id")
     private Question question;
 
     @OneToMany(cascade = {CascadeType.ALL})
     private Set<Comment> comments;
 
-    @NotBlank
-    private String body;
+   /* @NotBlank
+    private String body;*/
 
     private boolean chosenAnswer;
     private int upvotes;
@@ -34,16 +29,57 @@ public class Answer {
 
     public Answer() {
         this.body = "Body";
-        //this.question = new Question();
+        this.question = new Question();
         this.comments = new HashSet<>();
-        this.user = new User();
     }
 
-    public User getUser() {
-        return user;
+
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public boolean isChosenAnswer() {
+        return chosenAnswer;
+    }
+
+    public void setChosenAnswer(boolean chosenAnswer) {
+        this.chosenAnswer = chosenAnswer;
+    }
+
+    public int getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public int getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
+    }
+
 }

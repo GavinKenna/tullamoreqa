@@ -1,14 +1,14 @@
 package com.gkenna.tullamoreqa.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tags")
 public class Tag {
     @Id
-    //@GeneratedValue(strategy = GenerationType.)
     private String name;
 
     @NotBlank
@@ -17,5 +17,17 @@ public class Tag {
     public Tag(String name) {
         this.description = "Desc";
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
