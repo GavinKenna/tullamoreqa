@@ -5,13 +5,4 @@ pipeline {
     }
 
   }
-  stages {
-     stage("Checkout") {
-
-          checkout scm
-
-          stash includes: '**', name: 'project'
-
-        }
-  }
 }
