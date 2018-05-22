@@ -1,13 +1,15 @@
 package com.gkenna.tullamoreqa.domain.service.api;
 
 import com.gkenna.tullamoreqa.domain.Tag;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface TagService {
-    void addTag(Tag Tag);
-    void deleteTag(Tag Tag);
+    void addTag(Tag tag);
+    void deleteTag(Tag tag);
     void deleteTag(String id);
-    void editTag(Tag Tag);
-    boolean doesTagExist(Tag Tag);
+    void editTag(Tag tag);
+    boolean doesTagExist(Tag tag);
     boolean doesTagExist(String id);
     Tag getTag(String id);
     Tag[] getAllTags();

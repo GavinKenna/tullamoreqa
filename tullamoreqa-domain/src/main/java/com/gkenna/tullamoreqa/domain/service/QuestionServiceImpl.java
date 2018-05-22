@@ -75,7 +75,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void addQuestion(Question question) {
-
+        questionRepository.save(question);
     }
 
     @Override
@@ -109,8 +109,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question[] getAllQuestions() {
-        return new Question[0];
+    public Iterable<Question> getAllQuestions() {
+        return questionRepository.findAll();
     }
 
     @Override

@@ -35,6 +35,7 @@ public class Answer extends Entry {
 
     public void setQuestion(Question question) {
         this.question = question;
+        //this.question.getAnswers().add(this);
     }
 
     public Set<Comment> getComments() {

@@ -1,16 +1,26 @@
 package com.gkenna.tullamoreqa.domain.service;
 
 import com.gkenna.tullamoreqa.domain.Tag;
+import com.gkenna.tullamoreqa.domain.repositories.CommentRepository;
+import com.gkenna.tullamoreqa.domain.repositories.TagRepository;
 import com.gkenna.tullamoreqa.domain.service.api.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service("tagService")
 public class TagServiceImpl implements TagService {
-    @Override
-    public void addTag(Tag Tag) {
 
+    @Autowired
+    private TagRepository tagRepository;
+
+
+    @Override
+    public void addTag(Tag tag) {
+        tagRepository.save(tag);
     }
 
     @Override
-    public void deleteTag(Tag Tag) {
+    public void deleteTag(Tag tag) {
 
     }
 
@@ -20,12 +30,12 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void editTag(Tag Tag) {
+    public void editTag(Tag tag) {
 
     }
 
     @Override
-    public boolean doesTagExist(Tag Tag) {
+    public boolean doesTagExist(Tag tag) {
         return false;
     }
 

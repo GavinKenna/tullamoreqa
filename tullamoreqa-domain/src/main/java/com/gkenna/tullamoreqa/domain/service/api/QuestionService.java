@@ -14,7 +14,7 @@ public interface QuestionService {
     boolean doesQuestionExist(Question question);
     boolean doesQuestionExist(long id);
     Question getQuestion(long id);
-    Question[] getAllQuestions();
+    Iterable<Question> getAllQuestions();
     Question[] findQuestionsByTitle(String title);
     Question[] findQuestionsAskedByUser(User user);
     Question[] findQuestionsAnsweredByUser(User user);

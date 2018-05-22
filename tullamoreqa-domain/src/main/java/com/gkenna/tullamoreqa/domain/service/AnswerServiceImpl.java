@@ -2,47 +2,59 @@ package com.gkenna.tullamoreqa.domain.service;
 
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.domain.service.api.AnswerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service("answerService")
 public class AnswerServiceImpl implements AnswerService {
-    @Override
-    public void addAnswer(Answer Answer) {
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
+    @Override
+    public void addAnswer(Answer answer) {
+        // TODO Add exception handling here
+        answerRepository.save(answer);
     }
 
     @Override
-    public void deleteAnswer(Answer Answer) {
-
+    public void deleteAnswer(Answer answer) {
+        answerRepository.delete(answer);
     }
 
     @Override
     public void deleteAnswer(long id) {
-
+        answerRepository.deleteById(id);
     }
 
     @Override
-    public void editAnswer(Answer Answer) {
-
+    public void editAnswer(Answer answer) {
+        answerRepository.deleteById(answer.getId());
+        this.addAnswer(answer);
     }
 
     @Override
-    public boolean doesAnswerExist(Answer Answer) {
-        return false;
+    public boolean doesAnswerExist(Answer answer) {
+        return this.doesAnswerExist(answer.getId());
     }
 
     @Override
     public boolean doesAnswerExist(long id) {
-        return false;
+        return answerRepository.existsById(id);
     }
 
     @Override
-    public Answer getAnswer(long id) {
-        return null;
+    public Optional<Answer> getAnswer(long id) {
+        return answerRepository.findById(id);
     }
 
     @Override
-    public Answer[] getAllAnswers() {
-        return new Answer[0];
+    public Iterable<Answer> getAllAnswers() {
+        return answerRepository.findAll();
     }
 
     @Override

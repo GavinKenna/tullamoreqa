@@ -21,7 +21,7 @@ public class Question extends Entry {
     @ManyToMany(cascade = {CascadeType.ALL})
     private Set<User> modifiedBy;
 
-    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "question")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "question")
     private Set<Answer> answers;
 
     @OneToMany(cascade = {CascadeType.ALL})
