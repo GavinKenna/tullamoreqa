@@ -1,7 +1,7 @@
 package com.gkenna.tullamoreqa.core.impl;
 
 import com.gkenna.tullamoreqa.domain.Question;
-import com.gkenna.tullamoreqa.domain.service.QuestionService;
+import com.gkenna.tullamoreqa.domain.service.api.QuestionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

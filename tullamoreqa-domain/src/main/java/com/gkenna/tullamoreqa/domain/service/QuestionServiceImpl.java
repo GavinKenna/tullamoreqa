@@ -3,10 +3,12 @@ package com.gkenna.tullamoreqa.domain.service;
 
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
+import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
 import com.gkenna.tullamoreqa.domain.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.domain.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.domain.repositories.UserRepository;
+import com.gkenna.tullamoreqa.domain.service.api.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +79,21 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public void deleteQuestion(Question question) {
+
+    }
+
+    @Override
+    public void deleteQuestion(long id) {
+
+    }
+
+    @Override
+    public void editQuestion(Question question) {
+
+    }
+
+    @Override
     public boolean doesQuestionExist(Question question) {
         return false;
     }
@@ -92,6 +109,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question[] getAllQuestions() {
+        return new Question[0];
+    }
+
+    @Override
     public Question[] findQuestionsByTitle(String title) {
         return new Question[0];
     }
@@ -103,6 +125,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question[] findQuestionsAnsweredByUser(User user) {
+        return new Question[0];
+    }
+
+    @Override
+    public Question[] findQuestionsByTag(Tag tag) {
         return new Question[0];
     }
 }
