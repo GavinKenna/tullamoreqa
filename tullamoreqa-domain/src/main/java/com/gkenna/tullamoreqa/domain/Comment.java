@@ -5,40 +5,19 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "comments")
-public class Comment {
+public class Comment extends Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(targetEntity=User.class)
-    @JoinColumn(name="user_id")
-    private User user;
-
-    @NotBlank
-    private String body;
+    @ManyToOne(targetEntity = Entry.class)
+    @JoinColumn(name = "entry_id")
+    private Entry parent;
 
     private int upvotes;
     private int downvotes;
 
     public Comment() {
-        this.body = "Body";
-        this.user = new User();
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 
     public int getUpvotes() {

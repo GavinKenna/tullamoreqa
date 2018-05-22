@@ -70,4 +70,39 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.save(qq);
         answerRepository.save(c);
     }
+
+    @Override
+    public void addQuestion(Question question) {
+
+    }
+
+    @Override
+    public boolean doesQuestionExist(Question question) {
+        return false;
+    }
+
+    @Override
+    public boolean doesQuestionExist(long id) {
+        return false;
+    }
+
+    @Override
+    public Question getQuestion(long id) {
+        return null;
+    }
+
+    @Override
+    public Question[] findQuestionsByTitle(String title) {
+        return new Question[0];
+    }
+
+    @Override
+    public Question[] findQuestionsAskedByUser(User user) {
+        return new Question[0];
+    }
+
+    @Override
+    public Question[] findQuestionsAnsweredByUser(User user) {
+        return new Question[0];
+    }
 }

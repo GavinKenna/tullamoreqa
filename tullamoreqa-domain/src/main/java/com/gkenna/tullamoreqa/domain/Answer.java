@@ -20,16 +20,11 @@ public class Answer extends Entry {
     @OneToMany(cascade = {CascadeType.ALL})
     private Set<Comment> comments;
 
-   /* @NotBlank
-    private String body;*/
-
     private boolean chosenAnswer;
     private int upvotes;
     private int downvotes;
 
     public Answer() {
-        this.body = "Body";
-        this.question = new Question();
         this.comments = new HashSet<>();
     }
 

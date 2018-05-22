@@ -1,5 +1,6 @@
 package com.gkenna.tullamoreqa.core.impl;
 
+import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.service.QuestionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +23,7 @@ public class Application {
     @Bean
     public CommandLineRunner demo(QuestionService questionService) {
         return (args) -> {
-            questionService.addQuestion();
+            questionService.addQuestion(new Question());
         };
     }
 

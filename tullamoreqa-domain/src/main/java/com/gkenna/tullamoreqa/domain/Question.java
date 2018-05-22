@@ -43,8 +43,6 @@ public class Question extends Entry {
     @NotBlank
     private String title;
 
-    /*@NotBlank
-    private String body;*/
     private int upvotes;
     private int downvotes;
     private int score;
@@ -54,13 +52,11 @@ public class Question extends Entry {
         this.modifiedBy = new HashSet<User>();
         this.comments = new HashSet<Comment>();
         this.tags = new HashSet<Tag>();
-        this.body = "Body";
-        this.title = "Title";
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
         this.upvotes = 0;
         this.downvotes = 0;
-    }
+}
 
     public String getTitle() {
         return title;

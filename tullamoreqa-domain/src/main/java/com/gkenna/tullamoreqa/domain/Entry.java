@@ -5,7 +5,6 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@MappedSuperclass
 public abstract class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +12,7 @@ public abstract class Entry {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    protected User user;
 
     @NotBlank
     protected String body;
@@ -29,4 +28,13 @@ public abstract class Entry {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
 }
