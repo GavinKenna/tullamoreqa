@@ -5,6 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,16 +19,11 @@ public class Question extends Entry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name = "mod_user_id",nullable = true)
+    private User modifiedBy = null;
+
     @ManyToMany(cascade = {CascadeType.ALL})
-    private Set<User> modifiedBy;
-
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "question")
-    private Set<Answer> answers;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    private Set<Comment> comments;
-
-    @OneToMany(cascade = {CascadeType.ALL})
     private Set<Tag> tags;
 
     @Column(nullable = false, updatable = false)
@@ -48,9 +44,8 @@ public class Question extends Entry {
     private int score;
 
     public Question() {
-        this.answers = new HashSet<Answer>();
-        this.modifiedBy = new HashSet<User>();
-        this.comments = new HashSet<Comment>();
+        //this.answers = new HashSet<Answer>();
+        //this.comments = new HashSet<Comment>();
         this.tags = new HashSet<Tag>();
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
@@ -66,15 +61,15 @@ public class Question extends Entry {
         this.title = questionTitle;
     }
 
-    public Set<User> getModifiedBy() {
+    public User getModifiedBy() {
         return modifiedBy;
     }
 
-    public void setModifiedBy(Set<User> modifiedBy) {
+    public void setModifiedBy(User modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
 
-    public Set<Answer> getAnswers() {
+   /* public Set<Answer> getAnswers() {
         return answers;
     }
 
@@ -88,7 +83,7 @@ public class Question extends Entry {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
-    }
+    }*/
 
     public Set<Tag> getTags() {
         return tags;
@@ -150,7 +145,7 @@ public class Question extends Entry {
         return id;
     }*/
 
-    public void addAnswer(Answer answer){
+   /* public void addAnswer(Answer answer){
         this.answers.add(answer);
         answer.setQuestion(this);
     }
@@ -158,5 +153,5 @@ public class Question extends Entry {
     public void addComment(Comment comment){
         this.comments.add(comment);
         //comment.setParent(this);
-    }
+    }*/
 }

@@ -1,5 +1,8 @@
 package com.gkenna.tullamoreqa.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -10,8 +13,9 @@ public class Comment extends Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(targetEntity = Entry.class)
+    @ManyToOne(targetEntity = Entry.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "entry_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Entry parent;
 
     private int upvotes;

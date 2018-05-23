@@ -1,5 +1,9 @@
 package com.gkenna.tullamoreqa.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
@@ -7,25 +11,27 @@ import java.util.Set;
 
 @Entity
 @Table(name = "answers")
+@Transactional
 public class Answer extends Entry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(targetEntity = Question.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Question question;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    private Set<Comment> comments;
+   /* @OneToMany(cascade = {CascadeType.ALL})
+    private Set<Comment> comments;*/
 
     private boolean chosenAnswer;
     private int upvotes;
     private int downvotes;
 
     public Answer() {
-        this.comments = new HashSet<>();
+        //this.comments = new HashSet<>();
     }
 
 
@@ -35,16 +41,15 @@ public class Answer extends Entry {
 
     public void setQuestion(Question question) {
         this.question = question;
-        //this.question.getAnswers().add(this);
     }
 
-    public Set<Comment> getComments() {
+   /* public Set<Comment> getComments() {
         return comments;
     }
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
-    }
+    }*/
 
     public String getBody() {
         return body;
