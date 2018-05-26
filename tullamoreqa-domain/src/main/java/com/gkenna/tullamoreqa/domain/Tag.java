@@ -19,6 +19,10 @@ public class Tag {
         this.name = name;
     }
 
+    public Tag(){
+
+    }
+
     public String getName() {
         return name;
     }

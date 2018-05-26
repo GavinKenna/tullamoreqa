@@ -22,10 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication(scanBasePackages = {"com.gkenna.tullamoreqa.*"})
 @ComponentScan({"com.gkenna.tullamoreqa.*"})
@@ -68,30 +65,36 @@ public class Application {
         return (args) -> {
 
 
-            createTags();
+           /* createTags();
             createUsers();
             createQuestions();
-            createAnswers();
+            createAnswers();*/
 
-            Page<Answer> answersByGavin = answerRepository.findByUserId(1L, Pageable.unpaged());
-            answersByGavin.forEach(answer -> System.out.println("Answer body by Gavin " + answer.getBody()));
+           queryDb();
 
-            Page<Answer> answersForQuestion = answerRepository.findByQuestionId(1L, Pageable.unpaged());
-            answersForQuestion.forEach(answer -> System.out.println("Answer body " + answer.getBody()));
-
-            Page<Question> questionsByGavin = questionRepository.findByUserId(1L, Pageable.unpaged());
-            questionsByGavin.forEach(question -> System.out.println("Question body " + question.getBody()));
-
-            Page<Question> questionsByJavaTag = questionRepository.findByTagId("Java", Pageable.unpaged());
-            questionsByJavaTag.forEach(question -> System.out.println("Question body " + question.getBody()));
-
-//
         };
     }
 
+    private void queryDb() {
+       /* Page<Answer> answersByGavin = answerRepository.findByUserId(1L, Pageable.unpaged());
+        answersByGavin.forEach(answer -> System.out.println("Answer body by Gavin " + answer.getBody()));
+
+        Page<Answer> answersForQuestion = answerRepository.findByQuestionId(1L, Pageable.unpaged());
+        answersForQuestion.forEach(answer -> System.out.println("Answer body " + answer.getBody()));
+
+        Page<Question> questionsByGavin = questionRepository.findByUserId(1L, Pageable.unpaged());
+        questionsByGavin.forEach(question -> System.out.println("Question body " + question.getBody()));
+*/
+        List<String> list = new ArrayList<String>();
+        list.add("Java");
+        List<Question> questionsByJavaTag = (List<Question>) questionRepository.findByTagsNameContaining("Java");
+        questionsByJavaTag.forEach(question -> System.out.println("Question body " + question.getBody()));
+//
+    }
+
     private void createAnswers() {
-        Question help = questionRepository.findByQuestionTitle("Help", Pageable.unpaged()).iterator().next();
-        Question halp = questionRepository.findByQuestionTitle("Halp", Pageable.unpaged()).iterator().next();
+        Question help = questionRepository.findByTitle("Help", Pageable.unpaged()).iterator().next();
+        Question halp = questionRepository.findByTitle("Halp", Pageable.unpaged()).iterator().next();
 
         Answer a = new Answer();
         a.setUser(userRepository.findByUsername("Alice"));
@@ -128,9 +131,9 @@ public class Application {
 
         Question questionTwo = new Question();
         questionTwo.setBody("HAAAALP");
-        questionTwo.setTitle("HALP");
+        questionTwo.setTitle("Halp");
         questionTwo.setUser(userRepository.findByUsername("Alice"));
-        questionTwo.getTags().add(java.get());
+        questionTwo.getTags().add(help.get());
         questionService.addQuestion(questionTwo);
     }
 

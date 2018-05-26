@@ -23,7 +23,7 @@ public class Question extends Entry {
     @JoinColumn(name = "mod_user_id",nullable = true)
     private User modifiedBy = null;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private Set<Tag> tags;
 
     @Column(nullable = false, updatable = false)
