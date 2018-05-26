@@ -27,7 +27,35 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Collection<Question> findByTagsIn(@Param("super") List<String> tags);
 
     Collection<Question> findByTagsNameContaining(String tag);
+    Collection<Question> findQuestionsByTagsNameIn(Set<String> tag);
+    Collection<Question> findQuestionsByTagsNameContaining(Set<String> tag);
 
+    /**
+     * This works, but much like the others above. This makes sure there's at least one tag that
+     * matches. Still looking for one that makes sure it contains all tags
+     * @param tag
+     * @return
+     */
+    @Query("select distinct q from Question q inner join q.tags t where t.name in :super")
+    Collection<Question> findQuestionsBasedOnTagName(@Param("super") Set<String> tag);
+
+    @Query("select distinct q from Question q inner join q.tags t where t = (select distinct g from Tag g where g" +
+            ".name in :super)")
+    Collection<Question> findQuestionsBasedOnTagNameQuery(@Param("super") Set<String> tag);
+
+    @Query("select distinct q from Question q inner join q.tags t where t is (select distinct g from Tag g where g" +
+            ".name in :super)")
+    Collection<Question> findQuestionsBasedOnTagNameQueryNew(@Param("super") Set<String> tag);
+
+    //Collection<Question> findQuestionsByTagsNameContaining(Set<String> tags);
+
+    @Query("select q from Question q join q.tags t where t.name in :tags " +
+            "group by q.id having count(q.id) = :#{#tags.length}L")
+    Collection<Question> filterQuestionsByTag(@Param("tags") String[] tags);
+
+    @Query("select q from Question q join q.tags t where t.name in :tags " +
+            "group by q.id having count(q.id) = :tagCount")
+    Collection<Question> filterQuestionsByTags(@Param("tags") Set<String> tagList, @Param("tagCount") long length);
 
 
  }

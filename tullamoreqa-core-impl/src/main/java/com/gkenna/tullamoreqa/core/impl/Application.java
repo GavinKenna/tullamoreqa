@@ -85,11 +85,21 @@ public class Application {
         Page<Question> questionsByGavin = questionRepository.findByUserId(1L, Pageable.unpaged());
         questionsByGavin.forEach(question -> System.out.println("Question body " + question.getBody()));
 */
-        List<String> list = new ArrayList<String>();
+        Set<String> list = new HashSet<>();
         list.add("Java");
-        List<Question> questionsByJavaTag = (List<Question>) questionRepository.findByTagsNameContaining("Java");
-        questionsByJavaTag.forEach(question -> System.out.println("Question body " + question.getBody()));
-//
+        String[] s = list.toArray(new String[list.size()]);
+        List<Question> questionsByJavaTag = (List<Question>) questionRepository.filterQuestionsByTag
+                (s);
+        questionsByJavaTag.forEach(question -> System.out.println("Java Question body " + question.getBody()));
+
+        Set<String> listTwo = new HashSet<>();
+        listTwo.add("Java");
+        listTwo.add("Help");
+        s = listTwo.toArray(new String[listTwo.size()]);
+        List<Question> questionsByJavaAndHelpTag = (List<Question>) questionRepository
+                .filterQuestionsByTag(s);
+        questionsByJavaAndHelpTag.forEach(question -> System.out.println("Java Help Question body " + question.getBody()));
+
     }
 
     private void createAnswers() {
@@ -134,6 +144,7 @@ public class Application {
         questionTwo.setTitle("Halp");
         questionTwo.setUser(userRepository.findByUsername("Alice"));
         questionTwo.getTags().add(help.get());
+        questionTwo.getTags().add(java.get());
         questionService.addQuestion(questionTwo);
     }
 
