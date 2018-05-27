@@ -49,9 +49,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     //Collection<Question> findQuestionsByTagsNameContaining(Set<String> tags);
 
-    @Query("select q from Question q join q.tags t where t.name in :tags " +
-            "group by q.id having count(q.id) = :#{#tags.length}L")
-    Collection<Question> filterQuestionsByTag(@Param("tags") String[] tags);
+    @Query("select q from Question q join q.tags t where t.name in :gk " +
+            "group by q.id having count(q.id) = :#{#gk.length + 0L}")
+    Collection<Question> filterQuestionsByTag(@Param("gk") String[] gk);
 
     @Query("select q from Question q join q.tags t where t.name in :tags " +
             "group by q.id having count(q.id) = :tagCount")
