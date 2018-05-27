@@ -20,7 +20,7 @@ public class Question extends Entry {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "mod_user_id",nullable = true)
+    @JoinColumn(name = "mod_user_username",nullable = true)
     private User modifiedBy = null;
 
     @ManyToMany(cascade = {CascadeType.MERGE})

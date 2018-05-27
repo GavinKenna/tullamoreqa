@@ -1,4 +1,4 @@
-package com.gkenna.tullamoreqa.domain.repositories;
+package com.gkenna.tullamoreqa.core.api.repositories;
 
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.User;

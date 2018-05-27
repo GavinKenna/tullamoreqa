@@ -1,9 +1,8 @@
-package com.gkenna.tullamoreqa.domain.service;
+package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
+import com.gkenna.tullamoreqa.core.api.services.TagService;
 import com.gkenna.tullamoreqa.domain.Tag;
-import com.gkenna.tullamoreqa.domain.repositories.CommentRepository;
-import com.gkenna.tullamoreqa.domain.repositories.TagRepository;
-import com.gkenna.tullamoreqa.domain.service.api.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public boolean doesTagExist(String id) {
-        return false;
+        return tagRepository.existsById(id);
     }
 
     @Override

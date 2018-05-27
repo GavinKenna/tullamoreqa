@@ -1,9 +1,9 @@
-package com.gkenna.tullamoreqa.domain.service;
+package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
+import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.User;
-import com.gkenna.tullamoreqa.domain.repositories.AnswerRepository;
-import com.gkenna.tullamoreqa.domain.service.api.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

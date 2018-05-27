@@ -11,6 +11,14 @@
 
     <artifactId>tullamoreqa-core-api</artifactId>
     <version>0.0.1</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.gkenna.tullamoreqa</groupId>
+            <artifactId>tullamoreqa-domain</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>

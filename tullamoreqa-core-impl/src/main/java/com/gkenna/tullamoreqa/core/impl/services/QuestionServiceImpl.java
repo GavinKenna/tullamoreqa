@@ -1,31 +1,18 @@
-package com.gkenna.tullamoreqa.domain.service;
+package com.gkenna.tullamoreqa.core.impl.services;
 
-
-import com.gkenna.tullamoreqa.domain.Answer;
+import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
+import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
-import com.gkenna.tullamoreqa.domain.repositories.AnswerRepository;
-import com.gkenna.tullamoreqa.domain.repositories.QuestionRepository;
-import com.gkenna.tullamoreqa.domain.repositories.UserRepository;
-import com.gkenna.tullamoreqa.domain.service.api.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
-
 
     @Override
     public void addQuestion(Question question) {

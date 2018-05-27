@@ -11,7 +11,7 @@ public abstract class Entry {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_username")
     protected User user;
 
     @NotBlank
