@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean doesUserExist(long id) {
-        return false;
+    public boolean doesUserExist(String username) {
+        return this.userRepository.findByUsername(username) != null;
     }
 
     @Override

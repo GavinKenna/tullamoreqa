@@ -10,7 +10,7 @@ public interface UserService {
     void deleteUser(long id);
     void editUser(User user);
     boolean doesUserExist(User user);
-    boolean doesUserExist(long id);
+    boolean doesUserExist(String username);
     User getUser(String id);
     User[] getAllUsers();
 

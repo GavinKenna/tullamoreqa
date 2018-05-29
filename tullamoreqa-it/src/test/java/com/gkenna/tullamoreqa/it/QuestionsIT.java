@@ -5,7 +5,6 @@ import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
 import com.gkenna.tullamoreqa.core.api.services.*;
-import com.gkenna.tullamoreqa.core.impl.services.QuestionServiceImpl;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -17,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,11 +61,11 @@ public class QuestionsIT {
 
     private void queryDb() {
         Page<Answer> answersByGavin = answerRepository.findAnswersByUserUsername("Gavin", Pageable.unpaged());
-        System.out.println("Answer size by Gavin == " + answersByGavin.getSize());
-        assert answersByGavin.getSize() == 1;
+        System.out.println("Answer size by Gavin == " + answersByGavin.getTotalPages());
+        assert answersByGavin.hasContent();
 
         Page<Question> questionsByGavin = questionRepository.findQuestionsByUser_Username("Gavin", Pageable.unpaged());
-        assert questionsByGavin.getSize() == 1;
+        assert questionsByGavin.hasContent();
 
         List<Question> questionsByJavaTag = (List<Question>) questionRepository.findQuestionsBasedOnAllTagNames
                 (new String[]{"Java"});
@@ -77,9 +77,15 @@ public class QuestionsIT {
 
     }
 
-    private void createAnswers() {
+    @Transactional
+    void createAnswers() {
         Question help = questionRepository.findByTitle("Help", Pageable.unpaged()).iterator().next();
         Question halp = questionRepository.findByTitle("Halp", Pageable.unpaged()).iterator().next();
+
+        assert help != null;
+        assert halp != null;
+
+        assert answerRepository.findAll().size() == 0;
 
         Answer a = new Answer();
         a.setUser(userRepository.findByUsername("Alice"));
@@ -87,18 +93,25 @@ public class QuestionsIT {
         a.setBody("I know the answer!");
         answerService.addAnswer(a);
 
+        assert answerRepository.findAll().size() == 1;
+
         Answer b = new Answer();
         b.setUser(userRepository.findByUsername("Bob"));
         b.setQuestion(help);
         b.setBody("No, I know it!");
         answerService.addAnswer(b);
 
+        assert answerRepository.findAll().size() == 2;
 
         Answer c = new Answer();
         c.setUser(userRepository.findByUsername("Gavin"));
         c.setQuestion(halp);
         c.setBody("I don't know anything");
         answerService.addAnswer(c);
+
+        System.out.println("Gavins Answer " + c.toString());
+
+        assert answerRepository.findAll().size() == 3;
     }
 
     private void createQuestions() {
@@ -107,12 +120,16 @@ public class QuestionsIT {
         Optional<Tag> help = tagRepository.findById("Help");
         Optional<Tag> some = tagRepository.findById("SoemthingElse");
 
+        assert questionRepository.findAll().size() == 0;
+
         Question question = new Question();
         question.setBody("Help help help");
         question.setTitle("Help");
         question.setUser(userRepository.findByUsername("Gavin"));
         question.getTags().add(java.get());
         questionService.addQuestion(question);
+
+        assert questionRepository.findAll().size() == 1;
 
         Question questionTwo = new Question();
         questionTwo.setBody("HAAAALP");
@@ -121,6 +138,8 @@ public class QuestionsIT {
         questionTwo.getTags().add(help.get());
         questionTwo.getTags().add(java.get());
         questionService.addQuestion(questionTwo);
+
+        assert questionRepository.findAll().size() == 2;
     }
 
     private void createUsers() {
@@ -135,6 +154,10 @@ public class QuestionsIT {
         User alice = new User("Alice");
 
         userService.addUser(alice);
+
+        assert userService.doesUserExist("Gavin") == true;
+        assert userService.doesUserExist("Bob") == true;
+        assert userService.doesUserExist("Alice") == true;
     }
 
     private void createTags() {
@@ -146,8 +169,8 @@ public class QuestionsIT {
         tagService.addTag(help);
         tagService.addTag(somethingElse);
 
-        assert tagService.doesTagExist("Java")==true;
-        assert tagService.doesTagExist("Help")==true;
+        assert tagService.doesTagExist("Java") == true;
+        assert tagService.doesTagExist("Help") == true;
         assert tagService.doesTagExist("SomethingElse");
 
     }

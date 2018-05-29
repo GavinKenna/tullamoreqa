@@ -37,4 +37,12 @@ public abstract class Entry {
         this.body = body;
     }
 
+    @Override
+    public String toString() {
+        return "Entry{" +
+                "id=" + id +
+                ", user=" + user +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }

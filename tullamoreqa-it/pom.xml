@@ -98,13 +98,14 @@
                                     </images>
                                 </configuration>
                             </execution>
-                           <!-- <execution>
+                            <execution>
                                 <id>remove-it-database</id>
                                 <phase>post-integration-test</phase>
                                 <goals>
                                     <goal>stop</goal>
+                                    <goal>remove</goal>
                                 </goals>
-                            </execution>-->
+                            </execution>
                         </executions>
                     </plugin>
                     <plugin>

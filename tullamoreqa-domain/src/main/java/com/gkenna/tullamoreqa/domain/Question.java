@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -23,7 +24,7 @@ public class Question extends Entry {
     @JoinColumn(name = "mod_user_username",nullable = true)
     private User modifiedBy = null;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Tag> tags;
 
     @Column(nullable = false, updatable = false)
@@ -42,6 +43,28 @@ public class Question extends Entry {
     private int upvotes;
     private int downvotes;
     private int score;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Question)) return false;
+        Question question = (Question) o;
+        return getId() == question.getId() &&
+                getUpvotes() == question.getUpvotes() &&
+                getDownvotes() == question.getDownvotes() &&
+                getScore() == question.getScore() &&
+                Objects.equals(getModifiedBy(), question.getModifiedBy()) &&
+                Objects.equals(getTags(), question.getTags()) &&
+                Objects.equals(getCreatedAt(), question.getCreatedAt()) &&
+                Objects.equals(getLastUpdatedAt(), question.getLastUpdatedAt()) &&
+                Objects.equals(getTitle(), question.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getModifiedBy(), getTags(), getCreatedAt(), getLastUpdatedAt(), getTitle(), getUpvotes(), getDownvotes(), getScore());
+    }
 
     public Question() {
         //this.answers = new HashSet<Answer>();
@@ -139,6 +162,23 @@ public class Question extends Entry {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", modifiedBy=" + modifiedBy +
+                ", tags=" + tags +
+                ", createdAt=" + createdAt +
+                ", lastUpdatedAt=" + lastUpdatedAt +
+                ", title='" + title + '\'' +
+                ", upvotes=" + upvotes +
+                ", downvotes=" + downvotes +
+                ", score=" + score +
+                ", user=" + user +
+                ", body='" + body + '\'' +
+                '}';
     }
 
     /*public long getId() {

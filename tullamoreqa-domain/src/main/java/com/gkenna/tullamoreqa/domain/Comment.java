@@ -4,7 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 @Entity
 @Table(name = "comments")
@@ -42,5 +42,33 @@ public class Comment extends Entry {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", parent=" + parent +
+                ", upvotes=" + upvotes +
+                ", downvotes=" + downvotes +
+                ", user=" + user +
+                ", body='" + body + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+        Comment comment = (Comment) o;
+        return getId() == comment.getId() &&
+                getUpvotes() == comment.getUpvotes() &&
+                getDownvotes() == comment.getDownvotes() &&
+                Objects.equals(parent, comment.parent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), parent, getUpvotes(), getDownvotes());
     }
 }

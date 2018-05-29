@@ -10,12 +10,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Page<Answer> findByQuestionId(Long questionId, Pageable pageable);
     Page<Answer> findByUserUsername(String username, Pageable pageable);
-    @Query("select distinct a from Answer a where a.user.username = :username")
-    Page<Answer> findAnswersByUserUsername(@Param("username")String userUsername, Pageable pageable);
+    @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.user u WHERE u.username = ?1")
+    Page<Answer> findAnswersByUserUsername(String userUsername, Pageable pageable);
     Page<Answer> findByChosenAnswer(boolean chosenAnswer, Pageable pageable);
 
 }
