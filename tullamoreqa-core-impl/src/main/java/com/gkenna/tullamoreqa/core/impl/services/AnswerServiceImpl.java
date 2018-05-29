@@ -8,6 +8,8 @@ import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +18,32 @@ import java.util.Optional;
 @Service("answerService")
 public class AnswerServiceImpl implements AnswerService {
 
+    private static final Logger LOGGER = LogManager.getLogger(AnswerServiceImpl.class);
+
     @Autowired
     private AnswerRepository answerRepository;
 
     @Override
     public void addAnswer(Answer answer) {
-        // TODO Add exception handling here
+        LOGGER.debug("Saving {}", answer);
         answerRepository.save(answer);
     }
 
     @Override
     public void deleteAnswer(Answer answer) {
+        LOGGER.debug("Deleting {}", answer);
         answerRepository.delete(answer);
     }
 
     @Override
     public void deleteAnswer(long id) {
+        LOGGER.debug("Deleting {}", id);
         answerRepository.deleteById(id);
     }
 
     @Override
     public void editAnswer(Answer answer) {
+        LOGGER.debug("Editing {}", answer);
         answerRepository.deleteById(answer.getId());
         this.addAnswer(answer);
     }
