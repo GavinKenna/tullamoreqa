@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +76,7 @@ public class QuestionsIT {
 
     }
 
-    @Transactional
-    void createAnswers() {
+    private void createAnswers() {
         Question help = questionRepository.findByTitle("Help", Pageable.unpaged()).iterator().next();
         Question halp = questionRepository.findByTitle("Halp", Pageable.unpaged()).iterator().next();
 
@@ -87,26 +85,21 @@ public class QuestionsIT {
 
         assert answerRepository.findAll().size() == 0;
 
-        Answer a = new Answer();
-        a.setUser(userRepository.findByUsername("Alice"));
-        a.setQuestion(help);
-        a.setBody("I know the answer!");
+        User gavin = userRepository.findByUsername("Gavin");
+        User bob = userRepository.findByUsername("Bob");
+        User alice = userRepository.findByUsername("Alice");
+
+        Answer a = new Answer(help, alice, "I know the Answer");
         answerService.addAnswer(a);
 
         assert answerRepository.findAll().size() == 1;
 
-        Answer b = new Answer();
-        b.setUser(userRepository.findByUsername("Bob"));
-        b.setQuestion(help);
-        b.setBody("No, I know it!");
+        Answer b = new Answer(help, bob, "No, I know it!");
         answerService.addAnswer(b);
 
         assert answerRepository.findAll().size() == 2;
 
-        Answer c = new Answer();
-        c.setUser(userRepository.findByUsername("Gavin"));
-        c.setQuestion(halp);
-        c.setBody("I don't know anything");
+        Answer c = new Answer(halp, gavin, "I don't know anything.");
         answerService.addAnswer(c);
 
         System.out.println("Gavins Answer " + c.toString());

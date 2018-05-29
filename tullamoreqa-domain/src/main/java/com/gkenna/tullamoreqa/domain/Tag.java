@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.domain;
 
 import javax.persistence.Entity;
@@ -20,7 +24,7 @@ public class Tag {
         this.name = name;
     }
 
-    public Tag(){
+    private Tag(){
 
     }
 

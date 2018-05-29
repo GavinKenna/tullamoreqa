@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.domain;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -5,7 +9,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -21,7 +24,7 @@ public class Question extends Entry {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "mod_user_username",nullable = true)
+    @JoinColumn(name = "mod_user_username", nullable = true)
     private User modifiedBy = null;
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
@@ -44,6 +47,14 @@ public class Question extends Entry {
     private int downvotes;
     private int score;
 
+    public Question() {
+        this.tags = new HashSet<Tag>();
+        this.createdAt = new Date();
+        this.lastUpdatedAt = new Date();
+        this.upvotes = 0;
+        this.downvotes = 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,18 +74,9 @@ public class Question extends Entry {
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getModifiedBy(), getTags(), getCreatedAt(), getLastUpdatedAt(), getTitle(), getUpvotes(), getDownvotes(), getScore());
+        return Objects.hash(getId(), getModifiedBy(), getTags(), getCreatedAt(), getLastUpdatedAt(), getTitle(),
+                getUpvotes(), getDownvotes(), getScore());
     }
-
-    public Question() {
-        //this.answers = new HashSet<Answer>();
-        //this.comments = new HashSet<Comment>();
-        this.tags = new HashSet<Tag>();
-        this.createdAt = new Date();
-        this.lastUpdatedAt = new Date();
-        this.upvotes = 0;
-        this.downvotes = 0;
-}
 
     public String getTitle() {
         return title;

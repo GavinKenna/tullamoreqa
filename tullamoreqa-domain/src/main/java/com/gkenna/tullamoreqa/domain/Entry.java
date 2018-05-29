@@ -17,6 +17,13 @@ public abstract class Entry {
     @NotBlank
     protected String body;
 
+    public Entry(User user, @NotBlank String body) {
+        this.user = user;
+        this.body = body;
+    }
+
+    protected Entry(){}
+
     public long getId() {
         return id;
     }

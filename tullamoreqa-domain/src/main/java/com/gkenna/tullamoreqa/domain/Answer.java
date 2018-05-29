@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.domain;
 
 import org.hibernate.annotations.Cascade;
@@ -27,7 +31,13 @@ public class Answer extends Entry {
     private int upvotes;
     private int downvotes;
 
-    public Answer() {
+    private Answer() {
+        super();
+    }
+
+    public Answer(Question question, User user, String body) {
+        super(user,body);
+        this.question = question;
     }
 
 

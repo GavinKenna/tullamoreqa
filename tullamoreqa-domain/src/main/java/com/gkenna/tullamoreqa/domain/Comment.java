@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.domain;
 
 import org.hibernate.annotations.OnDelete;
@@ -21,7 +25,7 @@ public class Comment extends Entry {
     private int upvotes;
     private int downvotes;
 
-    public Comment() {
+    private Comment() {
     }
 
     public int getUpvotes() {

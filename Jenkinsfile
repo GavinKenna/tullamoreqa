@@ -16,5 +16,10 @@ pipeline {
                sh 'mvn verify'
              }
            }
+           stage('Integration Tests') {
+             steps {
+               sh 'mvn clean install -Ptest'
+             }
+           }
          }
        }

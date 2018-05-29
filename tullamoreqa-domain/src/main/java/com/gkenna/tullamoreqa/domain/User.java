@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.domain;
 
 import javax.persistence.*;
@@ -18,7 +22,7 @@ public class User {
         this.username = username;
     }
 
-    public User(){
+    private User(){
 
     }
 
