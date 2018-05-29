@@ -63,7 +63,7 @@ public class QuestionsIT {
         System.out.println("Answer size by Gavin == " + answersByGavin.getTotalPages());
         assert answersByGavin.hasContent();
 
-        Page<Question> questionsByGavin = questionRepository.findQuestionsByUser_Username("Gavin", Pageable.unpaged());
+        Page<Question> questionsByGavin = questionRepository.findQuestionsByUserUsername("Gavin", Pageable.unpaged());
         assert questionsByGavin.hasContent();
 
         List<Question> questionsByJavaTag = (List<Question>) questionRepository.findQuestionsBasedOnAllTagNames
