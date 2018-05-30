@@ -1,10 +1,7 @@
 package com.gkenna.tullamoreqa.core.impl;
 
-import com.gkenna.tullamoreqa.core.api.services.TagService;
-import com.gkenna.tullamoreqa.domain.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,16 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class Application {
 
     private static final Logger LOGGER = LogManager.getLogger(Application.class);
-    @Autowired
-    TagService tagService;
 
     public static void main(String[] args) {
         SpringApplication.run(com.gkenna.tullamoreqa.core.impl.Application.class);
-
-        LOGGER.debug("DEBUG");
-        LOGGER.info("INFO");
-        LOGGER.warn("WARNING");
-        LOGGER.error("ERROR");
     }
 
 
@@ -40,7 +30,6 @@ public class Application {
     @Transactional
     public CommandLineRunner demo() {
         return (args) -> {
-            tagService.addTag(new Tag("G"));
 
         };
     }
