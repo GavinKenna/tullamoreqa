@@ -8,17 +8,21 @@ import com.gkenna.tullamoreqa.core.api.repositories.CommentRepository;
 import com.gkenna.tullamoreqa.core.api.services.CommentService;
 import com.gkenna.tullamoreqa.domain.Comment;
 import com.gkenna.tullamoreqa.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("commentService")
 public class CommentServiceImpl implements CommentService {
+    private static final Logger LOGGER = LogManager.getLogger(CommentServiceImpl.class);
 
     @Autowired
     private CommentRepository commentRepository;
 
     @Override
     public void addComment(Comment comment) {
+        LOGGER.debug("Adding {}", comment);
         commentRepository.save(comment);
     }
 

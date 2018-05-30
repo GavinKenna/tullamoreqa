@@ -5,12 +5,12 @@
     <parent>
         <artifactId>tullamoreqa</artifactId>
         <groupId>com.gkenna.tullamoreqa</groupId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tullamoreqa-it</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <dependencies>
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
             <artifactId>tullamoreqa-core-api</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -42,9 +42,37 @@
             <version>4.3.13.RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test-autoconfigure</artifactId>
+            <version>1.5.9.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.0.6.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.5.9.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,6 +95,15 @@
         <profile>
             <id>test</id>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/test/resources</directory>
+                        <targetPath>${project.build.directory}</targetPath>
+                        <includes>
+                            <include>log4j2.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -83,9 +120,11 @@
                         <configuration>
                             <systemProperties>
                                 <it-database.port>${it-database.port}</it-database.port>
+                                <docker.host.address>${docker.container.it-database.ip}</docker.host.address>
                             </systemProperties>
                             <environmentVariables>
                                 <it-database.port>${it-database.port}</it-database.port>
+                                <docker.host.address>${docker.container.it-database.ip}</docker.host.address>
                             </environmentVariables>
                         </configuration>
                     </plugin>
@@ -144,7 +183,7 @@
                 <dependency>
                     <groupId>com.gkenna.tullamoreqa</groupId>
                     <artifactId>tullamoreqa-core-impl</artifactId>
-                    <version>0.0.2</version>
+                    <version>0.0.3</version>
                 </dependency>
             </dependencies>
         </profile>

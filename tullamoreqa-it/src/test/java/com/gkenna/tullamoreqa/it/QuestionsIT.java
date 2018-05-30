@@ -9,6 +9,8 @@ import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {AppConfiguration.class})
 public class QuestionsIT {
+
+    private static final Logger LOGGER = LogManager.getLogger(QuestionsIT.class);
 
     @Autowired
     QuestionService questionService;
@@ -60,7 +64,7 @@ public class QuestionsIT {
 
     private void queryDb() {
         Page<Answer> answersByGavin = answerRepository.findAnswersByUserUsername("Gavin", Pageable.unpaged());
-        System.out.println("Answer size by Gavin == " + answersByGavin.getTotalPages());
+        LOGGER.info("Answer size by Gavin == " + answersByGavin.getTotalPages());
         assert answersByGavin.hasContent();
 
         Page<Question> questionsByGavin = questionRepository.findQuestionsByUserUsername("Gavin", Pageable.unpaged());
@@ -102,7 +106,7 @@ public class QuestionsIT {
         Answer c = new Answer(halp, gavin, "I don't know anything.");
         answerService.addAnswer(c);
 
-        System.out.println("Gavins Answer " + c.toString());
+        LOGGER.info("Gavins Answer " + c.toString());
 
         assert answerRepository.findAll().size() == 3;
     }
