@@ -19,7 +19,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     private static final Logger LOGGER = LogManager.getLogger(QuestionServiceImpl.class);
 
-
     @Autowired
     private QuestionRepository questionRepository;
 
