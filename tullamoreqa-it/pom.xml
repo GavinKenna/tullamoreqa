@@ -104,11 +104,11 @@
                         <configuration>
                             <systemProperties>
                                 <it-database.port>${it-database.port}</it-database.port>
-                                <docker.host.address>${docker.host.address}</docker.host.address>
+                                <docker.host.address>${docker.host.ip}</docker.host.address>
                             </systemProperties>
                             <environmentVariables>
                                 <it-database.port>${it-database.port}</it-database.port>
-                                <docker.host.address>${docker.host.address}</docker.host.address>
+                                <docker.host.address>${docker.host.ip}</docker.host.address>
                             </environmentVariables>
                         </configuration>
                     </plugin>
