@@ -5,12 +5,12 @@
     <parent>
         <artifactId>tullamoreqa</artifactId>
         <groupId>com.gkenna.tullamoreqa</groupId>
-        <version>0.0.3</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tullamoreqa-it</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
             <artifactId>tullamoreqa-core-api</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.4-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -183,7 +183,7 @@
                 <dependency>
                     <groupId>com.gkenna.tullamoreqa</groupId>
                     <artifactId>tullamoreqa-core-impl</artifactId>
-                    <version>0.0.3</version>
+                    <version>0.0.4-SNAPSHOT</version>
                 </dependency>
             </dependencies>
         </profile>
