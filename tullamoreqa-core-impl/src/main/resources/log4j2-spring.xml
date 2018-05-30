@@ -5,7 +5,7 @@
 <Configuration status="WARN" monitorInterval="30">
     <Properties>
         <Property name="LOG_PATTERN">
-            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+            %highlight{%d{HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex}
         </Property>
     </Properties>
     <Appenders>
@@ -14,7 +14,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.gkenna.tullamoreqa" level="debug" additivity="false">
+        <Logger name="com.gkenna.tullamoreqa" level="info" additivity="false">
             <AppenderRef ref="ConsoleAppender" />
         </Logger>
 
