@@ -184,6 +184,7 @@
                     <groupId>com.gkenna.tullamoreqa</groupId>
                     <artifactId>tullamoreqa-core-impl</artifactId>
                     <version>0.0.3</version>
+                    <scope>test</scope>
                 </dependency>
             </dependencies>
         </profile>
