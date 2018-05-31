@@ -10,11 +10,13 @@ import com.gkenna.tullamoreqa.domain.Question;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/question")
@@ -26,13 +28,25 @@ public class QuestionControllerImpl implements QuestionController {
     private QuestionService questionService;
 
     @Override
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addQuestion(@RequestBody Question input) {
-        return null;
+
+        LOGGER.info("Add Question : {}", input);
+
+        questionService.addQuestion(input);
+
+        HttpHeaders headers = new HttpHeaders();
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(input.getId()).toUri();
+
+        headers.setLocation(location);
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
     @Override
     public Question getQuestion(@PathVariable Long questionId) {
-        return null;
+        return questionService.getQuestion(questionId);
     }
 
     @Override

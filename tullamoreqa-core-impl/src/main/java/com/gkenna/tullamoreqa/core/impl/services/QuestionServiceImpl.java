@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+// TODO Remove automatic ID generation - should do it in service impl.
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
 
@@ -26,6 +26,8 @@ public class QuestionServiceImpl implements QuestionService {
     public void addQuestion(Question question) {
         LOGGER.debug("Adding {}", question);
         questionRepository.save(question);
+        questionRepository.flush();
+        LOGGER.info("ADDED {}", question);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getQuestion(long id) {
-        return null;
+        return questionRepository.getOne(id);
     }
 
     @Override
