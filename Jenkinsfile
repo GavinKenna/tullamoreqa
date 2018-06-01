@@ -9,6 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn clean install'
+        archiveArtifacts(artifacts: '*', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
     stage('Verify') {
