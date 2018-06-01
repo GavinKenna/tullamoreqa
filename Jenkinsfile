@@ -9,21 +9,11 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn clean install'
-        archiveArtifacts(artifacts: '*', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
     stage('Verify') {
-      parallel {
-        stage('Verify') {
-          steps {
-            sh 'mvn verify'
-          }
-        }
-        stage('Archive Artifacts') {
-          steps {
-            archiveArtifacts(artifacts: '*', onlyIfSuccessful: true)
-          }
-        }
+      steps {
+        sh 'mvn verify'
       }
     }
     stage('Integration Tests') {
@@ -33,7 +23,7 @@ pipeline {
     }
     stage('Archive Artifacts') {
       steps {
-        archiveArtifacts(artifacts: '*', allowEmptyArchive: true, onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: '*/target/*.jar', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
   }
