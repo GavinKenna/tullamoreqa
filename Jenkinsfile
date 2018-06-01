@@ -12,8 +12,17 @@ pipeline {
       }
     }
     stage('Verify') {
-      steps {
-        sh 'mvn verify'
+      parallel {
+        stage('Verify') {
+          steps {
+            sh 'mvn verify'
+          }
+        }
+        stage('Archive Artifacts') {
+          steps {
+            archiveArtifacts(artifacts: '*', onlyIfSuccessful: true)
+          }
+        }
       }
     }
     stage('Integration Tests') {
