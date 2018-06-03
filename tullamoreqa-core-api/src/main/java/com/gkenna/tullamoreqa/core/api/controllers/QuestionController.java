@@ -24,7 +24,19 @@ public interface QuestionController {
      */
     Question getQuestion(Long questionId);
 
+    /**
+     * PUT Method
+     * @param questionId
+     * @param input
+     * @return
+     */
     ResponseEntity<?> updateQuestion(Long questionId, Question input);
 
+
+    /**
+     * DELETE Method
+     * @param questionId
+     * @return
+     */
     ResponseEntity<?> deleteQuestion(Long questionId);
 }
