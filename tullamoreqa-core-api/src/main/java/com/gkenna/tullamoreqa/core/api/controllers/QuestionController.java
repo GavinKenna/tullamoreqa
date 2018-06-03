@@ -22,7 +22,7 @@ public interface QuestionController {
      * @param questionId
      * @return
      */
-    Question getQuestion(Long questionId);
+    ResponseEntity<Question> getQuestion(Long questionId);
 
     /**
      * PUT Method

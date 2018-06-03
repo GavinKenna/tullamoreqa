@@ -45,17 +45,48 @@ public class QuestionControllerImpl implements QuestionController {
     }
 
     @Override
-    public Question getQuestion(@PathVariable Long questionId) {
-        return questionService.getQuestion(questionId);
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<Question> getQuestion(@PathVariable("id") Long questionId) {
+        LOGGER.debug("Attempting to get Question {}", questionId);
+        Question output = questionService.getQuestion(questionId);
+        if (output == null) {
+            LOGGER.error("Question with id {} not found.", questionId);
+            // TODO Replace this exception with custom exception
+            return new ResponseEntity(new Exception("Question with id " + questionId
+                    + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Question>(output, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> updateQuestion(@PathVariable Long questionId, @RequestBody Question input) {
-        return null;
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public ResponseEntity<?> updateQuestion(@PathVariable("id") Long questionId, @RequestBody Question input) {
+        LOGGER.debug("Updating Question {} with the following details {}", questionId, input);
+        Question output;
+        try {
+            output = questionService.updateQuestion(questionId, input);
+        } catch (Exception e) {
+            LOGGER.error("Question with id {} not found.", questionId);
+            // TODO Replace this exception with custom exception
+            return new ResponseEntity(new Exception("Answer with id " + questionId
+                    + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Question>(output, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
-        return null;
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable("id") Long questionId) {
+        LOGGER.debug("Deleting Question {}", questionId);
+        Question output;
+        try {
+            output = questionService.deleteQuestion(questionId);
+        } catch (Exception e) {
+            LOGGER.error("Question with id {} not found.", questionId);
+            // TODO Replace this exception with custom exception
+            return new ResponseEntity(new Exception("Question with id " + questionId
+                    + " not found"), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Question>(output, HttpStatus.OK);
     }
 }

@@ -36,13 +36,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void deleteQuestion(long id) {
+    public Question deleteQuestion(long id) {
 
+        return null;
     }
 
     @Override
-    public void editQuestion(Question question) {
-
+    public Question updateQuestion(Long questionId, Question input) {
+        return null;
     }
 
     @Override
