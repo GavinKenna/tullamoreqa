@@ -17,10 +17,6 @@ import java.util.Objects;
 @Transactional
 public class Answer extends Entry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -81,10 +77,11 @@ public class Answer extends Entry {
         this.downvotes = downvotes;
     }
 
+
     @Override
     public String toString() {
         return "Answer{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", question=" + question +
                 ", chosenAnswer=" + chosenAnswer +
                 ", upvotes=" + upvotes +

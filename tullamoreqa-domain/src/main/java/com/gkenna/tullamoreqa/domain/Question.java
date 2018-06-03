@@ -19,10 +19,6 @@ import java.util.Set;
 @Table(name = "questions")
 public class Question extends Entry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @ManyToOne
     @JoinColumn(name = "mod_user_username", nullable = true)
     private User modifiedBy = null;
@@ -94,22 +90,6 @@ public class Question extends Entry {
         this.modifiedBy = modifiedBy;
     }
 
-   /* public Set<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }*/
-
     public Set<Tag> getTags() {
         return tags;
     }
@@ -169,7 +149,7 @@ public class Question extends Entry {
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", modifiedBy=" + modifiedBy +
                 ", tags=" + tags +
                 ", createdAt=" + createdAt +
@@ -183,17 +163,4 @@ public class Question extends Entry {
                 '}';
     }
 
-    /*public long getId() {
-        return id;
-    }*/
-
-   /* public void addAnswer(Answer answer){
-        this.answers.add(answer);
-        answer.setQuestion(this);
-    }
-
-    public void addComment(Comment comment){
-        this.comments.add(comment);
-        //comment.setParent(this);
-    }*/
 }

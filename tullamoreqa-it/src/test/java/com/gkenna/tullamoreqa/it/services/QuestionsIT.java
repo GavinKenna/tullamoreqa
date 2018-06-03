@@ -1,4 +1,4 @@
-package com.gkenna.tullamoreqa.it;
+package com.gkenna.tullamoreqa.it.services;
 
 import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
@@ -9,6 +9,7 @@ import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.it.AppConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;

@@ -7,7 +7,7 @@
     <groupId>com.gkenna.tullamoreqa</groupId>
     <artifactId>tullamoreqa</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <modules>
         <module>tullamoreqa-domain</module>
         <module>tullamoreqa-core-api</module>

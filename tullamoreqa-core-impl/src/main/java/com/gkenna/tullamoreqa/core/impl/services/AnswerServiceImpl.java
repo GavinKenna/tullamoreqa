@@ -36,16 +36,15 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void deleteAnswer(long id) {
+    public Answer deleteAnswer(long id) {
         LOGGER.debug("Deleting {}", id);
         answerRepository.deleteById(id);
+        return null;
     }
 
     @Override
-    public void editAnswer(Answer answer) {
-        LOGGER.debug("Editing {}", answer);
-        answerRepository.deleteById(answer.getId());
-        this.addAnswer(answer);
+    public Answer updateAnswer(Long answerId, Answer input) {
+        return null;
     }
 
     @Override
@@ -59,8 +58,13 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Optional<Answer> getAnswer(long id) {
-        return answerRepository.findById(id);
+    public Answer getAnswer(long id) {
+        LOGGER.info("ALL ANSWERS {}", answerRepository.findAll());
+        Optional<Answer> answer = answerRepository.findById(id);
+        if(answer.isPresent()){
+            return answer.get();
+        }
+        return null;
     }
 
     @Override
@@ -72,4 +76,5 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer[] findAnswersAnsweredByUser(User user) {
         return new Answer[0];
     }
+
 }

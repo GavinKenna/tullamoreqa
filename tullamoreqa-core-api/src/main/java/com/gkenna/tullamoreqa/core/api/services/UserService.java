@@ -10,12 +10,20 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     void addUser(User user);
+
     void deleteUser(User user);
-    void deleteUser(long id);
-    void editUser(User user);
+
+    User deleteUser(String id);
+
+    User updateUser(String username, User input);
+
     boolean doesUserExist(User user);
+
     boolean doesUserExist(String username);
+
     User getUser(String id);
+
     User[] getAllUsers();
+
 
 }

@@ -32,13 +32,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(long id) {
+    public Comment deleteComment(long id) {
 
+        return null;
     }
 
     @Override
-    public void editComment(Comment comment) {
-
+    public Comment updateComment(Long commentId, Comment input) {
+        return null;
     }
 
     @Override
@@ -65,4 +66,6 @@ public class CommentServiceImpl implements CommentService {
     public Comment[] findCommentsByUser(User user) {
         return new Comment[0];
     }
+
+
 }

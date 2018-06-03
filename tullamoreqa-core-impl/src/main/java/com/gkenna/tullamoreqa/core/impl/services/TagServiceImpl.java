@@ -34,13 +34,14 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(String id) {
+    public Tag deleteTag(String id) {
 
+        return null;
     }
 
     @Override
-    public void editTag(Tag tag) {
-
+    public Tag updateTag(String tagId, Tag input) {
+        return null;
     }
 
     @Override
