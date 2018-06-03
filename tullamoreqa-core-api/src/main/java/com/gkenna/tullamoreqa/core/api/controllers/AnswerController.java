@@ -22,7 +22,7 @@ public interface AnswerController {
      * @param answerId
      * @return
      */
-    Answer getAnswer(Long answerId);
+    ResponseEntity<Answer> getAnswer(Long answerId);
 
     /**
      * PUT Method

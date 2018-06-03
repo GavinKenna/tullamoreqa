@@ -13,8 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service("answerService")
 public class AnswerServiceImpl implements AnswerService {
 
@@ -36,16 +34,15 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void deleteAnswer(long id) {
+    public Answer deleteAnswer(long id) {
         LOGGER.debug("Deleting {}", id);
         answerRepository.deleteById(id);
+        return null;
     }
 
     @Override
-    public void editAnswer(Answer answer) {
-        LOGGER.debug("Editing {}", answer);
-        answerRepository.deleteById(answer.getId());
-        this.addAnswer(answer);
+    public Answer updateAnswer(Long answerId, Answer input) {
+        return null;
     }
 
     @Override
@@ -59,8 +56,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Optional<Answer> getAnswer(long id) {
-        return answerRepository.findById(id);
+    public Answer getAnswer(long id) {
+        return answerRepository.findById(id).get();
     }
 
     @Override
@@ -72,4 +69,5 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer[] findAnswersAnsweredByUser(User user) {
         return new Answer[0];
     }
+
 }
