@@ -17,10 +17,6 @@ import java.util.Objects;
 @Transactional
 public class Answer extends Entry {
 
-   /* @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;*/
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     @OnDelete(action = OnDeleteAction.CASCADE)

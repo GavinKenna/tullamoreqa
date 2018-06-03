@@ -13,9 +13,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "comments")
 public class Comment extends Entry {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;*/
 
     @ManyToOne(targetEntity = Entry.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "entry_id")
@@ -43,10 +40,6 @@ public class Comment extends Entry {
     public void setDownvotes(int downvotes) {
         this.downvotes = downvotes;
     }
-
-   /* public long getId() {
-        return id;
-    }*/
 
     @Override
     public String toString() {
