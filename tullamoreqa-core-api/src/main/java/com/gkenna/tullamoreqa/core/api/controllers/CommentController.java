@@ -22,7 +22,7 @@ public interface CommentController {
      * @param commentId
      * @return
      */
-    Comment getComment(Long commentId);
+    ResponseEntity<Comment> getComment(Long commentId);
 
     /**
      * PUT Method
