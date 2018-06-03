@@ -19,9 +19,9 @@ import java.util.Set;
 @Table(name = "questions")
 public class Question extends Entry {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long id;*/
 
     @ManyToOne
     @JoinColumn(name = "mod_user_username", nullable = true)
@@ -169,7 +169,7 @@ public class Question extends Entry {
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", modifiedBy=" + modifiedBy +
                 ", tags=" + tags +
                 ", createdAt=" + createdAt +

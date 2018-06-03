@@ -17,9 +17,9 @@ import java.util.Objects;
 @Transactional
 public class Answer extends Entry {
 
-    @Id
+   /* @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
@@ -81,10 +81,11 @@ public class Answer extends Entry {
         this.downvotes = downvotes;
     }
 
+
     @Override
     public String toString() {
         return "Answer{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", question=" + question +
                 ", chosenAnswer=" + chosenAnswer +
                 ", upvotes=" + upvotes +

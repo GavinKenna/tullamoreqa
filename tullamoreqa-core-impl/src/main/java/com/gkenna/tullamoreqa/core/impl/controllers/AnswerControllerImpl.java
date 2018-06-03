@@ -51,6 +51,7 @@ public class AnswerControllerImpl implements AnswerController {
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<Answer> getAnswer(@PathVariable("id") Long answerId) {
+        LOGGER.debug("Attempting to get Answer {}", answerId);
         Answer output = answerService.getAnswer(answerId);
         if (output == null) {
             LOGGER.error("Answer with id {} not found.", answerId);

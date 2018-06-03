@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service("answerService")
 public class AnswerServiceImpl implements AnswerService {
 
@@ -57,7 +59,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer getAnswer(long id) {
-        return answerRepository.findById(id).get();
+        LOGGER.info("ALL ANSWERS {}", answerRepository.findAll());
+        Optional<Answer> answer = answerRepository.findById(id);
+        if(answer.isPresent()){
+            return answer.get();
+        }
+        return null;
     }
 
     @Override

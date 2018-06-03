@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public abstract class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_username")
@@ -24,7 +24,7 @@ public abstract class Entry {
 
     protected Entry(){}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

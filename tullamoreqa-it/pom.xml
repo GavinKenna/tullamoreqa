@@ -70,6 +70,12 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.gkenna.tullamoreqa</groupId>
+            <artifactId>tullamoreqa-core-impl</artifactId>
+            <version>0.0.4-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>
