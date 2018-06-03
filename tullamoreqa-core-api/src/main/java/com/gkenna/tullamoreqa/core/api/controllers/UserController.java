@@ -19,24 +19,24 @@ public interface UserController {
     /**
      * GET Method
      *
-     * @param userId
+     * @param username
      * @return
      */
-    User getUser(Long userId);
+    ResponseEntity<User> getUser(String username);
 
     /**
      * PUT Method
-     * @param userId
+     * @param username
      * @param input
      * @return
      */
-    ResponseEntity<?> updateUser(Long userId, User input);
+    ResponseEntity<?> updateUser(String username, User input);
 
 
     /**
      * DELETE Method
-     * @param userId
+     * @param username
      * @return
      */
-    ResponseEntity<?> deleteUser(Long userId);
+    ResponseEntity<?> deleteUser(String username);
 }

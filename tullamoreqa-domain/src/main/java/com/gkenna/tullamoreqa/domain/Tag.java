@@ -32,6 +32,8 @@ public class Tag {
         return name;
     }
 
+    public String getId(){return this.getName();}
+
     public String getDescription() {
         return description;
     }

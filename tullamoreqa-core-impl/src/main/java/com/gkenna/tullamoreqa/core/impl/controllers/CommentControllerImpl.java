@@ -30,7 +30,7 @@ public class CommentControllerImpl implements CommentController {
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addQuestion(@RequestBody  Comment input) {
+    public ResponseEntity<?> addComment(@RequestBody  Comment input) {
         LOGGER.debug("Adding Comment {}", input);
 
         //TODO Add exception handling

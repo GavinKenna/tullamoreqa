@@ -22,7 +22,7 @@ public interface TagController {
      * @param tag
      * @return
      */
-    Tag getTag(String tag);
+    ResponseEntity<Tag> getTag(String tag);
 
     /**
      * PUT Method

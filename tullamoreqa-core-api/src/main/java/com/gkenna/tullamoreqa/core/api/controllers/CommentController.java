@@ -14,7 +14,7 @@ public interface CommentController {
      * @param input
      * @return
      */
-    ResponseEntity<?> addQuestion(Comment input);
+    ResponseEntity<?> addComment(Comment input);
 
     /**
      * GET Method

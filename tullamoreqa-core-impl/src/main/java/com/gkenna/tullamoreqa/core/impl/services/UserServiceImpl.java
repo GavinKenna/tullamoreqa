@@ -33,13 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(long id) {
-
+    public User deleteUser(String id) {
+        return null;
     }
 
     @Override
-    public void editUser(User user) {
-
+    public User updateUser(String username, User input) {
+        return null;
     }
 
     @Override
