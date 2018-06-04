@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.AnswerNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
@@ -36,15 +37,34 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer deleteAnswer(long id) {
+    public Answer deleteAnswer(Long id) throws AnswerNotFoundException {
         LOGGER.debug("Deleting {}", id);
-        answerRepository.deleteById(id);
-        return null;
+        if(answerRepository.existsById(id)){
+            Answer output = answerRepository.getOne(id);
+            answerRepository.delete(output);
+            return output;
+        }
+        LOGGER.error("Answer {} does not exist. Cannot delete.", id);
+        throw new AnswerNotFoundException(id + " does not exist.");
     }
 
     @Override
-    public Answer updateAnswer(Long answerId, Answer input) {
-        return null;
+    public Answer updateAnswer(Long answerId, Answer input) throws AnswerNotFoundException {
+        LOGGER.debug("Updating {}", answerId);
+        if(answerRepository.existsById(answerId)){
+            Answer output = answerRepository.getOne(answerId);
+            output.setBody(input.getBody());
+            output.setQuestion(input.getQuestion());
+            output.setUser(input.getUser());
+            output.setChosenAnswer(input.isChosenAnswer());
+            output.setDownvotes(input.getDownvotes());
+            output.setUpvotes(input.getUpvotes());
+
+            answerRepository.save(output);
+            return output;
+        }
+        LOGGER.error("Answer {} does not exist. Cannot delete.", answerId);
+        throw new AnswerNotFoundException(answerId + " does not exist.");
     }
 
     @Override
