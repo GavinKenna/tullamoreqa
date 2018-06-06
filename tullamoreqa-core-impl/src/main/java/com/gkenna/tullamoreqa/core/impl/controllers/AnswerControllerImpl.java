@@ -53,13 +53,16 @@ public class AnswerControllerImpl implements AnswerController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<Answer> getAnswer(@PathVariable("id") Long answerId) {
         LOGGER.debug("Attempting to get Answer {}", answerId);
-        Answer output = answerService.getAnswer(answerId);
-        if (output == null) {
+        Answer output;
+
+        try {
+            output = answerService.getAnswer(answerId);
+        } catch (AnswerNotFoundException e) {
             LOGGER.error("Answer with id {} not found.", answerId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id " + answerId
-                    + " not found"), HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity(e, HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<Answer>(output, HttpStatus.OK);
     }
 
