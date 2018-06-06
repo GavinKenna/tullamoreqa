@@ -10,7 +10,7 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface AnswerService {
+public interface AnswerService extends EntryService {
     void addAnswer(Answer answer);
 
     void deleteAnswer(Answer answer);
