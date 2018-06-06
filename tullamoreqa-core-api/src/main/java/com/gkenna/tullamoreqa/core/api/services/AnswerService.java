@@ -12,13 +12,30 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AnswerService {
     void addAnswer(Answer answer);
+
     void deleteAnswer(Answer answer);
-    Answer deleteAnswer(Long id) throws AnswerNotFoundException;
+
+    Answer deleteAnswer(Long answerId) throws AnswerNotFoundException;
+
     boolean doesAnswerExist(Answer answer);
-    boolean doesAnswerExist(long id);
-    Answer getAnswer(long id);
+
+    boolean doesAnswerExist(Long answerId);
+
+    Answer getAnswer(Long answerId) throws AnswerNotFoundException;
+
     Iterable<Answer> getAllAnswers();
+
     Answer[] findAnswersAnsweredByUser(User user);
 
+    Answer[] findAnswersAnsweredByUsername(String username);
+
     Answer updateAnswer(Long answerId, Answer input) throws AnswerNotFoundException;
+
+    void addUpvote(Long answerId) throws AnswerNotFoundException;
+
+    void removeUpvote(Long answerId) throws AnswerNotFoundException;
+
+    void addDownvote(Long answerId) throws AnswerNotFoundException;
+
+    void removeDownvote(Long answerId) throws AnswerNotFoundException;
 }

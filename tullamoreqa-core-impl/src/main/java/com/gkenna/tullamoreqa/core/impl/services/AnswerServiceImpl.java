@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 @Service("answerService")
 public class AnswerServiceImpl implements AnswerService {
@@ -37,28 +37,33 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer deleteAnswer(Long id) throws AnswerNotFoundException {
-        LOGGER.debug("Deleting {}", id);
-        if(answerRepository.existsById(id)){
-            Answer output = answerRepository.getOne(id);
+    public Answer deleteAnswer(Long answerId) throws AnswerNotFoundException {
+        LOGGER.debug("Deleting {}", answerId);
+        if (answerRepository.existsById(answerId)) {
+            Answer output = answerRepository.getOne(answerId);
             answerRepository.delete(output);
             return output;
         }
-        LOGGER.error("Answer {} does not exist. Cannot delete.", id);
-        throw new AnswerNotFoundException(id + " does not exist.");
+        LOGGER.error("Answer {} does not exist. Cannot delete.", answerId);
+        throw new AnswerNotFoundException(answerId + " does not exist.");
     }
 
     @Override
     public Answer updateAnswer(Long answerId, Answer input) throws AnswerNotFoundException {
-        LOGGER.debug("Updating {}", answerId);
-        if(answerRepository.existsById(answerId)){
+        LOGGER.debug("Updating {} to {}", answerId, input);
+        if (answerRepository.existsById(answerId)) {
             Answer output = answerRepository.getOne(answerId);
+
+            LOGGER.debug("Answer before update {}", output);
+
             output.setBody(input.getBody());
             output.setQuestion(input.getQuestion());
             output.setUser(input.getUser());
             output.setChosenAnswer(input.isChosenAnswer());
             output.setDownvotes(input.getDownvotes());
             output.setUpvotes(input.getUpvotes());
+
+            LOGGER.debug("Answer after update {}", output);
 
             answerRepository.save(output);
             return output;
@@ -68,23 +73,56 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public void addUpvote(Long answerId) throws AnswerNotFoundException {
+        LOGGER.debug("Attempting to Upvote Answer {}", answerId);
+        Answer output;
+        try {
+            output = answerRepository.getOne(answerId);
+        } catch (EntityNotFoundException e) {
+            LOGGER.error("Answer not found. Reasoning {}", e.toString());
+            throw new AnswerNotFoundException(answerId + " does not exist.");
+        }
+
+        output.setUpvotes(output.getUpvotes() + 1);
+
+        LOGGER.debug("Upvoted Answer {} successfully.", answerId);
+        answerRepository.save(output);
+    }
+
+    @Override
+    public void removeUpvote(Long answerId) {
+
+    }
+
+    @Override
+    public void addDownvote(Long answerId) {
+
+    }
+
+    @Override
+    public void removeDownvote(Long answerId) {
+
+    }
+
+    @Override
     public boolean doesAnswerExist(Answer answer) {
         return this.doesAnswerExist(answer.getId());
     }
 
     @Override
-    public boolean doesAnswerExist(long id) {
-        return answerRepository.existsById(id);
+    public boolean doesAnswerExist(Long answerId) {
+        return answerRepository.existsById(answerId);
     }
 
     @Override
-    public Answer getAnswer(long id) {
-        LOGGER.info("ALL ANSWERS {}", answerRepository.findAll());
-        Optional<Answer> answer = answerRepository.findById(id);
-        if(answer.isPresent()){
-            return answer.get();
+    public Answer getAnswer(Long answerId) throws AnswerNotFoundException {
+        LOGGER.debug("Attempting to get Answer {}", answerId);
+        try {
+            return answerRepository.getOne(answerId);
+        } catch (EntityNotFoundException e) {
+            LOGGER.error("Answer not found. Reasoning {}", e.toString());
+            throw new AnswerNotFoundException(answerId + " does not exist.");
         }
-        return null;
     }
 
     @Override
@@ -94,7 +132,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer[] findAnswersAnsweredByUser(User user) {
-        return new Answer[0];
+        return this.findAnswersAnsweredByUsername(user.getUsername());
+    }
+
+    @Override
+    public Answer[] findAnswersAnsweredByUsername(String username) {
+        return answerRepository.findAnswersByUserUsername(username);
     }
 
 }
