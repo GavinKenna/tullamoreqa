@@ -39,16 +39,10 @@ public class Question extends Entry {
     @NotBlank
     private String title;
 
-    private int upvotes;
-    private int downvotes;
-    private int score;
-
     public Question() {
         this.tags = new HashSet<Tag>();
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
-        this.upvotes = 0;
-        this.downvotes = 0;
     }
 
     @Override
@@ -122,30 +116,6 @@ public class Question extends Entry {
         this.body = questionBody;
     }
 
-    public int getUpvotes() {
-        return upvotes;
-    }
-
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
-    }
-
-    public int getDownvotes() {
-        return downvotes;
-    }
-
-    public void setDownvotes(int downvotes) {
-        this.downvotes = downvotes;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     @Override
     public String toString() {
         return "Question{" +
@@ -157,7 +127,6 @@ public class Question extends Entry {
                 ", title='" + title + '\'' +
                 ", upvotes=" + upvotes +
                 ", downvotes=" + downvotes +
-                ", score=" + score +
                 ", user=" + user +
                 ", body='" + body + '\'' +
                 '}';

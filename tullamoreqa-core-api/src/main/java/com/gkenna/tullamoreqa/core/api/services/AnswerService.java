@@ -31,11 +31,4 @@ public interface AnswerService extends EntryService {
 
     Answer updateAnswer(Long answerId, Answer input) throws AnswerNotFoundException;
 
-    void addUpvote(Long answerId) throws AnswerNotFoundException;
-
-    void removeUpvote(Long answerId) throws AnswerNotFoundException;
-
-    void addDownvote(Long answerId) throws AnswerNotFoundException;
-
-    void removeDownvote(Long answerId) throws AnswerNotFoundException;
 }

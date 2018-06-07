@@ -90,18 +90,54 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void removeUpvote(Long answerId) {
+    public void removeUpvote(Long answerId) throws AnswerNotFoundException {
+        LOGGER.debug("Attempting to remove Upvote on Answer {}", answerId);
+        Answer output;
+        try {
+            output = answerRepository.getOne(answerId);
+        } catch (EntityNotFoundException e) {
+            LOGGER.error("Answer not found. Reasoning {}", e.toString());
+            throw new AnswerNotFoundException(answerId + " does not exist.");
+        }
 
+        output.setUpvotes(output.getUpvotes() - 1);
+
+        LOGGER.debug("Remove Upvote on Answer {} successfully.", answerId);
+        answerRepository.save(output);
     }
 
     @Override
-    public void addDownvote(Long answerId) {
+    public void addDownvote(Long answerId) throws AnswerNotFoundException {
+        LOGGER.debug("Attempting to Downvote Answer {}", answerId);
+        Answer output;
+        try {
+            output = answerRepository.getOne(answerId);
+        } catch (EntityNotFoundException e) {
+            LOGGER.error("Answer not found. Reasoning {}", e.toString());
+            throw new AnswerNotFoundException(answerId + " does not exist.");
+        }
 
+        output.setDownvotes(output.getDownvotes() + 1);
+
+        LOGGER.debug("Downvoted Answer {} successfully.", answerId);
+        answerRepository.save(output);
     }
 
     @Override
-    public void removeDownvote(Long answerId) {
+    public void removeDownvote(Long answerId) throws AnswerNotFoundException {
+        LOGGER.debug("Attempting to remove Downvote on Answer {}", answerId);
+        Answer output;
+        try {
+            output = answerRepository.getOne(answerId);
+        } catch (EntityNotFoundException e) {
+            LOGGER.error("Answer not found. Reasoning {}", e.toString());
+            throw new AnswerNotFoundException(answerId + " does not exist.");
+        }
 
+        output.setDownvotes(output.getDownvotes() - 1);
+
+        LOGGER.debug("Remove Downvote on Answer {} successfully.", answerId);
+        answerRepository.save(output);
     }
 
     @Override
