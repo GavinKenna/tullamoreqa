@@ -4,47 +4,76 @@
 
 package com.gkenna.tullamoreqa.domain;
 
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import static org.junit.Assert.*;
 
 public class AnswerTest {
 
-    @org.junit.Test
-    public void getQuestion() {
+    @InjectMocks
+    private final Answer validAnswer;
+
+    @InjectMocks
+    private final Answer invalidAnswer;
+
+    private final String validBody = "Answer Body";
+
+    @Mock
+    private Question mockedQuestion;
+
+    @Mock
+    private User mockedUser;
+    
+    public AnswerTest(){
+        MockitoAnnotations.initMocks(this);
+        validAnswer = new Answer(mockedQuestion, mockedUser, validBody);
+        invalidAnswer = new Answer(mockedQuestion, mockedUser, validBody);
     }
 
-    @org.junit.Test
+    @Test
+    public void getQuestionValid() {
+        assert validAnswer.getQuestion().equals(mockedQuestion);
+    }
+
+    @Test
     public void setQuestion() {
+        /*when(mockCustomObject.testMethod()).thenReturn(...);
+        mainClass.makeCall();
+        verify(mockCustomObject).testMethod();*/
     }
 
-    @org.junit.Test
+    @Test
     public void getBody() {
     }
 
-    @org.junit.Test
+    @Test
     public void setBody() {
     }
 
-    @org.junit.Test
+    @Test
     public void isChosenAnswer() {
     }
 
-    @org.junit.Test
+    @Test
     public void setChosenAnswer() {
     }
 
-    @org.junit.Test
+    @Test
     public void getUpvotes() {
     }
 
-    @org.junit.Test
+    @Test
     public void setUpvotes() {
     }
 
-    @org.junit.Test
+    @Test
     public void getDownvotes() {
     }
 
-    @org.junit.Test
+    @Test
     public void setDownvotes() {
     }
 }

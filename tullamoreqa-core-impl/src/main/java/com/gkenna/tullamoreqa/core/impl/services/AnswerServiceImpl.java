@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service("answerService")
 public class AnswerServiceImpl implements AnswerService {
@@ -153,12 +154,14 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer getAnswer(Long answerId) throws AnswerNotFoundException {
         LOGGER.debug("Attempting to get Answer {}", answerId);
-        try {
-            return answerRepository.getOne(answerId);
-        } catch (EntityNotFoundException e) {
-            LOGGER.error("Answer not found. Reasoning {}", e.toString());
-            throw new AnswerNotFoundException(answerId + " does not exist.");
+        Optional<Answer> answer = answerRepository.findById(answerId);
+        if (answer.isPresent()) {
+            return answer.get();
         }
+
+        LOGGER.error("Answer not found.");
+        throw new AnswerNotFoundException(answerId + " does not exist.");
+
     }
 
     @Override
