@@ -20,9 +20,13 @@ public class AnswerTest {
     private final Answer invalidAnswer;
 
     private final String validBody = "Answer Body";
+    private final String validBodyTwo = "Another Answer Body";
 
     @Mock
     private Question mockedQuestion;
+
+    @Mock
+    private Question mockedQuestionTwo;
 
     @Mock
     private User mockedUser;
@@ -40,6 +44,12 @@ public class AnswerTest {
 
     @Test
     public void setQuestion() {
+        validAnswer.setQuestion(mockedQuestionTwo);
+        assert validAnswer.getQuestion().equals(mockedQuestionTwo);
+        assert validAnswer.getQuestion().equals(mockedQuestion) == false;
+        validAnswer.setQuestion(mockedQuestion);
+        assert validAnswer.getQuestion().equals(mockedQuestion);
+        assert validAnswer.getQuestion().equals(mockedQuestionTwo) == false;
         /*when(mockCustomObject.testMethod()).thenReturn(...);
         mainClass.makeCall();
         verify(mockCustomObject).testMethod();*/
@@ -47,22 +57,32 @@ public class AnswerTest {
 
     @Test
     public void getBody() {
+        assert validAnswer.getBody().equals(this.validBody);
     }
 
     @Test
     public void setBody() {
+        validAnswer.setBody(validBodyTwo);
+        assert validAnswer.getBody().equals(this.validBodyTwo);
+        assert validAnswer.getBody().equals(this.validBody) == false;
+        validAnswer.setBody(validBody);
     }
 
     @Test
     public void isChosenAnswer() {
+        assert validAnswer.isChosenAnswer() == false;
     }
 
     @Test
     public void setChosenAnswer() {
+        validAnswer.setChosenAnswer(true);
+        assert validAnswer.isChosenAnswer() == true;
+        validAnswer.setChosenAnswer(false);
     }
 
     @Test
     public void getUpvotes() {
+
     }
 
     @Test
