@@ -9,13 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.*;
-
 public class AnswerTest {
 
     @InjectMocks
     private final Answer validAnswer;
-    
+
     @InjectMocks
     private final Answer fullyFormedAnswer;
 
@@ -33,11 +31,11 @@ public class AnswerTest {
 
     @Mock
     private User mockedUser;
-    
-    public AnswerTest(){
+
+    public AnswerTest() {
         MockitoAnnotations.initMocks(this);
         validAnswer = new Answer(mockedQuestion, mockedUser, validBody);
-        invalidAnswer = new Answer(mockedQuestion, mockedUser, validBody);
+        invalidAnswer = new Answer(null, null, null);
         fullyFormedAnswer = new Answer(mockedQuestion, mockedUser, validBody);
 
         fullyFormedAnswer.setChosenAnswer(true);
@@ -129,5 +127,33 @@ public class AnswerTest {
 
         validAnswer.setDownvotes(0);
         validAnswer.setUpvotes(0);
+    }
+
+    @Test
+    public void compareEquals() {
+        assert validAnswer != fullyFormedAnswer;
+        assert validAnswer != invalidAnswer;
+        assert fullyFormedAnswer != invalidAnswer;
+        assert validAnswer == validAnswer;
+        assert fullyFormedAnswer == fullyFormedAnswer;
+        assert invalidAnswer == invalidAnswer;
+
+        assert !validAnswer.equals(fullyFormedAnswer);
+        assert !validAnswer.equals(invalidAnswer);
+        assert !fullyFormedAnswer.equals(invalidAnswer);
+
+        assert fullyFormedAnswer.equals(fullyFormedAnswer);
+        assert validAnswer.equals(validAnswer);
+        assert invalidAnswer.equals(invalidAnswer);
+    }
+
+    @Test
+    public void compareHashcodes() {
+        assert validAnswer.hashCode() != fullyFormedAnswer.hashCode();
+        assert validAnswer.hashCode() != invalidAnswer.hashCode();
+        assert fullyFormedAnswer.hashCode() != invalidAnswer.hashCode();
+        assert validAnswer.hashCode() == validAnswer.hashCode();
+        assert fullyFormedAnswer.hashCode() == fullyFormedAnswer.hashCode();
+        assert invalidAnswer.hashCode() == invalidAnswer.hashCode();
     }
 }

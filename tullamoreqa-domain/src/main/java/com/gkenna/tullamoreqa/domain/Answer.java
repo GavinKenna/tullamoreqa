@@ -78,12 +78,17 @@ public class Answer extends Entry {
         if (!(o instanceof Answer)) return false;
         Answer answer = (Answer) o;
         return isChosenAnswer() == answer.isChosenAnswer() &&
-                Objects.equals(getQuestion(), answer.getQuestion());
+                Objects.equals(getQuestion(), answer.getQuestion()) &&
+                Objects.equals(getBody(), answer.getBody()) &&
+                Objects.equals(getId(), answer.getId()) &&
+                Objects.equals(getUpvotes(), answer.getUpvotes()) &&
+                Objects.equals(getDownvotes(), answer.getDownvotes()) &&
+                Objects.equals(getUser(), answer.getUser());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getQuestion(), isChosenAnswer());
+        return Objects.hash(getQuestion(), isChosenAnswer(), getBody(), getId(), getUpvotes(), getDownvotes(),
+                getUser());
     }
 }
