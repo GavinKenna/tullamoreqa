@@ -22,8 +22,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     private static final Logger LOGGER = LogManager.getLogger(AnswerServiceImpl.class);
 
+    private final AnswerRepository answerRepository;
+
     @Autowired
-    private AnswerRepository answerRepository;
+    public AnswerServiceImpl(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
 
     @Override
     public void addAnswer(Answer answer) {
