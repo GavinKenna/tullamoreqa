@@ -15,6 +15,9 @@ public class AnswerTest {
 
     @InjectMocks
     private final Answer validAnswer;
+    
+    @InjectMocks
+    private final Answer fullyFormedAnswer;
 
     @InjectMocks
     private final Answer invalidAnswer;
@@ -35,6 +38,11 @@ public class AnswerTest {
         MockitoAnnotations.initMocks(this);
         validAnswer = new Answer(mockedQuestion, mockedUser, validBody);
         invalidAnswer = new Answer(mockedQuestion, mockedUser, validBody);
+        fullyFormedAnswer = new Answer(mockedQuestion, mockedUser, validBody);
+
+        fullyFormedAnswer.setChosenAnswer(true);
+        fullyFormedAnswer.setDownvotes(100);
+        fullyFormedAnswer.setUpvotes(200);
     }
 
     @Test
@@ -71,6 +79,7 @@ public class AnswerTest {
     @Test
     public void isChosenAnswer() {
         assert validAnswer.isChosenAnswer() == false;
+        assert fullyFormedAnswer.isChosenAnswer() == true;
     }
 
     @Test
@@ -82,18 +91,43 @@ public class AnswerTest {
 
     @Test
     public void getUpvotes() {
-
+        assert validAnswer.getUpvotes() == 0;
+        assert fullyFormedAnswer.getUpvotes() == 200;
     }
 
     @Test
     public void setUpvotes() {
+        validAnswer.setUpvotes(50);
+        assert validAnswer.getUpvotes() == 50;
+        validAnswer.setUpvotes(0);
+        assert validAnswer.getUpvotes() == 0;
     }
 
     @Test
     public void getDownvotes() {
+        assert validAnswer.getDownvotes() == 0;
+        assert fullyFormedAnswer.getDownvotes() == 100;
     }
 
     @Test
     public void setDownvotes() {
+        validAnswer.setDownvotes(50);
+        assert validAnswer.getDownvotes() == 50;
+        validAnswer.setDownvotes(0);
+        assert validAnswer.getDownvotes() == 0;
+    }
+
+    @Test
+    public void getScore() {
+        assert validAnswer.getScore() == 0;
+        assert fullyFormedAnswer.getScore() == 100;
+
+        validAnswer.setUpvotes(40);
+        assert validAnswer.getScore() == 40;
+        validAnswer.setDownvotes(60);
+        assert validAnswer.getScore() == -20;
+
+        validAnswer.setDownvotes(0);
+        validAnswer.setUpvotes(0);
     }
 }
