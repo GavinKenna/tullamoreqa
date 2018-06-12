@@ -61,6 +61,12 @@ public class AnswerServiceImplTest {
         verify(mockedAnswerRepo).delete(answer);
     }
 
+    @Test(expected = AnswerNotFoundException.class)
+    public void deleteAnswerByInvalidId() throws AnswerNotFoundException {
+        when(mockedAnswerRepo.existsById(answerId)).thenReturn(false);
+        answerService.deleteAnswer(answerId);
+    }
+
     @Test
     public void editAnswer() {
     }
