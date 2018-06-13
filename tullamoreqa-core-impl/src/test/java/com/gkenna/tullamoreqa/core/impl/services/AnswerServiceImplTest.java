@@ -16,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -116,11 +119,25 @@ public class AnswerServiceImplTest {
     }
 
     @Test
-    public void getAnswer() {
+    public void getAnswer() throws AnswerNotFoundException {
+        Optional<Answer> optionalAnswer = Optional.ofNullable(answer);
+        when(mockedAnswerRepo.findById(answerId)).thenReturn(optionalAnswer);
+
+        Answer a = answerService.getAnswer(answerId);
+        assert answer.equals(a);
+    }
+
+    @Test(expected = AnswerNotFoundException.class)
+    public void getAnswerInvalidId() throws AnswerNotFoundException {
+        Optional<Answer> optionalAnswer = Optional.empty();
+        when(mockedAnswerRepo.findById(answerId)).thenReturn(optionalAnswer);
+
+        Answer a = answerService.getAnswer(answerId);
     }
 
     @Test
     public void getAllAnswers() {
+        //when(mockedAnswerRepo.findAll()).thenReturn(new ArrayList<>());
     }
 
     @Test
