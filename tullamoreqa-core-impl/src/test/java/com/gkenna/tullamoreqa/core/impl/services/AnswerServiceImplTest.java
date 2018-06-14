@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
@@ -137,10 +138,36 @@ public class AnswerServiceImplTest {
 
     @Test
     public void getAllAnswers() {
-        //when(mockedAnswerRepo.findAll()).thenReturn(new ArrayList<>());
+        List<Answer> listOfAnswers = new ArrayList<>();
+        listOfAnswers.add(answer);
+        when(mockedAnswerRepo.findAll()).thenReturn(listOfAnswers);
+
+        List<Answer> returnedListOfAnswers = (List<Answer>) answerService.getAllAnswers();
+        verify(mockedAnswerRepo).findAll();
+
+        assert returnedListOfAnswers.equals(listOfAnswers);
     }
 
     @Test
     public void findAnswersAnsweredByUser() {
+
+    }
+
+    @Test
+    public void findAnswersAnsweredByUsername() {
+        Answer[] answersByGavin = {answer};
+        Answer[] answersByEmma = {};
+
+        when(mockedAnswerRepo.findAnswersByUserUsername("Gavin")).thenReturn(answersByGavin);
+        when(mockedAnswerRepo.findAnswersByUserUsername("Emma")).thenReturn(answersByEmma);
+
+        Answer[] returnedAnswersForGavin = answerService.findAnswersAnsweredByUsername("Gavin");
+        verify(mockedAnswerRepo).findAnswersByUserUsername("Gavin");
+
+        Answer[] returnedAnswersForEmma = answerService.findAnswersAnsweredByUsername("Emma");
+        verify(mockedAnswerRepo).findAnswersByUserUsername("Emma");
+
+        assert answersByEmma.equals(returnedAnswersForEmma);
+        assert answersByGavin.equals(returnedAnswersForGavin);
     }
 }
