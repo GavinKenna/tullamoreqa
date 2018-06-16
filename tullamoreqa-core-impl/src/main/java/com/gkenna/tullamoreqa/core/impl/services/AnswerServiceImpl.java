@@ -79,6 +79,9 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public void addUpvote(Long answerId) throws AnswerNotFoundException {
+        // TODO Will have to add logic to check if a user has already Upvoted this answer.
+        // If so then we will have to remove the upvote.
+        
         LOGGER.debug("Attempting to Upvote Answer {}", answerId);
         Answer output;
         try {
@@ -165,7 +168,6 @@ public class AnswerServiceImpl implements AnswerService {
 
         LOGGER.error("Answer not found.");
         throw new AnswerNotFoundException(answerId + " does not exist.");
-
     }
 
     @Override

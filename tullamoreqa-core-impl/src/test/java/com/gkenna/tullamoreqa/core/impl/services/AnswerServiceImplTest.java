@@ -43,9 +43,6 @@ public class AnswerServiceImplTest {
 
     @Test
     public void addAnswer() {
-         /*when(mockCustomObject.testMethod()).thenReturn(...);
-        mainClass.makeCall();
-        verify(mockCustomObject).testMethod();*/
         answerService.addAnswer(answer);
         verify(mockedAnswerRepo).save(answer);
     }
@@ -150,7 +147,23 @@ public class AnswerServiceImplTest {
 
     @Test
     public void findAnswersAnsweredByUser() {
+        Answer[] answersByGavin = {answer};
+        Answer[] answersByEmma = {};
 
+        User gavin = new User("Gavin");
+        User emma = new User("Emma");
+
+        when(mockedAnswerRepo.findAnswersByUserUsername("Gavin")).thenReturn(answersByGavin);
+        when(mockedAnswerRepo.findAnswersByUserUsername("Emma")).thenReturn(answersByEmma);
+
+        Answer[] returnedAnswersForGavin = answerService.findAnswersAnsweredByUser(gavin);
+        verify(mockedAnswerRepo).findAnswersByUserUsername("Gavin");
+
+        Answer[] returnedAnswersForEmma = answerService.findAnswersAnsweredByUser(emma);
+        verify(mockedAnswerRepo).findAnswersByUserUsername("Emma");
+
+        assert answersByEmma.equals(returnedAnswersForEmma);
+        assert answersByGavin.equals(returnedAnswersForGavin);
     }
 
     @Test
