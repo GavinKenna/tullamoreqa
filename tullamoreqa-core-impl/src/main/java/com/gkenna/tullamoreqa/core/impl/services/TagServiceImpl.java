@@ -11,8 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("tagService")
+@EnableTransactionManagement
 public class TagServiceImpl implements TagService {
 
     private static final Logger LOGGER = LogManager.getLogger(TagServiceImpl.class);
@@ -23,6 +26,7 @@ public class TagServiceImpl implements TagService {
 
 
     @Override
+    @Transactional
     public void addTag(Tag tag) {
         LOGGER.debug("Adding {}", tag);
         tagRepository.save(tag);

@@ -13,6 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+
 // TODO Remove automatic ID generation - should do it in service impl.
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
@@ -26,7 +29,6 @@ public class QuestionServiceImpl implements QuestionService {
     public void addQuestion(Question question) {
         LOGGER.debug("Adding {}", question);
         questionRepository.save(question);
-        questionRepository.flush();
         LOGGER.info("ADDED {}", question);
     }
 

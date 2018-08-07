@@ -4,14 +4,17 @@
 
 package com.gkenna.tullamoreqa.domain;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entry {
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_username")
+    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
     protected User user;
     @NotBlank
     protected String body;

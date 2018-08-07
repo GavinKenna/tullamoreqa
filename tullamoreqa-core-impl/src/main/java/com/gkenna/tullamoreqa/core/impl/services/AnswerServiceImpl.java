@@ -13,11 +13,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service("answerService")
+@EnableTransactionManagement
 public class AnswerServiceImpl implements AnswerService {
 
     private static final Logger LOGGER = LogManager.getLogger(AnswerServiceImpl.class);
@@ -30,6 +33,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    @Transactional
     public void addAnswer(Answer answer) {
         LOGGER.debug("Saving {}", answer);
         answerRepository.save(answer);

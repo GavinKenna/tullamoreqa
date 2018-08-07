@@ -17,7 +17,7 @@ import java.util.Objects;
 @Transactional
 public class Answer extends Entry {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "question_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Cascade(value = org.hibernate.annotations.CascadeType.REFRESH)

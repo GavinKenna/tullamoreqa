@@ -45,6 +45,7 @@ public class AnswerServiceImplTest {
     public void addAnswer() {
         answerService.addAnswer(answer);
         verify(mockedAnswerRepo).save(answer);
+        //verify(mockedAnswerRepo).saveAndFlush(answer);
     }
 
     @Test
