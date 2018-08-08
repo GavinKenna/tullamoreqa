@@ -49,16 +49,16 @@ public class AnswerControllerIT {
     private TestRestTemplate testRestTemplate;
 
     @Autowired
-    private TagService tagRepository;
+    private TagRepository tagRepository;
 
     @Autowired
-    private QuestionService questionRepository;
+    private QuestionRepository questionRepository;
 
     @Autowired
-    private UserService userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private AnswerService answerRepository;
+    private AnswerRepository answerRepository;
 
     @Autowired
     private QuestionRepository qr;
@@ -71,14 +71,14 @@ public class AnswerControllerIT {
 
     private Set<Tag> tags;
 
-    @Test
+    @Before
     public void setup(){
         Tag tag = new Tag("TAG");
         tags = new HashSet<>();
         tags.add(tag);
-        tagRepository.addTag(tag);
+        tagRepository.save(tag);
         mockedUser = new User("Emma");
-        userRepository.addUser(mockedUser);
+        userRepository.save(mockedUser);
         mockedQuestion = new Question();
         mockedQuestion.setBody("MockedBody");
         mockedQuestion.setTitle("MockedTitle");
@@ -89,13 +89,13 @@ public class AnswerControllerIT {
         mockedQuestion.setTags(tags);
         mockedQuestion.setDownvotes(0);
         mockedQuestion.setUpvotes(0);
-        questionRepository.addQuestion(mockedQuestion);
+        questionRepository.save(mockedQuestion);
 
         qr.findAll();
 
     }
 
-    //@Test
+    @Test
     public void addAnswerTest() throws Exception {
         validAnswer = new Answer(mockedQuestion, mockedUser, "AddAnswerTest");
 
@@ -113,21 +113,21 @@ public class AnswerControllerIT {
         assert (true == true);
     }
 
-    //@Test
+    @Test
     public void getAnswerTest() throws Exception {
         validAnswer = new Answer(mockedQuestion, mockedUser, "GetAnswerTest");
 
         LOGGER.info("ValidAnswer is {}", validAnswer);
 
-        answerRepository.addAnswer(validAnswer);
-
-        Long id = validAnswer.getId();
+        Long id = answerRepository.save(validAnswer).getId();
 
         LOGGER.info("ID for getAnswerTest is {}", id);
 
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
                 "http://localhost:" + this.port + "/answer/"+id, Map.class);
+
+        LOGGER.info("Answer Entity {}", entity.toString());
 
         assert (entity.getStatusCode() == HttpStatus.OK);
     }

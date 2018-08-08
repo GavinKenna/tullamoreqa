@@ -20,7 +20,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service("answerService")
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class AnswerServiceImpl implements AnswerService {
 
     private static final Logger LOGGER = LogManager.getLogger(AnswerServiceImpl.class);
@@ -33,7 +33,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public void addAnswer(Answer answer) {
         LOGGER.debug("Saving {}", answer);
         answerRepository.save(answer);

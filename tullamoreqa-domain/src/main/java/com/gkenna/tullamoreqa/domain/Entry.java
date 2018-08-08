@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entry {
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "user_username")
     //@Cascade(org.hibernate.annotations.CascadeType.ALL)
     protected User user;

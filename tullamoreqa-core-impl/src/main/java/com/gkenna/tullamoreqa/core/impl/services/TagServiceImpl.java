@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("tagService")
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class TagServiceImpl implements TagService {
 
     private static final Logger LOGGER = LogManager.getLogger(TagServiceImpl.class);
@@ -26,10 +26,11 @@ public class TagServiceImpl implements TagService {
 
 
     @Override
-    @Transactional
+    //@Transactional
     public void addTag(Tag tag) {
         LOGGER.debug("Adding {}", tag);
         tagRepository.save(tag);
+        tagRepository.flush();
     }
 
     @Override

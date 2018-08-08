@@ -27,8 +27,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {AppConfiguration.class})
+//@Transactional
 public class QuestionsIT {
 
     private static final Logger LOGGER = LogManager.getLogger(QuestionsIT.class);
@@ -60,7 +63,7 @@ public class QuestionsIT {
     public void doNothing(){
         assert (true == true);
     }
-    //@Test
+    @Test
     public void main() {
 
         createTags();
@@ -165,15 +168,15 @@ public class QuestionsIT {
         assert userService.doesUserExist("Bob") == true;
         assert userService.doesUserExist("Alice") == true;
     }
-
+    //@Transactional
     private void createTags() {
         Tag java = new Tag("Java");
         Tag help = new Tag("Help");
         Tag somethingElse = new Tag("SomethingElse");
 
-        tagService.addTag(java);
-        tagService.addTag(help);
-        tagService.addTag(somethingElse);
+        tagRepository.save(java);
+        tagRepository.save(help);
+        tagRepository.save(somethingElse);
 
         LOGGER.info("Java Tag exists {}", tagService.doesTagExist("Java"));
         LOGGER.info("All tags {}", tagService.getAllTags());

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("userService")
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    @Transactional
+    //@Transactional
     public void addUser(User user) {
         LOGGER.debug("Adding {}", user);
         userRepository.save(user);
