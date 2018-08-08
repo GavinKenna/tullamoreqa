@@ -19,6 +19,12 @@
         <module>tullamore-ui</module>
         <module>tullamoreqa-it</module>
     </modules>
+    
+    <scm>
+        <connection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git</connection>
+        <developerConnection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git</developerConnection>
+        <url>https://bitbucket.org/gkenna92/tullamoreqa.git</url>
+    </scm> 
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
