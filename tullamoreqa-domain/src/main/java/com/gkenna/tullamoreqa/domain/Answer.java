@@ -17,22 +17,20 @@ import java.util.Objects;
 @Transactional
 public class Answer extends Entry {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "question_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Cascade(value = org.hibernate.annotations.CascadeType.REFRESH)
     private Question question;
 
     private boolean chosenAnswer;
-    private int upvotes;
-    private int downvotes;
 
     private Answer() {
         super();
     }
 
     public Answer(Question question, User user, String body) {
-        super(user,body);
+        super(user, body);
         this.question = question;
     }
 
@@ -61,33 +59,16 @@ public class Answer extends Entry {
         this.chosenAnswer = chosenAnswer;
     }
 
-    public int getUpvotes() {
-        return upvotes;
-    }
-
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
-    }
-
-    public int getDownvotes() {
-        return downvotes;
-    }
-
-    public void setDownvotes(int downvotes) {
-        this.downvotes = downvotes;
-    }
-
 
     @Override
     public String toString() {
         return "Answer{" +
-                "id=" + this.getId() +
-                ", question=" + question +
+                "question=" + question +
                 ", chosenAnswer=" + chosenAnswer +
-                ", upvotes=" + upvotes +
-                ", downvotes=" + downvotes +
                 ", user=" + user +
                 ", body='" + body + '\'' +
+                ", upvotes=" + upvotes +
+                ", downvotes=" + downvotes +
                 '}';
     }
 
@@ -96,15 +77,18 @@ public class Answer extends Entry {
         if (this == o) return true;
         if (!(o instanceof Answer)) return false;
         Answer answer = (Answer) o;
-        return getId() == answer.getId() &&
-                isChosenAnswer() == answer.isChosenAnswer() &&
-                getUpvotes() == answer.getUpvotes() &&
-                getDownvotes() == answer.getDownvotes() &&
-                Objects.equals(getQuestion(), answer.getQuestion());
+        return isChosenAnswer() == answer.isChosenAnswer() &&
+                Objects.equals(getQuestion(), answer.getQuestion()) &&
+                Objects.equals(getBody(), answer.getBody()) &&
+                Objects.equals(getId(), answer.getId()) &&
+                Objects.equals(getUpvotes(), answer.getUpvotes()) &&
+                Objects.equals(getDownvotes(), answer.getDownvotes()) &&
+                Objects.equals(getUser(), answer.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getQuestion(), isChosenAnswer(), getUpvotes(), getDownvotes());
+        return Objects.hash(getQuestion(), isChosenAnswer(), getBody(), getId(), getUpvotes(), getDownvotes(),
+                getUser());
     }
 }

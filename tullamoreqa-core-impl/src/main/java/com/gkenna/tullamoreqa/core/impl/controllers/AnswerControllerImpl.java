@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.AnswerController;
+import com.gkenna.tullamoreqa.core.api.exceptions.AnswerNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
 import org.apache.logging.log4j.LogManager;
@@ -52,13 +53,16 @@ public class AnswerControllerImpl implements AnswerController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<Answer> getAnswer(@PathVariable("id") Long answerId) {
         LOGGER.debug("Attempting to get Answer {}", answerId);
-        Answer output = answerService.getAnswer(answerId);
-        if (output == null) {
+        Answer output;
+
+        try {
+            output = answerService.getAnswer(answerId);
+        } catch (AnswerNotFoundException e) {
             LOGGER.error("Answer with id {} not found.", answerId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id " + answerId
-                    + " not found"), HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity(e, HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<Answer>(output, HttpStatus.OK);
     }
 
@@ -70,7 +74,7 @@ public class AnswerControllerImpl implements AnswerController {
         Answer output;
         try {
             output = answerService.updateAnswer(answerId, input);
-        } catch (Exception e) {
+        } catch (AnswerNotFoundException e) {
             LOGGER.error("Answer with id {} not found.", answerId);
             // TODO Replace this exception with custom exception
             return new ResponseEntity(new Exception("Answer with id " + answerId
@@ -86,7 +90,7 @@ public class AnswerControllerImpl implements AnswerController {
         Answer output;
         try {
             output = answerService.deleteAnswer(answerId);
-        } catch (Exception e) {
+        } catch (AnswerNotFoundException e) {
             LOGGER.error("Answer with id {} not found.", answerId);
             // TODO Replace this exception with custom exception
             return new ResponseEntity(new Exception("Answer with id " + answerId

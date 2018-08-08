@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.it.services;
 
 import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
@@ -23,8 +27,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {AppConfiguration.class})
+//@Transactional
 public class QuestionsIT {
 
     private static final Logger LOGGER = LogManager.getLogger(QuestionsIT.class);
@@ -52,6 +59,10 @@ public class QuestionsIT {
     @Autowired
     TagRepository tagRepository;
 
+    @Test
+    public void doNothing(){
+        assert (true == true);
+    }
     @Test
     public void main() {
 
@@ -157,15 +168,18 @@ public class QuestionsIT {
         assert userService.doesUserExist("Bob") == true;
         assert userService.doesUserExist("Alice") == true;
     }
-
+    //@Transactional
     private void createTags() {
         Tag java = new Tag("Java");
         Tag help = new Tag("Help");
         Tag somethingElse = new Tag("SomethingElse");
 
-        tagService.addTag(java);
-        tagService.addTag(help);
-        tagService.addTag(somethingElse);
+        tagRepository.save(java);
+        tagRepository.save(help);
+        tagRepository.save(somethingElse);
+
+        LOGGER.info("Java Tag exists {}", tagService.doesTagExist("Java"));
+        LOGGER.info("All tags {}", tagService.getAllTags());
 
         assert tagService.doesTagExist("Java") == true;
         assert tagService.doesTagExist("Help") == true;

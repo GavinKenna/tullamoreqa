@@ -22,5 +22,8 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.user u WHERE u.username = ?1")
     Page<Answer> findAnswersByUserUsername(String userUsername, Pageable pageable);
 
+    @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.user u WHERE u.username = ?1")
+    Answer[] findAnswersByUserUsername(String userUsername);
+
     Answer findAnswerByBody(String body);
 }
