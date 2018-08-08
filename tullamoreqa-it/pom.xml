@@ -37,31 +37,31 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
-            <version>LATEST</version>
+            <version>2.0.4.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>LATEST</version>
+            <version>5.0.8.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test-autoconfigure</artifactId>
-            <version>LATEST</version>
+            <version>2.0.4.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>LATEST</version>
+            <version>5.0.8.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>LATEST</version>
+            <version>2.0.4.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>LATEST</version>
+            <version>2.0.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
@@ -186,8 +186,8 @@
                                 <id>remove-it-database</id>
                                 <phase>post-integration-test</phase>
                                 <goals>
-                                    <!--<goal>stop</goal>
-                                    <goal>remove</goal>-->
+                                    <goal>stop</goal>
+                                    <goal>remove</goal>
                                 </goals>
                             </execution>
                         </executions>
