@@ -3,7 +3,8 @@
   ~ Copyright (c) 2018. Gavin Kenna
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tullamoreqa</artifactId>
         <groupId>com.gkenna.tullamoreqa</groupId>
@@ -13,82 +14,74 @@
 
     <artifactId>tullamoreqa-core-impl</artifactId>
     <version>0.0.7-SNAPSHOT</version>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>${maven-compiler-plugin.source}</source>
+                    <target>${maven-compiler-plugin.target}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.0.0.M7</version>
+                <version>${spring-boot-maven-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
             <artifactId>tullamoreqa-domain</artifactId>
             <version>0.0.7-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.2.3.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.2.3.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.0.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.0.3.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.4.jre7</version>
         </dependency>
         <dependency>
             <groupId>com.gkenna.tullamoreqa</groupId>
             <artifactId>tullamoreqa-core-api</artifactId>
             <version>0.0.7-SNAPSHOT</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.0.8.RELEASE</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.0.4.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>2.0.4.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -99,22 +92,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>2.0.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.0.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
+    <properties>
+        <spring-boot-maven-plugin.version>2.0.0.M7</spring-boot-maven-plugin.version>
+    </properties>
 
 
 </project>

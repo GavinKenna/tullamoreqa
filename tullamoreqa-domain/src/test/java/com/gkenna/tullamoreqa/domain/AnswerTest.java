@@ -52,13 +52,10 @@ public class AnswerTest {
     public void setQuestion() {
         validAnswer.setQuestion(mockedQuestionTwo);
         assert validAnswer.getQuestion().equals(mockedQuestionTwo);
-        assert validAnswer.getQuestion().equals(mockedQuestion) == false;
+        assert !validAnswer.getQuestion().equals(mockedQuestion);
         validAnswer.setQuestion(mockedQuestion);
         assert validAnswer.getQuestion().equals(mockedQuestion);
-        assert validAnswer.getQuestion().equals(mockedQuestionTwo) == false;
-        /*when(mockCustomObject.testMethod()).thenReturn(...);
-        mainClass.makeCall();
-        verify(mockCustomObject).testMethod();*/
+        assert !validAnswer.getQuestion().equals(mockedQuestionTwo);
     }
 
     @Test
@@ -70,20 +67,20 @@ public class AnswerTest {
     public void setBody() {
         validAnswer.setBody(validBodyTwo);
         assert validAnswer.getBody().equals(this.validBodyTwo);
-        assert validAnswer.getBody().equals(this.validBody) == false;
+        assert !validAnswer.getBody().equals(this.validBody);
         validAnswer.setBody(validBody);
     }
 
     @Test
     public void isChosenAnswer() {
-        assert validAnswer.isChosenAnswer() == false;
-        assert fullyFormedAnswer.isChosenAnswer() == true;
+        assert !validAnswer.isChosenAnswer();
+        assert fullyFormedAnswer.isChosenAnswer();
     }
 
     @Test
     public void setChosenAnswer() {
         validAnswer.setChosenAnswer(true);
-        assert validAnswer.isChosenAnswer() == true;
+        assert validAnswer.isChosenAnswer();
         validAnswer.setChosenAnswer(false);
     }
 
@@ -134,6 +131,7 @@ public class AnswerTest {
         assert validAnswer != fullyFormedAnswer;
         assert validAnswer != invalidAnswer;
         assert fullyFormedAnswer != invalidAnswer;
+
         assert validAnswer == validAnswer;
         assert fullyFormedAnswer == fullyFormedAnswer;
         assert invalidAnswer == invalidAnswer;

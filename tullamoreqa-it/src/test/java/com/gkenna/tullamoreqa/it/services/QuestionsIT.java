@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {AppConfiguration.class})
-//@Transactional
 public class QuestionsIT {
 
     private static final Logger LOGGER = LogManager.getLogger(QuestionsIT.class);

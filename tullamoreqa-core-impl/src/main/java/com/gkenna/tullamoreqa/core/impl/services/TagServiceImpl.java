@@ -15,22 +15,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("tagService")
-//@EnableTransactionManagement
 public class TagServiceImpl implements TagService {
 
     private static final Logger LOGGER = LogManager.getLogger(TagServiceImpl.class);
 
+    private final TagRepository tagRepository;
 
     @Autowired
-    private TagRepository tagRepository;
-
+    public TagServiceImpl(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     @Override
-    //@Transactional
     public void addTag(Tag tag) {
-        LOGGER.debug("Adding {}", tag);
+        LOGGER.debug("Adding New Tag {}", tag);
         tagRepository.save(tag);
-        tagRepository.flush();
+        LOGGER.debug("New Tag {} added successfully.", tag.getName());
     }
 
     @Override
