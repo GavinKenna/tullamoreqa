@@ -8,8 +8,6 @@ import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
-import com.gkenna.tullamoreqa.core.impl.services.AnswerServiceImpl;
-import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
@@ -19,9 +17,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -64,7 +59,7 @@ public class QuestionServiceIT {
     private Question invalidQuestion;
 
     @Before
-    public void setup(){
+    public void setup() {
         tags = new HashSet<>();
         tags.add(new Tag("QuestionServiceIT_Tag"));
         user = new User("QuestionServiceIT_Username");
@@ -80,7 +75,7 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
-    public void addValidQuestion(){
+    public void addValidQuestion() {
         validQuestion = new Question();
         validQuestion.setUpvotes(0);
         validQuestion.setDownvotes(0);
@@ -93,17 +88,45 @@ public class QuestionServiceIT {
         validQuestion.setBody("Question Body");
 
         questionService.addQuestion(validQuestion);
-
-        //Question fromRepo = questionRepository.getOne(validQuestion.getId());
-        Question fromRepo = questionService.getQuestion(validQuestion.getId());
-
-        LOGGER.debug("Question from addValidQuestion is {}", fromRepo);
-
-        LOGGER.debug("Original Question ID is {}",validQuestion.getId());
+        Question fromRepo = questionRepository.getOne(validQuestion.getId());
 
         assert fromRepo != null;
+        assert fromRepo.equals(validQuestion);
+    }
 
-        assert fromRepo.getBody().equals(validQuestion.getBody());
+    @Test
+    @Transactional
+    public void deleteValidQuestion() {
+        //Stub
+        assert true;
+    }
+
+    @Test
+    @Transactional
+    public void deleteInValidQuestion() {
+        //Stub
+        assert true;
+    }
+
+    @Test
+    @Transactional
+    public void editValidQuestion() {
+        //Stub
+        assert true;
+    }
+
+    @Test
+    @Transactional
+    public void editInValidQuestion() {
+        //Stub
+        assert true;
+    }
+
+    @Test
+    @Transactional
+    public void filterQuestions() {
+        //Stub
+        assert true;
     }
 
 }
