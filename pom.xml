@@ -9,7 +9,7 @@
     <groupId>com.gkenna.tullamoreqa</groupId>
     <artifactId>tullamoreqa</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.7</version>
+    <version>0.0.8-SNAPSHOT</version>
     <modules>
         <module>tullamoreqa-domain</module>
         <module>tullamoreqa-core-api</module>
@@ -22,7 +22,7 @@
         <connection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git</connection>
         <developerConnection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git</developerConnection>
         <url>https://bitbucket.org/gkenna92/tullamoreqa.git</url>
-        <tag>tullamoreqa-0.0.7</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
