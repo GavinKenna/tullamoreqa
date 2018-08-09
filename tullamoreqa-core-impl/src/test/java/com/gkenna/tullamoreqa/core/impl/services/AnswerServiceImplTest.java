@@ -45,7 +45,6 @@ public class AnswerServiceImplTest {
     public void addAnswer() {
         answerService.addAnswer(answer);
         verify(mockedAnswerRepo).save(answer);
-        //verify(mockedAnswerRepo).saveAndFlush(answer);
     }
 
     @Test
@@ -56,7 +55,6 @@ public class AnswerServiceImplTest {
 
     @Test
     public void deleteAnswerById() throws AnswerNotFoundException {
-
         when(mockedAnswerRepo.existsById(answerId)).thenReturn(true);
         when(mockedAnswerRepo.getOne(answerId)).thenReturn(answer);
 

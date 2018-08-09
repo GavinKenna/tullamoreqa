@@ -6,8 +6,6 @@ package com.gkenna.tullamoreqa.core.impl.services;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class QuestionServiceImplTest {
 
     @Test

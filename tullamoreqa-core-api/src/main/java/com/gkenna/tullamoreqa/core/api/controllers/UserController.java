@@ -26,6 +26,7 @@ public interface UserController {
 
     /**
      * PUT Method
+     *
      * @param username
      * @param input
      * @return
@@ -35,6 +36,7 @@ public interface UserController {
 
     /**
      * DELETE Method
+     *
      * @param username
      * @return
      */

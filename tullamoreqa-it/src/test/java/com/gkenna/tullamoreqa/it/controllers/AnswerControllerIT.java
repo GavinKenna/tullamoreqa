@@ -8,10 +8,6 @@ import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
-import com.gkenna.tullamoreqa.core.api.services.AnswerService;
-import com.gkenna.tullamoreqa.core.api.services.QuestionService;
-import com.gkenna.tullamoreqa.core.api.services.TagService;
-import com.gkenna.tullamoreqa.core.api.services.UserService;
 import com.gkenna.tullamoreqa.core.impl.Application;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -22,19 +18,19 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import sun.util.calendar.BaseCalendar;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -72,7 +68,7 @@ public class AnswerControllerIT {
     private Set<Tag> tags;
 
     @Before
-    public void setup(){
+    public void setup() {
         Tag tag = new Tag("TAG");
         tags = new HashSet<>();
         tags.add(tag);
@@ -92,7 +88,6 @@ public class AnswerControllerIT {
         questionRepository.save(mockedQuestion);
 
         qr.findAll();
-
     }
 
     @Test
@@ -109,7 +104,7 @@ public class AnswerControllerIT {
     }
 
     @Test
-    public void doNothing(){
+    public void doNothing() {
         assert (true == true);
     }
 
@@ -125,7 +120,7 @@ public class AnswerControllerIT {
 
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/answer/"+id, Map.class);
+                "http://localhost:" + this.port + "/answer/" + id, Map.class);
 
         LOGGER.info("Answer Entity {}", entity.toString());
 

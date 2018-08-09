@@ -6,14 +6,12 @@ package com.gkenna.tullamoreqa.it;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.*;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan({"com.gkenna.tullamoreqa.*"})
 @EnableTransactionManagement
 @EnableJpaRepositories("com.gkenna.tullamoreqa.core.api.repositories")
-//@DataJpaTest
 public class AppConfiguration {
 }
