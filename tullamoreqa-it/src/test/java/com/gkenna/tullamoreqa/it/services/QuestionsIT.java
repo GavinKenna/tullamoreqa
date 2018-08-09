@@ -59,10 +59,6 @@ public class QuestionsIT {
     TagRepository tagRepository;
 
     @Test
-    public void doNothing(){
-        assert (true == true);
-    }
-    @Test
     public void main() {
 
         createTags();

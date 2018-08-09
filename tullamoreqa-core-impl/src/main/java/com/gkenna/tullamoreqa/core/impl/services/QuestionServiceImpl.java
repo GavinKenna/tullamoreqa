@@ -32,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void addQuestion(Question question) {
         LOGGER.debug("Adding new Question {}", question);
-        questionRepository.save(question);
+        questionRepository.saveAndFlush(question);
         LOGGER.info("New Question with ID {} added successfully.", question.getId());
     }
 
