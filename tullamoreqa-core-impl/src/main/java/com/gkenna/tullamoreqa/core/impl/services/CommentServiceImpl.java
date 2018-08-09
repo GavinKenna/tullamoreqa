@@ -33,12 +33,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(Comment comment) {
-
     }
 
     @Override
     public Comment deleteComment(long id) {
-
         return null;
     }
 

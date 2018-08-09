@@ -26,6 +26,7 @@ public interface QuestionController {
 
     /**
      * PUT Method
+     *
      * @param questionId
      * @param input
      * @return
@@ -35,6 +36,7 @@ public interface QuestionController {
 
     /**
      * DELETE Method
+     *
      * @param questionId
      * @return
      */

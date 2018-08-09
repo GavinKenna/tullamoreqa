@@ -13,8 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -84,7 +82,7 @@ public class AnswerServiceImpl implements AnswerService {
     public void addUpvote(Long answerId) throws AnswerNotFoundException {
         // TODO Will have to add logic to check if a user has already Upvoted this answer.
         // If so then we will have to remove the upvote.
-        
+
         LOGGER.debug("Attempting to Upvote Answer {}", answerId);
         Answer output;
         try {

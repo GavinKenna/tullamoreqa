@@ -26,6 +26,7 @@ public interface CommentController {
 
     /**
      * PUT Method
+     *
      * @param commentId
      * @param input
      * @return
@@ -35,6 +36,7 @@ public interface CommentController {
 
     /**
      * DELETE Method
+     *
      * @param commentId
      * @return
      */

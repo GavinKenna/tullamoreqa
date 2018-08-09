@@ -4,9 +4,15 @@
 
 package com.gkenna.tullamoreqa.domain;
 
-import org.hibernate.annotations.Cascade;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -14,16 +20,15 @@ import javax.validation.constraints.NotBlank;
 public abstract class Entry {
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "user_username")
-    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
     protected User user;
+
     @NotBlank
     protected String body;
+    protected int upvotes;
+    protected int downvotes;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    protected int upvotes;
-    protected int downvotes;
 
     public Entry(User user, @NotBlank String body) {
         this.user = user;

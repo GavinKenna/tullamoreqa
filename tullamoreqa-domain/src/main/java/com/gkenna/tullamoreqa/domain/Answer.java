@@ -9,12 +9,16 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Table(name = "answers")
-@Transactional
 public class Answer extends Entry {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
