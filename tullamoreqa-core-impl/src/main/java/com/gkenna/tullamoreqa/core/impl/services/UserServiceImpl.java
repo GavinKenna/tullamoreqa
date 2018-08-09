@@ -15,20 +15,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("userService")
-//@EnableTransactionManagement
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    //@Transactional
     public void addUser(User user) {
-        LOGGER.debug("Adding {}", user);
+        LOGGER.debug("Adding New User {}", user);
         userRepository.save(user);
+        LOGGER.debug("New User with ID {} added successfully.", user.getUsername());
     }
 
     @Override

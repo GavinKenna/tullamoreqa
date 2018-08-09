@@ -2,13 +2,18 @@
  * Copyright (c) 2018. Gavin Kenna
  */
 
-package com.gkenna.tullamoreqa.it.services;
+package com.gkenna.tullamoreqa.it.endtoend;
+
 
 import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
-import com.gkenna.tullamoreqa.core.api.services.*;
+import com.gkenna.tullamoreqa.core.api.services.AnswerService;
+import com.gkenna.tullamoreqa.core.api.services.CommentService;
+import com.gkenna.tullamoreqa.core.api.services.QuestionService;
+import com.gkenna.tullamoreqa.core.api.services.TagService;
+import com.gkenna.tullamoreqa.core.api.services.UserService;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -27,14 +32,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.transaction.annotation.Transactional;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {AppConfiguration.class})
-//@Transactional
-public class QuestionsIT {
+public class EndToEndIT {
 
-    private static final Logger LOGGER = LogManager.getLogger(QuestionsIT.class);
+    private static final Logger LOGGER = LogManager.getLogger(EndToEndIT.class);
 
     @Autowired
     QuestionService questionService;
@@ -60,12 +62,7 @@ public class QuestionsIT {
     TagRepository tagRepository;
 
     @Test
-    public void doNothing(){
-        assert (true == true);
-    }
-    @Test
     public void main() {
-
         createTags();
         createUsers();
         createQuestions();
@@ -168,6 +165,7 @@ public class QuestionsIT {
         assert userService.doesUserExist("Bob") == true;
         assert userService.doesUserExist("Alice") == true;
     }
+
     //@Transactional
     private void createTags() {
         Tag java = new Tag("Java");

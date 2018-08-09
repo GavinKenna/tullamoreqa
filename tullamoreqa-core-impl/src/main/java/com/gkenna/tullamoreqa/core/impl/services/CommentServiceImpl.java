@@ -17,13 +17,18 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService {
     private static final Logger LOGGER = LogManager.getLogger(CommentServiceImpl.class);
 
+    private final CommentRepository commentRepository;
+
     @Autowired
-    private CommentRepository commentRepository;
+    public CommentServiceImpl(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
 
     @Override
     public void addComment(Comment comment) {
-        LOGGER.debug("Adding {}", comment);
+        LOGGER.debug("Adding new Comment {}", comment);
         commentRepository.save(comment);
+        LOGGER.debug("New Comment with ID {} added successfully.", comment.getId());
     }
 
     @Override

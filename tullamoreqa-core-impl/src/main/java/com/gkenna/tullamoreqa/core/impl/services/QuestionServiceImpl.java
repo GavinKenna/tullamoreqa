@@ -22,14 +22,18 @@ public class QuestionServiceImpl implements QuestionService {
 
     private static final Logger LOGGER = LogManager.getLogger(QuestionServiceImpl.class);
 
+    private final QuestionRepository questionRepository;
+
     @Autowired
-    private QuestionRepository questionRepository;
+    public QuestionServiceImpl(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 
     @Override
     public void addQuestion(Question question) {
-        LOGGER.debug("Adding {}", question);
-        questionRepository.save(question);
-        LOGGER.info("ADDED {}", question);
+        LOGGER.debug("Adding new Question {}", question);
+        questionRepository.saveAndFlush(question);
+        LOGGER.info("New Question with ID {} added successfully.", question.getId());
     }
 
     @Override

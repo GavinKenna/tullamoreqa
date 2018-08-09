@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @ComponentScan({"com.gkenna.tullamoreqa.*"})
-//@EnableTransactionManagement
-//@EnableJpaRepositories("com.gkenna.tullamoreqa.core.api.repositories")
+@EnableTransactionManagement
+@EnableJpaRepositories("com.gkenna.tullamoreqa.core.api.repositories")
 //@DataJpaTest
 public class AppConfiguration {
 }
