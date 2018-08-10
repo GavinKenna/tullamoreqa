@@ -3,3 +3,5 @@ sudo: required
 services:
   - docker
 script: mvn clean install -Ptest
+
+after_success: coveralls
