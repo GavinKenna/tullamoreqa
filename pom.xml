@@ -3,7 +3,9 @@
   ~ Copyright (c) 2018. Gavin Kenna
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.gkenna.tullamoreqa</groupId>
@@ -19,8 +21,11 @@
     </modules>
 
     <scm>
-        <connection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git</connection>
-        <developerConnection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git</developerConnection>
+        <connection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git
+        </developerConnection>
         <url>https://bitbucket.org/gkenna92/tullamoreqa.git</url>
         <tag>HEAD</tag>
     </scm>
@@ -35,7 +40,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.reporting.outputEncoding>UTF-8
+        </project.reporting.outputEncoding>
         <hibernate.version>5.2.3.Final</hibernate.version>
         <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
         <postgresql.version>42.2.4.jre7</postgresql.version>
@@ -48,6 +54,31 @@
         <maven-compiler-plugin.source>8</maven-compiler-plugin.source>
         <maven-compiler-plugin.target>8</maven-compiler-plugin.target>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>sun_checks.xml</configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencyManagement>
         <dependencies>
