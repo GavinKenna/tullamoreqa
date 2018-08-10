@@ -2,4 +2,4 @@ language: java
 sudo: required
 services:
   - docker
-script: mvn clean install -Ptest verify
+script: mvn clean install -Ptest
