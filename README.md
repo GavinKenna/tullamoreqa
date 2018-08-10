@@ -1,5 +1,7 @@
 # TullamoreQA
 
+[![Build Status](https://travis-ci.org/GavinKenna/tullamoreqa.svg?branch=master)](https://travis-ci.org/GavinKenna/tullamoreqa)
+
 An open-source Q&A System (In the works). Currently on a pre-release version that doesn't do a whole lot yet.
 
 **Components of TQA**
