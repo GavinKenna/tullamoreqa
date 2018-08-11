@@ -90,6 +90,7 @@ public class Question extends Entry {
         }
         Question question = (Question) o;
         return getId() == question.getId()
+                && getBody().equals(question.getBody())
                 && getUpvotes() == question.getUpvotes()
                 && getDownvotes() == question.getDownvotes()
                 && getScore() == question.getScore()
@@ -206,10 +207,10 @@ public class Question extends Entry {
         sb.append(", createdAt=").append(createdAt);
         sb.append(", lastUpdatedAt=").append(lastUpdatedAt);
         sb.append(", title='").append(title).append('\'');
-        sb.append(", user=").append(user);
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", upvotes=").append(upvotes);
-        sb.append(", downvotes=").append(downvotes);
+        sb.append(", user=").append(getUser());
+        sb.append(", body='").append(getBody()).append('\'');
+        sb.append(", upvotes=").append(getUpvotes());
+        sb.append(", downvotes=").append(getDownvotes());
         sb.append('}');
         return sb.toString();
     }

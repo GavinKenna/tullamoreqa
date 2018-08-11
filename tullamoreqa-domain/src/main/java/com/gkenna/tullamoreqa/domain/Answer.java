@@ -82,24 +82,6 @@ public class Answer extends Entry {
     }
 
     /**
-     * The body of the Answer, which contains the whole of the Answer.
-     *
-     * @return Entire Answer body.
-     */
-    public final String getBody() {
-        return body;
-    }
-
-    /**
-     * Set the body of the Answer.
-     *
-     * @param body Body of the Answer.
-     */
-    public final void setBody(final String body) {
-        this.body = body;
-    }
-
-    /**
      * Is the Answer the Chosen Answer of the Question?
      *
      * @return True if chosen answer.
@@ -147,10 +129,10 @@ public class Answer extends Entry {
         final StringBuilder sb = new StringBuilder("Answer{");
         sb.append("question=").append(question);
         sb.append(", chosenAnswer=").append(chosenAnswer);
-        sb.append(", user=").append(user);
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", upvotes=").append(upvotes);
-        sb.append(", downvotes=").append(downvotes);
+        sb.append(", user=").append(getUser());
+        sb.append(", body='").append(getBody()).append('\'');
+        sb.append(", upvotes=").append(getUpvotes());
+        sb.append(", downvotes=").append(getDownvotes());
         sb.append('}');
         return sb.toString();
     }
