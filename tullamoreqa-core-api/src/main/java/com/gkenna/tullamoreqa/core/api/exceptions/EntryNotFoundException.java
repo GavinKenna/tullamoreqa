@@ -4,7 +4,18 @@
 
 package com.gkenna.tullamoreqa.core.api.exceptions;
 
-public class EntryNotFoundException extends Throwable {
-    public EntryNotFoundException(String message) {
+/**
+ * Thrown when a generic Entry cannot be found.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
+public abstract class EntryNotFoundException extends Throwable {
+    /**
+     * Constructs a <tt>AnswerNotFoundException</tt> with the specified cause.
+     *
+     * @param message Additional exception information.
+     */
+    public EntryNotFoundException(final String message) {
     }
 }
