@@ -15,77 +15,163 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * An Abstract class that allows for Users to create
+ * text based objects, i.e. Answers, Questions and Comments.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entry {
+
+    /**
+     * The User who created the Entry.
+     */
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "user_username")
-    protected User user;
+    private User user;
 
+    /**
+     * The Body of the Entry. Contains the bulk of the textual
+     * information.
+     * If this was a Question it would contain the Question.
+     */
     @NotBlank
-    protected String body;
-    protected int upvotes;
-    protected int downvotes;
+    private String body;
+
+    /**
+     * How many Upvotes from other Users does this Entry have.
+     */
+    private int upvotes;
+
+    /**
+     * How many Downvotes from other Users does this Entry have.
+     */
+    private int downvotes;
+
+    /**
+     * The ID of the Entry.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public Entry(User user, @NotBlank String body) {
+    /**
+     * Create a new Entry.
+     *
+     * @param user The User creating this Entry.
+     * @param body The Body the User is populating.
+     */
+    public Entry(final User user, final @NotBlank String body) {
         this.user = user;
         this.body = body;
     }
 
+    /**
+     * Default Constructor. Shouldn't be called.
+     * See Effective Java (2nd+3rd Edition).
+     */
     protected Entry() {
     }
 
-    public Long getId() {
+    /**
+     * Return the ID of the Entry.
+     *
+     * @return ID of the Entry.
+     */
+    public final Long getId() {
         return id;
     }
 
-    public User getUser() {
+    /**
+     * Return the User who created this Entry.
+     *
+     * @return User who created this Entry.
+     */
+    public final User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    /**
+     * Set the User who created this Entry.
+     *
+     * @param user User who created this Entry.
+     */
+    public final void setUser(final User user) {
         this.user = user;
     }
 
-    public String getBody() {
+    /**
+     * Return the Body of the Entry.
+     *
+     * @return Body of the Entry.
+     */
+    public final String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    /**
+     * Set the Body of this Entry.
+     *
+     * @param body Body of this Entry.
+     */
+    public final void setBody(final String body) {
         this.body = body;
     }
 
-    public int getUpvotes() {
+    /**
+     * Return the Upvotes of the Entry.
+     *
+     * @return Upvotes of the Entry.
+     */
+    public final int getUpvotes() {
         return upvotes;
     }
 
-    public void setUpvotes(int upvotes) {
+    /**
+     * Set the Upvotes of this Entry.
+     *
+     * @param upvotes Upvotes of this Entry.
+     */
+    public final void setUpvotes(final int upvotes) {
         this.upvotes = upvotes;
     }
 
-    public int getDownvotes() {
+    /**
+     * Return the Downvotes of the Entry.
+     *
+     * @return Downvotes of the Entry.
+     */
+    public final int getDownvotes() {
         return downvotes;
     }
 
-    public void setDownvotes(int downvotes) {
+    /**
+     * Set the Downvotes of this Entry.
+     *
+     * @param downvotes Downvotes of this Entry.
+     */
+    public final void setDownvotes(final int downvotes) {
         this.downvotes = downvotes;
     }
 
-    public int getScore() {
+    /**
+     * Return the Score of this Entry, which is Upvotes - Downvotes.
+     *
+     * @return Upvotes - Downvotes.
+     */
+    public final int getScore() {
         return this.getUpvotes() - this.getDownvotes();
     }
 
     @Override
-    public String toString() {
-        return "Entry{" +
-                "user=" + user +
-                ", body='" + body + '\'' +
-                ", id=" + id +
-                ", upvotes=" + upvotes +
-                ", downvotes=" + downvotes +
-                '}';
-    }
+    public abstract String toString();
+
+    @Override
+    public abstract boolean equals(final Object o);
+
+    @Override
+    public abstract int hashCode();
 }
