@@ -7,21 +7,29 @@ package com.gkenna.tullamoreqa.core.api.services;
 import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.stereotype.Service;
 
+/**
+ * API for interacting with {@link com.gkenna.tullamoreqa.domain.Tag}.
+ * This API communicates directly with the
+ * {@link com.gkenna.tullamoreqa.core.api.repositories.TagRepository}.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @Service
 public interface TagService {
-    void addTag(Tag tag);
+    void addTag(final Tag tag);
 
-    void deleteTag(Tag tag);
+    void deleteTag(final Tag tag);
 
-    Tag deleteTag(String id);
+    Tag deleteTag(final String id);
 
-    Tag updateTag(String tagId, Tag input);
+    Tag updateTag(final String tagId, final Tag input);
 
-    boolean doesTagExist(Tag tag);
+    boolean doesTagExist(final Tag tag);
 
-    boolean doesTagExist(String id);
+    boolean doesTagExist(final String id);
 
-    Tag getTag(String id);
+    Tag getTag(final String id);
 
     Tag[] getAllTags();
 

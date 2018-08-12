@@ -7,21 +7,29 @@ package com.gkenna.tullamoreqa.core.api.services;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
+/**
+ * API for interacting with {@link com.gkenna.tullamoreqa.domain.User}.
+ * This API communicates directly with the
+ * {@link com.gkenna.tullamoreqa.core.api.repositories.UserRepository}.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @Service
 public interface UserService {
-    void addUser(User user);
+    void addUser(final User user);
 
-    void deleteUser(User user);
+    void deleteUser(final User user);
 
-    User deleteUser(String id);
+    User deleteUser(final String id);
 
-    User updateUser(String username, User input);
+    User updateUser(final String username, final User input);
 
-    boolean doesUserExist(User user);
+    boolean doesUserExist(final User user);
 
-    boolean doesUserExist(String username);
+    boolean doesUserExist(final String username);
 
-    User getUser(String id);
+    User getUser(final String id);
 
     User[] getAllUsers();
 

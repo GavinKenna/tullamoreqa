@@ -8,23 +8,31 @@ import com.gkenna.tullamoreqa.domain.Comment;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
+/**
+ * API for interacting with {@link com.gkenna.tullamoreqa.domain.Comment}.
+ * This API communicates directly with the
+ * {@link com.gkenna.tullamoreqa.core.api.repositories.CommentRepository}.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @Service
 public interface CommentService {
-    void addComment(Comment comment);
+    void addComment(final Comment comment);
 
-    void deleteComment(Comment comment);
+    void deleteComment(final Comment comment);
 
-    Comment deleteComment(long id);
+    Comment deleteComment(final Long id);
 
-    boolean doesCommentExist(Comment comment);
+    boolean doesCommentExist(final Comment comment);
 
-    boolean doesCommentExist(long id);
+    boolean doesCommentExist(final Long id);
 
-    Comment getComment(long id);
+    Comment getComment(final Long id);
 
     Comment[] getAllComments();
 
-    Comment[] findCommentsByUser(User user);
+    Comment[] findCommentsByUser(final User user);
 
-    Comment updateComment(Long commentId, Comment input);
+    Comment updateComment(final Long commentId, final Comment input);
 }
