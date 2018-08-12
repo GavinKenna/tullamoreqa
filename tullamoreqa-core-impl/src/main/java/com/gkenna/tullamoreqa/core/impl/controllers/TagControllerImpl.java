@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.TagController;
+import com.gkenna.tullamoreqa.core.api.exceptions.TagNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.TagService;
 import com.gkenna.tullamoreqa.domain.Tag;
 import org.apache.logging.log4j.LogManager;
@@ -56,7 +57,12 @@ public class TagControllerImpl implements TagController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<Tag> getTag(@PathVariable("id") String tagId) {
         LOGGER.debug("Attempting to get Tag {}", tagId);
-        Tag output = tagService.getTag(tagId);
+        Tag output = null;
+        try {
+            output = tagService.getTag(tagId);
+        } catch (TagNotFoundException e) {
+            e.printStackTrace();
+        }
         if (output == null) {
             LOGGER.error("Tag with id {} not found.", tagId);
             // TODO Replace this exception with custom exception
@@ -70,7 +76,7 @@ public class TagControllerImpl implements TagController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public ResponseEntity<?> updateTag(@PathVariable("id") String tagId, @RequestBody Tag input) {
         LOGGER.debug("Updating Tag {} with the following details {}", tagId, input);
-        Tag output;
+        Tag output = null;
         try {
             output = tagService.updateTag(tagId, input);
         } catch (Exception e) {
@@ -78,6 +84,8 @@ public class TagControllerImpl implements TagController {
             // TODO Replace this exception with custom exception
             return new ResponseEntity(new Exception("Answer with id " + tagId
                     + " not found"), HttpStatus.NOT_FOUND);
+        } catch (TagNotFoundException e) {
+            e.printStackTrace();
         }
         return new ResponseEntity<Tag>(output, HttpStatus.OK);
     }
@@ -86,7 +94,7 @@ public class TagControllerImpl implements TagController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public ResponseEntity<?> deleteTag(@PathVariable("id") String tagId) {
         LOGGER.debug("Deleting Tag {}", tagId);
-        Tag output;
+        Tag output = null;
         try {
             output = tagService.deleteTag(tagId);
         } catch (Exception e) {
@@ -94,6 +102,8 @@ public class TagControllerImpl implements TagController {
             // TODO Replace this exception with custom exception
             return new ResponseEntity(new Exception("Tag with id " + tagId
                     + " not found"), HttpStatus.NO_CONTENT);
+        } catch (TagNotFoundException e) {
+            e.printStackTrace();
         }
         return new ResponseEntity<Tag>(output, HttpStatus.OK);
     }

@@ -12,56 +12,78 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link UserService}.
+ *
+ * @author Gavin Kenna
+ * @see UserService
+ * @since 0.0.0
+ */
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+    /**
+     * User Service Logger.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(UserServiceImpl.class);
 
+    /**
+     * User Repository, that will be AutoWired by Spring in the Constructor.
+     * This object is used to interact with the DB.
+     * We will use this object to Add/Delete/Update/Get {@link User}.
+     */
     private final UserRepository userRepository;
 
+    /**
+     * Constructor that Auto wires the User Repository.
+     *
+     * @param userRepository UserRepo object.
+     */
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public void addUser(User user) {
+    public final void addUser(final User user) {
         LOGGER.debug("Adding New User {}", user);
         userRepository.save(user);
-        LOGGER.debug("New User with ID {} added successfully.", user.getUsername());
+        LOGGER.debug("New User with ID {} added successfully.",
+                user.getUsername());
     }
 
     @Override
-    public void deleteUser(User user) {
+    public final void deleteUser(final User user) {
     }
 
     @Override
-    public User deleteUser(String id) {
+    public final User deleteUser(final String id) {
         return null;
     }
 
     @Override
-    public User updateUser(String username, User input) {
+    public final User updateUser(final String username, final User input) {
         return null;
     }
 
     @Override
-    public boolean doesUserExist(User user) {
+    public final boolean doesUserExist(final User user) {
         return false;
     }
 
     @Override
-    public boolean doesUserExist(String username) {
+    public final boolean doesUserExist(final String username) {
         return this.userRepository.findByUsername(username) != null;
     }
 
     @Override
-    public User getUser(String id) {
+    public final User getUser(final String id) {
         return null;
     }
 
     @Override
-    public User[] getAllUsers() {
+    public final User[] getAllUsers() {
         return new User[0];
     }
 }

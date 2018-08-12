@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -14,77 +15,100 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// TODO Remove automatic ID generation - should do it in service impl.
+/**
+ * Implementation of {@link QuestionService}.
+ *
+ * @author Gavin Kenna
+ * @see QuestionService
+ * @since 0.0.0
+ */
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
 
-    private static final Logger LOGGER = LogManager.getLogger(QuestionServiceImpl.class);
+    /**
+     * Question Service Logger.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(QuestionServiceImpl.class);
 
+    /**
+     * QuestionRepository, that will be AutoWired by Spring in the Constructor.
+     * This object is used to interact with the DB.
+     * We will use this object to Add/Delete/Update/Get {@link Question}.
+     */
     private final QuestionRepository questionRepository;
 
+    /**
+     * Constructor that Auto wires the Question Repository.
+     *
+     * @param questionRepository QuestionRepo object.
+     */
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository) {
+    public QuestionServiceImpl(final QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
     @Override
-    public void addQuestion(Question question) {
+    public final void addQuestion(final Question question) {
         LOGGER.debug("Adding new Question {}", question);
         questionRepository.saveAndFlush(question);
-        LOGGER.info("New Question with ID {} added successfully.", question.getId());
+        LOGGER.info("New Question with ID {} added successfully.",
+                question.getId());
     }
 
     @Override
-    public void deleteQuestion(Question question) {
+    public final void deleteQuestion(final Question question) {
     }
 
     @Override
-    public Question deleteQuestion(long id) {
+    public final Question deleteQuestion(final Long questionId)
+            throws QuestionNotFoundException {
         return null;
     }
 
     @Override
-    public Question updateQuestion(Long questionId, Question input) {
+    public final Question updateQuestion(final Long questionId,
+                                         final Question input) {
         return null;
     }
 
     @Override
-    public boolean doesQuestionExist(Question question) {
+    public final boolean doesQuestionExist(final Question question) {
         return false;
     }
 
     @Override
-    public boolean doesQuestionExist(long id) {
+    public final boolean doesQuestionExist(final Long questionId) {
         return false;
     }
 
     @Override
-    public Question getQuestion(long id) {
-        return questionRepository.getOne(id);
+    public final Question getQuestion(final Long questionId) {
+        return questionRepository.getOne(questionId);
     }
 
     @Override
-    public Iterable<Question> getAllQuestions() {
+    public final Iterable<Question> getAllQuestions() {
         return questionRepository.findAll();
     }
 
     @Override
-    public Question[] findQuestionsByTitle(String title) {
+    public final Question[] findQuestionsByTitle(final String title) {
         return new Question[0];
     }
 
     @Override
-    public Question[] findQuestionsAskedByUser(User user) {
+    public final Question[] findQuestionsAskedByUser(final User user) {
         return new Question[0];
     }
 
     @Override
-    public Question[] findQuestionsAnsweredByUser(User user) {
+    public final Question[] findQuestionsAnsweredByUser(final User user) {
         return new Question[0];
     }
 
     @Override
-    public Question[] findQuestionsByTag(Tag tag) {
+    public final Question[] findQuestionsByTag(final Tag tag) {
         return new Question[0];
     }
 }
