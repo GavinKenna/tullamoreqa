@@ -25,7 +25,8 @@ import java.util.Optional;
  * @since 0.0.0
  */
 @Service("answerService")
-public class AnswerServiceImpl implements AnswerService {
+public class AnswerServiceImpl extends EntryServiceImpl
+        implements AnswerService {
 
     /**
      * Answer Service Logger.

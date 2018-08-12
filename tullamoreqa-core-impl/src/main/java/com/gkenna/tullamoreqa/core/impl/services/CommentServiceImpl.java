@@ -22,7 +22,8 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service("commentService")
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends EntryServiceImpl
+        implements CommentService {
 
     /**
      * Comment Service Logger.

@@ -23,7 +23,8 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service("questionService")
-public class QuestionServiceImpl implements QuestionService {
+public class QuestionServiceImpl extends EntryServiceImpl
+        implements QuestionService {
 
     /**
      * Question Service Logger.
