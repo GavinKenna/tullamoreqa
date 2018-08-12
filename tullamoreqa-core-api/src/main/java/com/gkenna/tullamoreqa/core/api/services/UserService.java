@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.api.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.UserNotFoundException;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +18,79 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface UserService {
+    /**
+     * Insert a new {@link User} to the
+     * {@link com.gkenna.tullamoreqa.core.api.repositories.UserRepository}.
+     *
+     * @param user {@link User} to Add.
+     */
     void addUser(final User user);
 
-    void deleteUser(final User user);
+    /**
+     * Delete an {@link User} from the
+     * {@link com.gkenna.tullamoreqa.core.api.repositories.UserRepository}.
+     *
+     * @param user {@link User} to Delete.
+     * @throws UserNotFoundException Thrown if {@link User}
+     *                               cannot be found.
+     */
+    void deleteUser(final User user) throws UserNotFoundException;
 
-    User deleteUser(final String id);
+    /**
+     * Delete a {@link User} from the
+     * {@link com.gkenna.tullamoreqa.core.api.repositories.UserRepository}.
+     *
+     * @param username ID of the {@link User} to delete.
+     * @return Deleted User.
+     */
+    User deleteUser(final String username);
 
-    User updateUser(final String username, final User input);
+    /**
+     * Update a {@link User} on the Database.
+     *
+     * @param username The ID of the {@link User} to update.
+     * @param input    A {@link User} container that holds
+     *                 new values for questionId to update to.
+     * @return The {@link User} that was updated.
+     * @throws UserNotFoundException Thrown when the {@link User} cannot
+     *                               be found.
+     */
+    User updateUser(final String username, final User input)
+            throws UserNotFoundException;
 
+    /**
+     * Return if a {@link User} exists in the DB or not.
+     *
+     * @param user Does this {@link User} exist?
+     * @return True if the {@link User} exists,
+     * false if otherwise.
+     */
     boolean doesUserExist(final User user);
 
+    /**
+     * Return if a {@link User} exists in the DB or not.
+     *
+     * @param username Does the ID for this {@link User} exist?
+     * @return True if the {@link User} exists,
+     * false if otherwise.
+     */
     boolean doesUserExist(final String username);
 
-    User getUser(final String id);
+    /**
+     * Return an {@link User} based on its ID.
+     *
+     * @param username The ID of the {@link User} to return.
+     * @return A {@link User} with the
+     * ID passed.
+     * @throws UserNotFoundException Thrown if the {@link User} cannot be found.
+     */
+    User getUser(final String username) throws UserNotFoundException;
 
+    /**
+     * Return all {@link User}s in the DB.
+     *
+     * @return All {@link User}s in the DB.
+     */
     User[] getAllUsers();
 
 }

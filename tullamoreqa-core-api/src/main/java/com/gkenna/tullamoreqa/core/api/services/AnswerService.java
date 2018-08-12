@@ -20,65 +20,68 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AnswerService extends EntryService {
     /**
-     * Insert a new {@link com.gkenna.tullamoreqa.domain.Answer} to the
+     * Insert a new {@link Answer} to the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository}.
      *
-     * @param answer {@link com.gkenna.tullamoreqa.domain.Answer} to Add.
+     * @param answer {@link Answer} to Add.
      */
     void addAnswer(final Answer answer);
 
     /**
-     * Delete an {@link com.gkenna.tullamoreqa.domain.Answer} from the
+     * Delete an {@link Answer} from the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository}.
      *
-     * @param answer {@link com.gkenna.tullamoreqa.domain.Answer} to Delete.
+     * @param answer {@link Answer} to Delete.
+     * @throws AnswerNotFoundException Thrown if {@link Answer}
+     *                                 cannot be found.
      */
-    void deleteAnswer(final Answer answer);
+    void deleteAnswer(final Answer answer) throws AnswerNotFoundException;
 
     /**
-     * Delete an {@link com.gkenna.tullamoreqa.domain.Answer} from the
+     * Delete an {@link Answer} from the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository}.
      *
-     * @param answerId ID of the
-     *                 {@link com.gkenna.tullamoreqa.domain.Answer} to delete.
+     * @param answerId ID of the {@link Answer} to delete.
+     * @return Answer that was Deleted.
+     * @throws AnswerNotFoundException Thrown if {@link Answer} isn't found.
      */
     Answer deleteAnswer(final Long answerId) throws AnswerNotFoundException;
 
     /**
-     * Return if an {@link com.gkenna.tullamoreqa.domain.Answer} exists in the DB
-     * or not.
+     * Return if an {@link Answer} exists in the DB or not.
      *
-     * @param answer Does this {@link com.gkenna.tullamoreqa.domain.Answer} exist?
-     * @return True if the {@link com.gkenna.tullamoreqa.domain.Answer} exists,
+     * @param answer Does this {@link Answer} exist?
+     * @return True if the {@link Answer} exists,
      * false if otherwise.
      */
     boolean doesAnswerExist(final Answer answer);
 
     /**
-     * Return if an {@link com.gkenna.tullamoreqa.domain.Answer} exists in the DB
-     * or not.
+     * Return if an {@link  Answer} exists in
+     * the DB or not.
      *
      * @param answerId Does the ID for this
-     *                 {@link com.gkenna.tullamoreqa.domain.Answer} exist?
-     * @return True if the {@link com.gkenna.tullamoreqa.domain.Answer} exists,
+     *                 {@link Answer} exist?
+     * @return True if the {@link Answer} exists,
      * false if otherwise.
      */
     boolean doesAnswerExist(final Long answerId);
 
     /**
-     * Return an {@link com.gkenna.tullamoreqa.domain.Answer} based on its ID.
+     * Return an {@link Answer} based on its ID.
      *
-     * @param answerId The ID of the {@link com.gkenna.tullamoreqa.domain.Answer} to
-     *                 return.
-     * @return An {@link com.gkenna.tullamoreqa.domain.Answer} with the ID passed.
-     * @throws AnswerNotFoundException Thrown if the Answer cannot be found.
+     * @param answerId The ID of the {@link Answer} to return.
+     * @return An {@link Answer} with the
+     * ID passed.
+     * @throws AnswerNotFoundException Thrown if the {@link Answer}
+     *                                 cannot be found.
      */
     Answer getAnswer(final Long answerId) throws AnswerNotFoundException;
 
     /**
-     * Return all {@link com.gkenna.tullamoreqa.domain.Answer}s in the DB.
+     * Return all {@link Answer}s in the DB.
      *
-     * @return All {@link com.gkenna.tullamoreqa.domain.Answer}s in the DB.
+     * @return All {@link Answer}s in the DB.
      */
     Iterable<Answer> getAllAnswers();
 
@@ -109,6 +112,8 @@ public interface AnswerService extends EntryService {
      * @param input    An {@link Answer} container that holds
      *                 new values for answerId to update to.
      * @return The {@link Answer} that was updated.
+     * @throws AnswerNotFoundException Thrown when the {@link Answer} cannot
+     *                                 be found.
      */
     Answer updateAnswer(final Long answerId,
                         final Answer input) throws AnswerNotFoundException;
