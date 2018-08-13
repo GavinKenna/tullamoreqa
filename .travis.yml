@@ -2,6 +2,6 @@ language: java
 sudo: required
 services:
   - docker
-script: mvn clean install -Ptest
+script: mvn checkstyle:check clean install -Ptest
 
 after_success: coveralls
