@@ -7,38 +7,57 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Answer;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * API Controller for the {@link Answer} Entity. This API will allow
+ * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Answers.
+ * <p>
+ * The Implementation of this API will in turn call the
+ * {@link com.gkenna.tullamoreqa.core.api.services.AnswerService} API.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 public interface AnswerController {
     /**
-     * POST Method
+     * HTTP POST Method
+     * <p>
+     * Add an {@link Answer} to the Database.
      *
-     * @param input
-     * @return
+     * @param input An {@link Answer} container that should be inserted into
+     *              the Database.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> addAnswer(Answer input);
+    ResponseEntity<?> addAnswer(final Answer input);
 
     /**
-     * GET Method
+     * HTTP GET Method
+     * <p>
+     * Retrieve an {@link Answer} from the Database.
      *
-     * @param answerId
-     * @return
+     * @param answerId The ID of the {@link Answer} to retrieve.
+     * @return The Response of this Request.
      */
-    ResponseEntity<Answer> getAnswer(Long answerId);
+    ResponseEntity<Answer> getAnswer(final Long answerId);
 
     /**
-     * PUT Method
+     * HTTP PUT Method
+     * <p>
+     * Update an {@link Answer} on the Database.
      *
-     * @param answerId
-     * @param input
-     * @return
+     * @param answerId The ID of the {@link Answer} to update.
+     * @param input    An {@link Answer} container that holds
+     *                 new values for answerId to update to.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> updateAnswer(Long answerId, Answer input);
-
+    ResponseEntity<?> updateAnswer(final Long answerId, final Answer input);
 
     /**
-     * DELETE Method
+     * HTTP DELETE Method.
+     * <p>
+     * Delete an {@link Answer} from the Database.
      *
-     * @param answerId
-     * @return
+     * @param answerId The ID of the {@link Answer} to delete.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteAnswer(Long answerId);
+    ResponseEntity<?> deleteAnswer(final Long answerId);
 }

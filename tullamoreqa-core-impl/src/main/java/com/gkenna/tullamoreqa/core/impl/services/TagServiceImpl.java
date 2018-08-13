@@ -12,56 +12,77 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link TagService}.
+ *
+ * @author Gavin Kenna
+ * @see TagService
+ * @since 0.0.0
+ */
 @Service("tagService")
 public class TagServiceImpl implements TagService {
 
-    private static final Logger LOGGER = LogManager.getLogger(TagServiceImpl.class);
+    /**
+     * Tag Service Logger.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(TagServiceImpl.class);
 
+    /**
+     * Tag Repository, that will be AutoWired by Spring in the Constructor.
+     * This object is used to interact with the DB.
+     * We will use this object to Add/Delete/Update/Get {@link Tag}.
+     */
     private final TagRepository tagRepository;
 
+    /**
+     * Constructor that Auto wires the Tag Repository.
+     *
+     * @param tagRepository TagRepo object.
+     */
     @Autowired
-    public TagServiceImpl(TagRepository tagRepository) {
+    public TagServiceImpl(final TagRepository tagRepository) {
         this.tagRepository = tagRepository;
     }
 
     @Override
-    public void addTag(Tag tag) {
+    public final void addTag(final Tag tag) {
         LOGGER.debug("Adding New Tag {}", tag);
         tagRepository.save(tag);
         LOGGER.debug("New Tag {} added successfully.", tag.getName());
     }
 
     @Override
-    public void deleteTag(Tag tag) {
+    public final void deleteTag(final Tag tag) {
     }
 
     @Override
-    public Tag deleteTag(String id) {
+    public final Tag deleteTag(final String id) {
         return null;
     }
 
     @Override
-    public Tag updateTag(String tagId, Tag input) {
+    public final Tag updateTag(final String tagId, final Tag input) {
         return null;
     }
 
     @Override
-    public boolean doesTagExist(Tag tag) {
+    public final boolean doesTagExist(final Tag tag) {
         return false;
     }
 
     @Override
-    public boolean doesTagExist(String id) {
+    public final boolean doesTagExist(final String id) {
         return tagRepository.existsById(id);
     }
 
     @Override
-    public Tag getTag(String id) {
+    public final Tag getTag(final String id) {
         return null;
     }
 
     @Override
-    public Tag[] getAllTags() {
+    public final Tag[] getAllTags() {
         return new Tag[0];
     }
 }

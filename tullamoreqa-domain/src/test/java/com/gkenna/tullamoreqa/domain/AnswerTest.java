@@ -50,6 +50,8 @@ public class AnswerTest {
 
     @Test
     public void setQuestion() {
+        mockedQuestion.setBody("Mock1");
+        mockedQuestionTwo.setBody("Mock2");
         validAnswer.setQuestion(mockedQuestionTwo);
         assert validAnswer.getQuestion().equals(mockedQuestionTwo);
         assert !validAnswer.getQuestion().equals(mockedQuestion);

@@ -7,38 +7,57 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Comment;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * API Controller for the {@link Comment} Entity. This API will allow
+ * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Comments.
+ * <p>
+ * The Implementation of this API will in turn call the
+ * {@link com.gkenna.tullamoreqa.core.api.services.CommentService} API.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 public interface CommentController {
     /**
-     * POST Method
+     * HTTP POST Method
+     * <p>
+     * Add an {@link Comment} to the Database.
      *
-     * @param input
-     * @return
+     * @param input An {@link Comment} container that should be inserted into
+     *              the Database.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> addComment(Comment input);
+    ResponseEntity<?> addComment(final Comment input);
 
     /**
-     * GET Method
+     * HTTP GET Method
+     * <p>
+     * Retrieve an {@link Comment} from the Database.
      *
-     * @param commentId
-     * @return
+     * @param commentId The ID of the {@link Comment} to retrieve.
+     * @return The Response of this Request.
      */
-    ResponseEntity<Comment> getComment(Long commentId);
+    ResponseEntity<Comment> getComment(final Long commentId);
 
     /**
-     * PUT Method
+     * HTTP PUT Method
+     * <p>
+     * Update an {@link Comment} on the Database.
      *
-     * @param commentId
-     * @param input
-     * @return
+     * @param commentId The ID of the {@link Comment} to update.
+     * @param input     An {@link Comment} container that holds
+     *                  new values for commentId to update to.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> updateComment(Long commentId, Comment input);
-
+    ResponseEntity<?> updateComment(final Long commentId, final Comment input);
 
     /**
-     * DELETE Method
+     * HTTP DELETE Method.
+     * <p>
+     * Delete an {@link Comment} from the Database.
      *
-     * @param commentId
-     * @return
+     * @param commentId The ID of the {@link Comment} to delete.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteComment(Long commentId);
+    ResponseEntity<?> deleteComment(final Long commentId);
 }

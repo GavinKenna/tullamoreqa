@@ -23,31 +23,57 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-
+/**
+ * A Question entity, which is written by a User.
+ * Answers can be assigned to it, as well as Comments.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @Entity
 @Table(name = "questions")
 public class Question extends Entry {
 
+    /**
+     * The last User to modify the Question,
+     * be it updating the Body or anything else.
+     */
     @ManyToOne
     @JoinColumn(name = "mod_user_username", nullable = true)
     private User modifiedBy = null;
 
+    /**
+     * List of Tags that help describe the Question, i.e. 'Java' related.
+     */
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Tag> tags;
 
+    /**
+     * The exact Date and Time the Question was created at.
+     */
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
+    /**
+     * The exact Date and Time the Question was last updated
+     * at.
+     */
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date lastUpdatedAt;
 
+    /**
+     * The Title of the Question, i.e. "How do I increment an integer in Java?"
+     */
     @NotBlank
     private String title;
 
+    /**
+     * Question Constructor.
+     */
     public Question() {
         this.tags = new HashSet<Tag>();
         this.createdAt = new Date();
@@ -55,90 +81,137 @@ public class Question extends Entry {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Question)) return false;
+    public final boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Question)) {
+            return false;
+        }
         Question question = (Question) o;
-        return getId() == question.getId() &&
-                getUpvotes() == question.getUpvotes() &&
-                getDownvotes() == question.getDownvotes() &&
-                getScore() == question.getScore() &&
-                Objects.equals(getModifiedBy(), question.getModifiedBy()) &&
-                Objects.equals(getTags(), question.getTags()) &&
-                Objects.equals(getCreatedAt(), question.getCreatedAt()) &&
-                Objects.equals(getLastUpdatedAt(), question.getLastUpdatedAt()) &&
-                Objects.equals(getTitle(), question.getTitle());
+        return getId() == question.getId()
+                && getBody().equals(question.getBody())
+                && getUpvotes() == question.getUpvotes()
+                && getDownvotes() == question.getDownvotes()
+                && getScore() == question.getScore()
+                && Objects.equals(getModifiedBy(), question.getModifiedBy())
+                && Objects.equals(getTags(), question.getTags())
+                && Objects.equals(getCreatedAt(), question.getCreatedAt())
+                && Objects.equals(getLastUpdatedAt(),
+                question.getLastUpdatedAt())
+                && Objects.equals(getTitle(), question.getTitle());
     }
 
     @Override
-    public int hashCode() {
-
-        return Objects.hash(getId(), getModifiedBy(), getTags(), getCreatedAt(), getLastUpdatedAt(), getTitle(),
+    public final int hashCode() {
+        return Objects.hash(getId(), getModifiedBy(), getTags(), getCreatedAt(),
+                getLastUpdatedAt(), getTitle(),
                 getUpvotes(), getDownvotes(), getScore());
     }
 
-    public String getTitle() {
+    /**
+     * Return the Title of this Question.
+     *
+     * @return Title of this Question.
+     */
+    public final String getTitle() {
         return title;
     }
 
-    public void setTitle(String questionTitle) {
+    /**
+     * Set the Title of this Question.
+     *
+     * @param questionTitle Title of this Question.
+     */
+    public final void setTitle(final String questionTitle) {
         this.title = questionTitle;
     }
 
-    public User getModifiedBy() {
+    /**
+     * Return the User who last modified this Question.
+     *
+     * @return User who last modified this Question.
+     */
+    public final User getModifiedBy() {
         return modifiedBy;
     }
 
-    public void setModifiedBy(User modifiedBy) {
+    /**
+     * Set the User who last modified this Question.
+     *
+     * @param modifiedBy User who last modified this Question.
+     */
+    public final void setModifiedBy(final User modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
 
-    public Set<Tag> getTags() {
+    /**
+     * Return the list of Tags that filter this Question.
+     *
+     * @return List of Tags that filter this Question.
+     */
+    public final Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    /**
+     * Set the list of Tags that filter this Question.
+     *
+     * @param tags List of Tags that filter this Question.
+     */
+    public final void setTags(final Set<Tag> tags) {
         this.tags = tags;
     }
 
-    public Date getCreatedAt() {
+    /**
+     * Return the Date and Time that this Question was created.
+     *
+     * @return Date and Time that this Question was created.
+     */
+    public final Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    /**
+     * Set the Date and Time that this Question was created.
+     *
+     * @param createdAt Date and Time that this Question was created.
+     */
+    public final void setCreatedAt(final Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getLastUpdatedAt() {
+    /**
+     * Return the Date and Time that this Question was last modified.
+     *
+     * @return Date and Time that this Question was last modified.
+     */
+    public final Date getLastUpdatedAt() {
         return lastUpdatedAt;
     }
 
-    public void setLastUpdatedAt(Date lastUpdatedAt) {
+    /**
+     * Set the Date and Time that this Question was last modified.
+     *
+     * @param lastUpdatedAt Date and Time that this Question was last modified.
+     */
+    public final void setLastUpdatedAt(final Date lastUpdatedAt) {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String questionBody) {
-        this.body = questionBody;
-    }
-
     @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + this.getId() +
-                ", modifiedBy=" + modifiedBy +
-                ", tags=" + tags +
-                ", createdAt=" + createdAt +
-                ", lastUpdatedAt=" + lastUpdatedAt +
-                ", title='" + title + '\'' +
-                ", upvotes=" + upvotes +
-                ", downvotes=" + downvotes +
-                ", user=" + user +
-                ", body='" + body + '\'' +
-                '}';
+    public final String toString() {
+        final StringBuilder sb = new StringBuilder("Question{");
+        sb.append("modifiedBy=").append(modifiedBy);
+        sb.append(", tags=").append(tags);
+        sb.append(", createdAt=").append(createdAt);
+        sb.append(", lastUpdatedAt=").append(lastUpdatedAt);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", user=").append(getUser());
+        sb.append(", body='").append(getBody()).append('\'');
+        sb.append(", upvotes=").append(getUpvotes());
+        sb.append(", downvotes=").append(getDownvotes());
+        sb.append('}');
+        return sb.toString();
     }
-
 }

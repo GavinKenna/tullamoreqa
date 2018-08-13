@@ -7,38 +7,57 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * API Controller for the {@link Tag} Entity. This API will allow
+ * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Tags.
+ * <p>
+ * The Implementation of this API will in turn call the
+ * {@link com.gkenna.tullamoreqa.core.api.services.TagService} API.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 public interface TagController {
     /**
-     * POST Method
+     * HTTP POST Method
+     * <p>
+     * Add an {@link Tag} to the Database.
      *
-     * @param input
-     * @return
+     * @param input An {@link Tag} container that should be inserted into
+     *              the Database.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> addTag(Tag input);
+    ResponseEntity<?> addTag(final Tag input);
 
     /**
-     * GET Method
+     * HTTP GET Method
+     * <p>
+     * Retrieve an {@link Tag} from the Database.
      *
-     * @param tag
-     * @return
+     * @param tagId The ID of the {@link Tag} to retrieve.
+     * @return The Response of this Request.
      */
-    ResponseEntity<Tag> getTag(String tag);
+    ResponseEntity<Tag> getTag(final String tagId);
 
     /**
-     * PUT Method
+     * HTTP PUT Method
+     * <p>
+     * Update an {@link Tag} on the Database.
      *
-     * @param tag
-     * @param input
-     * @return
+     * @param tagId The ID of the {@link Tag} to update.
+     * @param input An {@link Tag} container that holds
+     *              new values for tagId to update to.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> updateTag(String tag, Tag input);
-
+    ResponseEntity<?> updateTag(final String tagId, final Tag input);
 
     /**
-     * DELETE Method
+     * HTTP DELETE Method.
+     * <p>
+     * Delete an {@link Tag} from the Database.
      *
-     * @param tag
-     * @return
+     * @param tagId The ID of the {@link Tag} to delete.
+     * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteTag(String tag);
+    ResponseEntity<?> deleteTag(final String tagId);
 }

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Gavin Kenna
+ */
+
 package com.gkenna.tullamoreqa.core.impl;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +16,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The Main execution spot for TullamoreQA. This file carries out all
+ * of the auto-wiring.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @SpringBootApplication(scanBasePackages = "com.gkenna.tullamoreqa.*")
 @ComponentScan({"com.gkenna.tullamoreqa.*"})
 @EnableJpaRepositories("com.gkenna.tullamoreqa.core.api.repositories")
@@ -19,20 +30,33 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableTransactionManagement
 public class Application {
 
-    private static final Logger LOGGER = LogManager.getLogger(Application.class);
+    /**
+     * Logger for Application.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(Application.class);
 
-    public static void main(String[] args) {
-        SpringApplication.run(com.gkenna.tullamoreqa.core.impl.Application.class);
+    /**
+     * Start the Spring Application.
+     *
+     * @param args Any additional arguments to be passed to Spring.
+     */
+    public static final void main(final String[] args) {
+        SpringApplication.run(
+                com.gkenna.tullamoreqa.core.impl.Application.class);
     }
 
-
+    /**
+     * Might be removed.
+     *
+     * @return Nothing.
+     */
     @Bean
     @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
     public CommandLineRunner demo() {
         return (args) -> {
 
         };
     }
-
-
 }
