@@ -9,7 +9,7 @@ It uses 99% of the Sun style guide, with one change:
 
 **Contributing**
 
-Before creating a pull request, simply run the following command to verify your code changes 1) build, 2) conform to the Checkstyle standards and 3) tests (bot unit and integration) run successfully:
+Before creating a pull request, simply run the following command to verify your code changes 1) build, 2) conform to the Checkstyle standards and 3) tests (both unit and integration) run successfully:
 
 ```
 $ mvn checkstyle:check clean install javadoc:javadoc -Ptest
