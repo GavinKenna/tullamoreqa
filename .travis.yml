@@ -2,6 +2,6 @@ language: java
 sudo: required
 services:
   - docker
-script: mvn checkstyle:check clean install -Ptest
+script: mvn checkstyle:check clean install javadoc:javadoc -Ptest
 
 after_success: coveralls

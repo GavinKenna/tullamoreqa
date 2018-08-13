@@ -71,7 +71,15 @@ public class QuestionControllerImpl implements QuestionController {
             @PathVariable("id") final Long questionId) {
 
         LOGGER.debug("Attempting to get Question {}", questionId);
-        Question output = questionService.getQuestion(questionId);
+        Question output = null;
+        try {
+            output = questionService.getQuestion(questionId);
+        } catch (QuestionNotFoundException e) {
+            /*
+            TODO Implement correct error handling.
+             */
+            e.printStackTrace();
+        }
         if (output == null) {
             LOGGER.error("Question with id {} not found.", questionId);
             // TODO Replace this exception with custom exception

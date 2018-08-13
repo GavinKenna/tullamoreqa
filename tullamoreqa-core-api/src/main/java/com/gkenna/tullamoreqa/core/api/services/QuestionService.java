@@ -93,7 +93,8 @@ public interface QuestionService {
      * @throws QuestionNotFoundException Thrown if the
      *                                   {@link Question} cannot be found.
      */
-    Question getQuestion(final Long questionId);
+    Question getQuestion(final Long questionId)
+            throws QuestionNotFoundException;
 
     /**
      * Return all {@link Question}s in the DB.
