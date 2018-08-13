@@ -53,7 +53,8 @@ public class Application {
      */
     @Bean
     @Transactional
-    public final CommandLineRunner demo() {
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public CommandLineRunner demo() {
         return (args) -> {
 
         };
