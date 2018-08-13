@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.TagController;
+import com.gkenna.tullamoreqa.core.api.exceptions.TagAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.TagNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.TagService;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -51,9 +52,15 @@ public class TagControllerImpl implements TagController {
     @RequestMapping(method = RequestMethod.POST)
     public final ResponseEntity<?> addTag(@RequestBody final Tag input) {
         LOGGER.debug("Adding Tag {}", input);
-
-        //TODO Add exception handling
-        tagService.addTag(input);
+        try {
+            tagService.addTag(input);
+        } catch (TagAlreadyExistsException e) {
+            LOGGER.error(e.getMessage());
+            /*
+            TODO initialize correct ResponseEntity for errors.
+             */
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        }
         /*
         Retrieving URI of new Tag.
          */

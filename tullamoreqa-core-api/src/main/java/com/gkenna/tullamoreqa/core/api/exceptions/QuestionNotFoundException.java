@@ -5,7 +5,7 @@
 package com.gkenna.tullamoreqa.core.api.exceptions;
 
 /**
- * Thrown when an {@link com.gkenna.tullamoreqa.domain.Question}
+ * Thrown when a {@link com.gkenna.tullamoreqa.domain.Question}
  * cannot be found.
  *
  * @author Gavin Kenna

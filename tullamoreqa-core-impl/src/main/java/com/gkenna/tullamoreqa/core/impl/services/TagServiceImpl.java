@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.TagAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.services.TagService;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -46,8 +47,13 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public final void addTag(final Tag tag) {
+    public final void addTag(final Tag tag) throws TagAlreadyExistsException {
         LOGGER.debug("Adding New Tag {}", tag);
+        if (tagRepository.getOne(tag.getName()) != null) {
+            LOGGER.error("Tag with ID {} already exists!");
+            throw new TagAlreadyExistsException(tag.getId()
+                    + " already exists.");
+        }
         tagRepository.save(tag);
         LOGGER.debug("New Tag {} added successfully.", tag.getName());
     }
