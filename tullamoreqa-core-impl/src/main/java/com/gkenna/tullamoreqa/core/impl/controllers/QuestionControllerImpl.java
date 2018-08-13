@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.QuestionController;
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
 import org.apache.logging.log4j.LogManager;
@@ -22,18 +23,34 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * Implementation of {@link QuestionController}.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @RestController
 @RequestMapping("/question")
 public class QuestionControllerImpl implements QuestionController {
 
-    private static final Logger LOGGER = LogManager.getLogger(QuestionControllerImpl.class);
+    /**
+     * Question Controller Logger.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(QuestionControllerImpl.class);
 
+    /**
+     * Question Service, that will be AutoWired by Spring in the Constructor.
+     * This object is used to interact with the Question Repo
+     * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
+     */
     @Autowired
     private QuestionService questionService;
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addQuestion(@RequestBody Question input) {
+    public final ResponseEntity<?> addQuestion(
+            @RequestBody final Question input) {
 
         LOGGER.info("Add Question : {}", input);
 
@@ -50,46 +67,55 @@ public class QuestionControllerImpl implements QuestionController {
 
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<Question> getQuestion(@PathVariable("id") Long questionId) {
+    public final ResponseEntity<Question> getQuestion(
+            @PathVariable("id") final Long questionId) {
+
         LOGGER.debug("Attempting to get Question {}", questionId);
         Question output = questionService.getQuestion(questionId);
         if (output == null) {
             LOGGER.error("Question with id {} not found.", questionId);
             // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Question with id " + questionId
-                    + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Exception("Question with id "
+                    + questionId + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Question>(output, HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<?> updateQuestion(@PathVariable("id") Long questionId, @RequestBody Question input) {
-        LOGGER.debug("Updating Question {} with the following details {}", questionId, input);
+    public final ResponseEntity<?> updateQuestion(
+            @PathVariable("id") final Long questionId,
+            @RequestBody final Question input) {
+
+        LOGGER.debug("Updating Question {} with the following details {}",
+                questionId, input);
+
         Question output;
         try {
             output = questionService.updateQuestion(questionId, input);
-        } catch (Exception e) {
+        } catch (QuestionNotFoundException e) {
             LOGGER.error("Question with id {} not found.", questionId);
             // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id " + questionId
-                    + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Exception("Answer with id "
+                    + questionId + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Question>(output, HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable("id") Long questionId) {
+    public final ResponseEntity<?> deleteQuestion(
+            @PathVariable("id") final Long questionId) {
+
         LOGGER.debug("Deleting Question {}", questionId);
         Question output;
         try {
             output = questionService.deleteQuestion(questionId);
-        } catch (Exception e) {
+        } catch (QuestionNotFoundException e) {
             LOGGER.error("Question with id {} not found.", questionId);
             // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Question with id " + questionId
-                    + " not found"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity(new Exception("Question with id "
+                    + questionId + " not found"), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Question>(output, HttpStatus.OK);
     }

@@ -42,8 +42,10 @@ public interface UserService {
      *
      * @param username ID of the {@link User} to delete.
      * @return Deleted User.
+     * @throws UserNotFoundException Thrown if {@link User}
+     *                               cannot be found.
      */
-    User deleteUser(final String username);
+    User deleteUser(final String username) throws UserNotFoundException;
 
     /**
      * Update a {@link User} on the Database.

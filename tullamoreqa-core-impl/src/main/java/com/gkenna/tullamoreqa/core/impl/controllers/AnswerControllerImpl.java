@@ -23,18 +23,33 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * Implementation of {@link AnswerController}.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.0
+ */
 @RestController
 @RequestMapping("/answer")
 public class AnswerControllerImpl implements AnswerController {
 
-    private static final Logger LOGGER = LogManager.getLogger(AnswerControllerImpl.class);
+    /**
+     * Answer Controller Logger.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(AnswerControllerImpl.class);
 
+    /**
+     * Answer Service, that will be AutoWired by Spring in the Constructor.
+     * This object is used to interact with the Answer Repo
+     * {@link com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository}.
+     */
     @Autowired
     private AnswerService answerService;
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addAnswer(@RequestBody Answer input) {
+    public final ResponseEntity<?> addAnswer(@RequestBody final Answer input) {
         LOGGER.debug("Adding Answer {}", input);
 
         //TODO Add exception handling
@@ -56,7 +71,9 @@ public class AnswerControllerImpl implements AnswerController {
 
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<Answer> getAnswer(@PathVariable("id") Long answerId) {
+    public final ResponseEntity<Answer> getAnswer(
+            @PathVariable("id") final Long answerId) {
+
         LOGGER.debug("Attempting to get Answer {}", answerId);
         Answer output;
 
@@ -73,24 +90,28 @@ public class AnswerControllerImpl implements AnswerController {
 
     @Override
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<?> updateAnswer(@PathVariable("id") Long answerId, @RequestBody Answer input) {
+    public final ResponseEntity<?> updateAnswer(
+            @PathVariable("id") final Long answerId,
+            @RequestBody final Answer input) {
 
-        LOGGER.debug("Updating Answer {} with the following details {}", answerId, input);
+        LOGGER.debug("Updating Answer {} with the following details {}",
+                answerId, input);
         Answer output;
         try {
             output = answerService.updateAnswer(answerId, input);
         } catch (AnswerNotFoundException e) {
             LOGGER.error("Answer with id {} not found.", answerId);
             // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id " + answerId
-                    + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Exception("Answer with id "
+                    + answerId + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Answer>(output, HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public ResponseEntity<?> deleteAnswer(@PathVariable("id") Long answerId) {
+    public final ResponseEntity<?> deleteAnswer(
+            @PathVariable("id") final Long answerId) {
         LOGGER.debug("Deleting Answer {}", answerId);
         Answer output;
         try {
@@ -98,8 +119,8 @@ public class AnswerControllerImpl implements AnswerController {
         } catch (AnswerNotFoundException e) {
             LOGGER.error("Answer with id {} not found.", answerId);
             // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id " + answerId
-                    + " not found"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity(new Exception("Answer with id "
+                    + answerId + " not found"), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Answer>(output, HttpStatus.OK);
     }
