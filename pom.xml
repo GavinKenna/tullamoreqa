@@ -21,12 +21,12 @@
     </modules>
 
     <scm>
-        <connection>scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git
+        <connection>scm:git:ssh://git@github.com/GavinKenna/tullamoreqa.git
         </connection>
         <developerConnection>
-            scm:git:ssh://git@bitbucket.org/gkenna92/tullamoreqa.git
+            scm:git:ssh://git@github.com/GavinKenna/tullamoreqa.git
         </developerConnection>
-        <url>https://bitbucket.org/gkenna92/tullamoreqa.git</url>
+        <url>https://github.com/GavinKenna/tullamoreqa.git</url>
         <tag>HEAD</tag>
     </scm>
 
