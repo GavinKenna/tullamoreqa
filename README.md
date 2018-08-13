@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/GavinKenna/tullamoreqa.svg?branch=master)](https://travis-ci.org/GavinKenna/tullamoreqa)
 [![Coverage Status](https://coveralls.io/repos/github/GavinKenna/tullamoreqa/badge.svg?branch=master)](https://coveralls.io/github/GavinKenna/tullamoreqa?branch=master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGavinKenna%2Ftullamoreqa.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGavinKenna%2Ftullamoreqa?ref=badge_shield)
 
 An open-source Q&A System (In the works). Currently on a pre-release version that doesn't do a whole lot yet.
 
@@ -52,3 +53,7 @@ To run the full Integration Test suite (and bring up the Postgres Docker Contain
 profile, as follows:
 
 `$ mvn clean install -Ptest`
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGavinKenna%2Ftullamoreqa.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FGavinKenna%2Ftullamoreqa?ref=badge_large)
