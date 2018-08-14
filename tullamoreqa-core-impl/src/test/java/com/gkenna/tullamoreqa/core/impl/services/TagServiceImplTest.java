@@ -15,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -188,5 +191,36 @@ public class TagServiceImplTest {
         when(mockedTagRepository.existsById("GetMe")).thenReturn(false);
 
         tagService.getTag("GetMe");
+    }
+
+    @Test
+    public void shouldGetAllTagsSuccessfully() throws TagNotFoundException {
+        final Tag tag1 = new Tag("GetMe1");
+        final Tag tag2 = new Tag("GetMe2");
+        final Tag tag3 = new Tag("GetMe3");
+
+        final List<Tag> tags = new ArrayList<Tag>();
+        tags.add(tag1);
+        tags.add(tag2);
+        tags.add(tag3);
+
+        when(mockedTagRepository.findAll()).thenReturn(tags);
+
+        final Tag[] allTags = tagService.getAllTags();
+
+        assert allTags[0].equals(tag1);
+        assert allTags[1].equals(tag2);
+        assert allTags[2].equals(tag3);
+    }
+
+    @Test
+    public void shouldGetAllTagsEmptySuccessfully() throws TagNotFoundException {
+        final List<Tag> tags = new ArrayList<Tag>();
+
+        when(mockedTagRepository.findAll()).thenReturn(tags);
+
+        final Tag[] allTags = tagService.getAllTags();
+
+        assert allTags.length == 0;
     }
 }
