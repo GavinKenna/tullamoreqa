@@ -101,26 +101,92 @@ public class TagServiceImplTest {
     }
 
     @Test
-    public void deleteTag1() {
+    public void shouldDeleteTagSuccessfully() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("DeleteMe")).thenReturn(true);
+
+        final Tag tag = new Tag("DeleteMe");
+
+        tagService.deleteTag(tag);
+
+        verify(mockedTagRepository).deleteById("DeleteMe");
+    }
+
+    @Test(expected = TagNotFoundException.class)
+    public void shouldThrowExceptionWhenDeletingTagIdThatDoesNotExist() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("DeleteMe")).thenReturn(false);
+
+        final Tag tag = new Tag("DeleteMe");
+
+        tagService.deleteTag("DeleteMe");
+
+        verify(mockedTagRepository).deleteById("DeleteMe");
+    }
+
+    @Test(expected = TagNotFoundException.class)
+    public void shouldThrowExceptionWhenDeletingTagThatDoesNotExist() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("DeleteMe")).thenReturn(false);
+
+        final Tag tag = new Tag("DeleteMe");
+
+        tagService.deleteTag(tag);
+
+        verify(mockedTagRepository).deleteById("DeleteMe");
     }
 
     @Test
-    public void editTag() {
+    public void shouldUpdateValidTagSuccessfully() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("OriginalTag")).thenReturn(true);
+
+        final Tag originalTag = new Tag("OriginalTag");
+        originalTag.setDescription("Original Description");
+
+        when(mockedTagRepository.getOne("OriginalTag")).thenReturn(originalTag);
+
+        final Tag input = new Tag("OriginalTag");
+        input.setDescription("New Description");
+
+        final Tag updated = tagService.updateTag("OriginalTag", input);
+
+        verify(mockedTagRepository).existsById("OriginalTag");
+        verify(mockedTagRepository).save(originalTag);
+
+        assert (updated.equals(input));
+        assert (updated.getDescription().equals(input.getDescription()));
+    }
+
+    @Test(expected = TagNotFoundException.class)
+    public void shouldThrowExceptionWhenUpdating() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("OriginalTag")).thenReturn(false);
+
+        final Tag originalTag = new Tag("OriginalTag");
+        originalTag.setDescription("Original Description");
+
+        final Tag input = new Tag("OriginalTag");
+        input.setDescription("New Description");
+
+        final Tag updated = tagService.updateTag("OriginalTag", input);
+
+        verify(mockedTagRepository).existsById("OriginalTag");
+        verify(mockedTagRepository).save(originalTag);
     }
 
     @Test
-    public void doesTagExist() {
+    public void shouldGetTagSuccessfully() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("GetMe")).thenReturn(true);
+
+        final Tag tag = new Tag("GetMe");
+
+        when(mockedTagRepository.getOne("GetMe")).thenReturn(tag);
+
+        assert (tagService.getTag("GetMe").equals(tag));
+
+        verify(mockedTagRepository).getOne("GetMe");
     }
 
-    @Test
-    public void doesTagExist1() {
-    }
+    @Test(expected = TagNotFoundException.class)
+    public void shouldThrowExceptionWhenGettingTag() throws TagNotFoundException {
+        when(mockedTagRepository.existsById("GetMe")).thenReturn(false);
 
-    @Test
-    public void getTag() {
-    }
-
-    @Test
-    public void getAllTags() {
+        tagService.getTag("GetMe");
     }
 }
