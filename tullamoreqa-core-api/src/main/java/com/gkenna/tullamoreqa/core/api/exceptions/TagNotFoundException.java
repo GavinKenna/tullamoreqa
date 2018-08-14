@@ -5,7 +5,7 @@
 package com.gkenna.tullamoreqa.core.api.exceptions;
 
 /**
- * Thrown when an {@link com.gkenna.tullamoreqa.domain.Tag} cannot be found.
+ * Thrown when a {@link com.gkenna.tullamoreqa.domain.Tag} cannot be found.
  *
  * @author Gavin Kenna
  * @since 0.0.8

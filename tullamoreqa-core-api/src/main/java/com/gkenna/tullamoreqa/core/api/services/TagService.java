@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.api.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.TagAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.TagNotFoundException;
 import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,10 @@ public interface TagService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.TagRepository}.
      *
      * @param tag {@link Tag} to Add.
+     * @throws TagAlreadyExistsException Thrown when a Tag with the supplied
+     *                                   ID already exists.
      */
-    void addTag(final Tag tag);
+    void addTag(final Tag tag) throws TagAlreadyExistsException;
 
     /**
      * Delete a {@link Tag} from the
@@ -41,10 +44,9 @@ public interface TagService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.TagRepository}.
      *
      * @param tagId ID of the {@link Tag} to delete.
-     * @return Tag that was Deleted.
      * @throws TagNotFoundException Thrown if {@link Tag} cannot be found.
      */
-    Tag deleteTag(final String tagId) throws TagNotFoundException;
+    void deleteTag(final String tagId) throws TagNotFoundException;
 
     /**
      * Update a {@link Tag} on the Database.

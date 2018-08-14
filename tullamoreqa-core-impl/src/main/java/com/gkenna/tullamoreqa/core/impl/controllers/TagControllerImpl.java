@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.TagController;
+import com.gkenna.tullamoreqa.core.api.exceptions.TagAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.TagNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.TagService;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -52,12 +53,28 @@ public class TagControllerImpl implements TagController {
     public final ResponseEntity<?> addTag(@RequestBody final Tag input) {
         LOGGER.debug("Adding Tag {}", input);
 
-        //TODO Add exception handling
-        tagService.addTag(input);
+        HttpHeaders headers = new HttpHeaders();
+
+        /*
+         * Check if a Tag already exists.
+         * If so return a 409 and return original Tag.
+         */
+        try {
+            tagService.addTag(input);
+        } catch (TagAlreadyExistsException e) {
+            LOGGER.error(e);
+
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(input.getName()).toUri();
+            headers.setLocation(location);
+
+            return new ResponseEntity<String>(headers, HttpStatus.CONFLICT);
+        }
+
         /*
         Retrieving URI of new Tag.
          */
-        HttpHeaders headers = new HttpHeaders();
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(input.getName()).toUri();
@@ -74,19 +91,17 @@ public class TagControllerImpl implements TagController {
             @PathVariable("id") final String tagId) {
 
         LOGGER.debug("Attempting to get Tag {}", tagId);
-        Tag output = null;
+
+        Tag output;
+
         try {
             output = tagService.getTag(tagId);
         } catch (TagNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (output == null) {
-            LOGGER.error("Tag with id {} not found.", tagId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Tag with id " + tagId
-                    + " not found"), HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Tag>(output, HttpStatus.OK);
+
+        return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
     @Override
@@ -98,16 +113,15 @@ public class TagControllerImpl implements TagController {
         LOGGER.debug("Updating Tag {} with the following details {}",
                 tagId, input);
 
-        Tag output = null;
+        Tag output;
+
         try {
             output = tagService.updateTag(tagId, input);
         } catch (TagNotFoundException e) {
-            LOGGER.error("Tag with id {} not found.", tagId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id "
-                    + tagId + " not found"), HttpStatus.NOT_FOUND);
+            LOGGER.error(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Tag>(output, HttpStatus.OK);
+        return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
     @Override
@@ -116,15 +130,14 @@ public class TagControllerImpl implements TagController {
             @PathVariable("id") final String tagId) {
 
         LOGGER.debug("Deleting Tag {}", tagId);
-        Tag output = null;
+
         try {
-            output = tagService.deleteTag(tagId);
+            tagService.deleteTag(tagId);
         } catch (TagNotFoundException e) {
-            LOGGER.error("Tag with id {} not found.", tagId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Tag with id " + tagId
-                    + " not found"), HttpStatus.NO_CONTENT);
+            LOGGER.error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Tag>(output, HttpStatus.OK);
+
+        return new ResponseEntity<Tag>(HttpStatus.NO_CONTENT);
     }
 }
