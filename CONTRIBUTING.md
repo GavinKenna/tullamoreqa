@@ -1,5 +1,7 @@
 **Style Guide**
 
+Please see https://github.com/GavinKenna/tullamoreqa/wiki/Code-Style for the official Code Style guide.
+
 This file will be updated as time goes on.
 
 For the time being, the Style Guide of TQA isn't set in stone at the moment, but it is tested against Checkstyle - Sun / Oracle standards.
