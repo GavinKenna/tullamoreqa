@@ -62,7 +62,7 @@ public class TagControllerImpl implements TagController {
         try {
             tagService.addTag(input);
         } catch (TagAlreadyExistsException e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")
@@ -118,12 +118,10 @@ public class TagControllerImpl implements TagController {
         try {
             output = tagService.updateTag(tagId, input);
         } catch (TagNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id "
-                    + tagId + " not found"), HttpStatus.NOT_FOUND);
+            LOGGER.error(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Tag>(output, HttpStatus.OK);
+        return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
     @Override
@@ -132,15 +130,16 @@ public class TagControllerImpl implements TagController {
             @PathVariable("id") final String tagId) {
 
         LOGGER.debug("Deleting Tag {}", tagId);
-        Tag output = null;
+
+        Tag output;
+
         try {
             output = tagService.deleteTag(tagId);
         } catch (TagNotFoundException e) {
-            LOGGER.error("Tag with id {} not found.", tagId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Tag with id " + tagId
-                    + " not found"), HttpStatus.NO_CONTENT);
+            LOGGER.error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Tag>(output, HttpStatus.OK);
+        
+        return new ResponseEntity<Tag>(output, HttpStatus.NO_CONTENT);
     }
 }
