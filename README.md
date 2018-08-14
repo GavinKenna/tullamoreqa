@@ -1,7 +1,7 @@
 # TullamoreQA
 
 [![Build Status](https://travis-ci.org/GavinKenna/tullamoreqa.svg?branch=master)](https://travis-ci.org/GavinKenna/tullamoreqa)
-[![Coverage Status](https://coveralls.io/repos/github/GavinKenna/tullamoreqa/badge.svg?branch=master)](https://coveralls.io/github/GavinKenna/tullamoreqa?branch=master)
+[![codecov](https://codecov.io/gh/GavinKenna/tullamoreqa/branch/master/graph/badge.svg)](https://codecov.io/gh/GavinKenna/tullamoreqa)
 
 An open-source Q&A System (In the works). Currently on a pre-release version that doesn't do a whole lot yet.
 
