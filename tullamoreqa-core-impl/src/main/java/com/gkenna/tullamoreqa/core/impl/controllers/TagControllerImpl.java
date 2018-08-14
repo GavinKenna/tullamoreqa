@@ -131,15 +131,13 @@ public class TagControllerImpl implements TagController {
 
         LOGGER.debug("Deleting Tag {}", tagId);
 
-        Tag output;
-
         try {
-            output = tagService.deleteTag(tagId);
+            tagService.deleteTag(tagId);
         } catch (TagNotFoundException e) {
             LOGGER.error(e);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        
-        return new ResponseEntity<Tag>(output, HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<Tag>(HttpStatus.NO_CONTENT);
     }
 }

@@ -44,10 +44,9 @@ public interface TagService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.TagRepository}.
      *
      * @param tagId ID of the {@link Tag} to delete.
-     * @return Tag that was Deleted.
      * @throws TagNotFoundException Thrown if {@link Tag} cannot be found.
      */
-    Tag deleteTag(final String tagId) throws TagNotFoundException;
+    void deleteTag(final String tagId) throws TagNotFoundException;
 
     /**
      * Update a {@link Tag} on the Database.

@@ -83,7 +83,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
             throws AnswerNotFoundException {
         LOGGER.debug("Updating {} to {}", answerId, input);
         if (answerRepository.existsById(answerId)) {
-            Answer output = answerRepository.getOne(answerId);
+            final Answer output = answerRepository.getOne(answerId);
 
             LOGGER.debug("Answer before update {}", output);
 
@@ -99,7 +99,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
             answerRepository.save(output);
             return output;
         }
-        LOGGER.error("Answer {} does not exist. Cannot delete.", answerId);
+        LOGGER.error("Answer {} does not exist. Cannot update.", answerId);
         throw new AnswerNotFoundException(answerId + " does not exist.");
     }
 

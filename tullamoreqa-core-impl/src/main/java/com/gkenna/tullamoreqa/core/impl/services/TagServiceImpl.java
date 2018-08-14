@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.services;
 
 import com.gkenna.tullamoreqa.core.api.exceptions.TagAlreadyExistsException;
+import com.gkenna.tullamoreqa.core.api.exceptions.TagNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.services.TagService;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -12,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Implementation of {@link TagService}.
@@ -49,7 +52,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public final void addTag(final Tag tag) throws TagAlreadyExistsException {
         LOGGER.debug("Adding New Tag {}", tag);
-        if (tagRepository.getOne(tag.getName()) != null) {
+        if (this.doesTagExist(tag.getId())) {
             LOGGER.error("Tag with ID {} already exists!");
             throw new TagAlreadyExistsException(tag.getId()
                     + " already exists.");
@@ -59,36 +62,71 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public final void deleteTag(final Tag tag) {
+    public final void deleteTag(final Tag tag) throws TagNotFoundException {
+        this.deleteTag(tag.getId());
     }
 
     @Override
-    public final Tag deleteTag(final String id) {
-        return null;
+    public final void deleteTag(final String tagId)
+            throws TagNotFoundException {
+
+        LOGGER.debug("Deleting Tag with ID {}", tagId);
+
+        if (this.doesTagExist(tagId)) {
+            tagRepository.deleteById(tagId);
+            return;
+        }
+
+        throw new TagNotFoundException("Tag " + tagId
+                + " does not exist.");
     }
 
     @Override
-    public final Tag updateTag(final String tagId, final Tag input) {
-        return null;
+    public final Tag updateTag(final String tagId, final Tag input)
+            throws TagNotFoundException {
+
+        LOGGER.debug("Updating {} to {}", tagId, input);
+
+        if (tagRepository.existsById(tagId)) {
+            final Tag output = tagRepository.getOne(tagId);
+
+            LOGGER.debug("Tag before update {}", output);
+
+            output.setDescription(input.getDescription());
+
+            LOGGER.debug("Tag after update {}", output);
+
+            tagRepository.save(output);
+            return output;
+        }
+
+        LOGGER.error("Tag {} does not exist. Cannot update.", tagId);
+        throw new TagNotFoundException(tagId + " does not exist.");
     }
 
     @Override
     public final boolean doesTagExist(final Tag tag) {
-        return false;
+        return this.doesTagExist(tag.getId());
     }
 
     @Override
-    public final boolean doesTagExist(final String id) {
-        return tagRepository.existsById(id);
+    public final boolean doesTagExist(final String tagId) {
+        return tagRepository.existsById(tagId);
     }
 
     @Override
-    public final Tag getTag(final String id) {
-        return null;
+    public final Tag getTag(final String tagId) throws TagNotFoundException {
+        if (this.doesTagExist(tagId)) {
+            return tagRepository.getOne(tagId);
+        }
+
+        LOGGER.error("Tag {} does not exist. Cannot retrieve.", tagId);
+        throw new TagNotFoundException(tagId + " does not exist.");
     }
 
     @Override
     public final Tag[] getAllTags() {
-        return new Tag[0];
+        List<Tag> tags = tagRepository.findAll();
+        return tags.toArray(new Tag[0]);
     }
 }
