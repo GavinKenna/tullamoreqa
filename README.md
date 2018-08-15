@@ -59,6 +59,6 @@ Table of Contents
 
   For this you will need Docker installed.
 
-  To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle and Javadocs, execute the validate.sh script:     
+  To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle, Cobertura and Javadocs, execute the validate.sh script:     
 
   `$ ./validate.sh`
