@@ -6,7 +6,7 @@
 #         USAGE:  ./validate.sh
 #
 #   DESCRIPTION: Build TullamoreQA and all of it's components.
-#                Will run Unit Tests, Integration Tests, Javadocs and Checkstyle.
+#                Will run Unit Tests, Integration Tests, Javadocs, Cobertura and Checkstyle.
 #
 #       OPTIONS:  ---
 #  REQUIREMENTS:  ---
@@ -35,4 +35,4 @@ fi
 
 # Execute build of TQA
 
-mvn checkstyle:check javadoc:javadoc -Ptest verify
+mvn checkstyle:check javadoc:javadoc cobertura:cobertura -Ptest verify
