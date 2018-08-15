@@ -53,7 +53,7 @@ public class TagServiceImpl implements TagService {
     public final void addTag(final Tag tag) throws TagAlreadyExistsException {
         LOGGER.debug("Adding New Tag {}", tag);
         if (this.doesTagExist(tag.getId())) {
-            LOGGER.error("Tag with ID {} already exists!");
+            LOGGER.error("Tag with ID {} already exists!", tag.getId());
             throw new TagAlreadyExistsException(tag.getId()
                     + " already exists.");
         }
