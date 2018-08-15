@@ -47,8 +47,13 @@ public class TagControllerImpl implements TagController {
      */
     private final TagService tagService;
 
+    /**
+     * Constructor that Auto wires the Tag Service.
+     *
+     * @param tagService Tag Service implementation.
+     */
     @Autowired
-    public TagControllerImpl(TagService tagService) {
+    public TagControllerImpl(final TagService tagService) {
         this.tagService = tagService;
     }
 
