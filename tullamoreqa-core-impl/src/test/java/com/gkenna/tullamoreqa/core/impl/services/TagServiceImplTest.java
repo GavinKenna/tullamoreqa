@@ -23,7 +23,8 @@ import static org.mockito.Mockito.when;
 
 public class TagServiceImplTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(TagServiceImplTest.class);
+    private static final Logger LOGGER =
+            LogManager.getLogger(TagServiceImplTest.class);
 
     @InjectMocks
     private final TagServiceImpl tagService;
@@ -194,7 +195,7 @@ public class TagServiceImplTest {
     }
 
     @Test
-    public void shouldGetAllTagsSuccessfully() throws TagNotFoundException {
+    public void shouldGetAllTagsSuccessfully() {
         final Tag tag1 = new Tag("GetMe1");
         final Tag tag2 = new Tag("GetMe2");
         final Tag tag3 = new Tag("GetMe3");
@@ -214,7 +215,7 @@ public class TagServiceImplTest {
     }
 
     @Test
-    public void shouldGetAllTagsEmptySuccessfully() throws TagNotFoundException {
+    public void shouldGetAllTagsEmptySuccessfully() {
         final List<Tag> tags = new ArrayList<Tag>();
 
         when(mockedTagRepository.findAll()).thenReturn(tags);
@@ -222,5 +223,53 @@ public class TagServiceImplTest {
         final Tag[] allTags = tagService.getAllTags();
 
         assert allTags.length == 0;
+    }
+
+    @Test
+    public void shouldReturnTrueForTagExistsUsingId() {
+        when(mockedTagRepository.existsById("Exists")).thenReturn(true);
+
+        final boolean doesTagExist = tagService.doesTagExist("Exists");
+
+        verify(mockedTagRepository).existsById("Exists");
+
+        assert doesTagExist;
+    }
+
+    @Test
+    public void shouldReturnTrueForTagExists() {
+        when(mockedTagRepository.existsById("Exists")).thenReturn(true);
+
+        final Tag tag = new Tag("Exists");
+
+        final boolean doesTagExist = tagService.doesTagExist(tag);
+
+        verify(mockedTagRepository).existsById("Exists");
+
+        assert doesTagExist;
+    }
+
+    @Test
+    public void shouldReturnFalseForTagExistsUsingId() {
+        when(mockedTagRepository.existsById("NotExists")).thenReturn(false);
+
+        final boolean doesTagExist = tagService.doesTagExist("NotExists");
+
+        verify(mockedTagRepository).existsById("NotExists");
+
+        assert !doesTagExist;
+    }
+
+    @Test
+    public void shouldReturnFalseForTagExists() {
+        when(mockedTagRepository.existsById("NotExists")).thenReturn(false);
+
+        final Tag tag = new Tag("NotExists");
+
+        final boolean doesTagExist = tagService.doesTagExist(tag);
+
+        verify(mockedTagRepository).existsById("NotExists");
+
+        assert !doesTagExist;
     }
 }
