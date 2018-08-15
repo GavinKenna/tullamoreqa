@@ -45,8 +45,12 @@ public class TagControllerImpl implements TagController {
      * This object is used to interact with the Tag Repo
      * {@link com.gkenna.tullamoreqa.core.api.repositories.TagRepository}.
      */
+    private final TagService tagService;
+
     @Autowired
-    private TagService tagService;
+    public TagControllerImpl(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
