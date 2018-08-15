@@ -7,7 +7,15 @@
 
 An open-source Q&A System (In the works). Currently on a pre-release version that doesn't do a whole lot yet.
 
-**Components of TQA**
+Table of Contents
+=================
+
+* [Components of TQA](#components-of-tqa)
+* [What will version 1.0.0 look like?](#what-will-version-100-look-like)
+* [Building](#building)
+* [Testing](#testing)
+
+# Components of TQA
 
 * tullamore-ui
     * Web end UI for creating Questions, adding Answers, logging in and creating user accounts.
@@ -28,29 +36,29 @@ An open-source Q&A System (In the works). Currently on a pre-release version tha
     * Location of Integration Tests for TQA. These tests connect to a Postgres DB 
 
 
-**What will version 1.0.0 look like?**
+# What will version 1.0.0 look like?
 
-My plans for TQA 1.0 will be:
-* Ability to add Questions, Answers, Users etc via UI
-* A usable UI (perhaps Angular 3)
-* A CLI client to interact with TQA
-* Swagger integration for the TQA API
-* OAuth authentication
-* User roles (Admin, Regular User, etc)
+  My plans for TQA 1.0 will be:
+ 
+ * Ability to add Questions, Answers, Users etc via UI
+ * A usable UI (perhaps Angular 3)
+ * A CLI client to interact with TQA
+ * Swagger integration for the TQA API
+ * OAuth authentication
+ * User roles (Admin, Regular User, etc)
 
-**Building**
+# Building
 
-Building TQA does not require any particular tools, other than Java 8 and Maven.
+  Building TQA does not require any particular tools, other than Java 8 and Maven.
 
-`$ mvn clean install`
+  `$ ./build.sh`
 
-**Testing**
+# Testing
 
-TQA utilizes Docker to initialize a Postgres DB to connect to. 
+  TQA utilizes Docker to initialize a Postgres DB to connect to. 
 
-For this you will need Docker installed.
+  For this you will need Docker installed.
 
-To run the full Integration Test suite (and bring up the Postgres Docker Container) execute maven with the `test` 
-profile, as follows:
+  To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle and Javadocs, execute the validate.sh script:     
 
-`$ mvn clean install -Ptest`
+  `$ ./validate.sh`
