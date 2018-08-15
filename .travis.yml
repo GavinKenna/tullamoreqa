@@ -2,7 +2,7 @@ language: java
 sudo: required
 services:
   - docker
-script: mvn checkstyle:check clean install javadoc:javadoc cobertura:cobertura -Ptest
+script: ./validate.sh
 
 after_success: 
 - bash <(curl -s https://codecov.io/bash)
