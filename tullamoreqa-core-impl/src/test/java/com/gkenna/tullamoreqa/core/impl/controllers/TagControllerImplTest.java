@@ -22,6 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,6 +62,27 @@ public class TagControllerImplTest {
         assert responseEntity.getStatusCode().value() == 201;
 
         assert Objects.requireNonNull(responseEntity.getHeaders().getLocation()).toString().equals("http://localhost/tag/Java");
+    }
+
+    @Test
+    public void shouldThrowTagAlreadyExistsWhenAdding() throws TagAlreadyExistsException {
+        final Tag tag = new Tag("Java");
+        tag.setDescription("Description for Java Tag.");
+
+        /*
+        Tag already exists in the DB.
+         */
+        doThrow(new TagAlreadyExistsException("Mocked Exception")).when(mockedTagService).addTag(tag);
+
+        ResponseEntity responseEntity = tagController.addTag(tag);
+
+        verify(mockedTagService).addTag(tag);
+
+        assert responseEntity.getStatusCode().is4xxClientError();
+        assert responseEntity.getStatusCode().value() == 409; // Conflict
+
+        assert Objects.requireNonNull(responseEntity.getHeaders().getLocation()).toString().equals("http://localhost/tag/Java");
+
     }
 
 }
