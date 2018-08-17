@@ -144,7 +144,7 @@ public class TagServiceImplTest {
         final Tag originalTag = new Tag("OriginalTag");
         originalTag.setDescription("Original Description");
 
-        when(mockedTagRepository.getOne("OriginalTag")).thenReturn(originalTag);
+        when(mockedTagRepository.findById("OriginalTag")).thenReturn(java.util.Optional.ofNullable(originalTag));
 
         final Tag input = new Tag("OriginalTag");
         input.setDescription("New Description");
