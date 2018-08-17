@@ -60,7 +60,7 @@ public class TagControllerImpl implements TagController {
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public final ResponseEntity<?> addTag(@RequestBody final Tag input) {
-        LOGGER.debug("Adding Tag {}", input);
+            LOGGER.debug("Adding Tag {}", input);
 
         HttpHeaders headers = new HttpHeaders();
 

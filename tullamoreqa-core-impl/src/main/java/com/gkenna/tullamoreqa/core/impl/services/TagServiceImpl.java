@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * @since 0.0.0
  */
 @Service("tagService")
+@Transactional
 public class TagServiceImpl implements TagService {
 
     /**
@@ -50,24 +52,33 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public final void addTag(final Tag tag) throws TagAlreadyExistsException {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void addTag(final Tag tag) throws TagAlreadyExistsException {
         LOGGER.debug("Adding New Tag {}", tag);
+        LOGGER.info("TagRepo is {}", tagRepository.toString());
+
         if (this.doesTagExist(tag.getId())) {
             LOGGER.error("Tag with ID {} already exists!", tag.getId());
             throw new TagAlreadyExistsException(tag.getId()
                     + " already exists.");
         }
-        tagRepository.save(tag);
+        tagRepository.saveAndFlush(tag);
+
         LOGGER.debug("New Tag {} added successfully.", tag.getName());
     }
 
     @Override
-    public final void deleteTag(final Tag tag) throws TagNotFoundException {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void deleteTag(final Tag tag) throws TagNotFoundException {
         this.deleteTag(tag.getId());
     }
 
     @Override
-    public final void deleteTag(final String tagId)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void deleteTag(final String tagId)
             throws TagNotFoundException {
 
         LOGGER.debug("Deleting Tag with ID {}", tagId);
@@ -82,13 +93,15 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public final Tag updateTag(final String tagId, final Tag input)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Tag updateTag(final String tagId, final Tag input)
             throws TagNotFoundException {
 
         LOGGER.debug("Updating {} to {}", tagId, input);
 
         if (tagRepository.existsById(tagId)) {
-            final Tag output = tagRepository.getOne(tagId);
+            final Tag output = tagRepository.findById(tagId).get();
 
             LOGGER.debug("Tag before update {}", output);
 
@@ -96,7 +109,7 @@ public class TagServiceImpl implements TagService {
 
             LOGGER.debug("Tag after update {}", output);
 
-            tagRepository.save(output);
+            tagRepository.saveAndFlush(output);
             return output;
         }
 
@@ -105,19 +118,29 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public final boolean doesTagExist(final Tag tag) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public boolean doesTagExist(final Tag tag) {
         return this.doesTagExist(tag.getId());
     }
 
     @Override
-    public final boolean doesTagExist(final String tagId) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public boolean doesTagExist(final String tagId) {
         return tagRepository.existsById(tagId);
     }
 
     @Override
-    public final Tag getTag(final String tagId) throws TagNotFoundException {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Tag getTag(final String tagId) throws TagNotFoundException {
+        LOGGER.info("TagRepo is {}", tagRepository.toString());
+        /*
+        TODO replace doesExist with Optional<Tag> get
+         */
         if (this.doesTagExist(tagId)) {
-            return tagRepository.getOne(tagId);
+            return tagRepository.findById(tagId).get();
         }
 
         LOGGER.error("Tag {} does not exist. Cannot retrieve.", tagId);
@@ -125,7 +148,9 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public final Tag[] getAllTags() {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Tag[] getAllTags() {
         List<Tag> tags = tagRepository.findAll();
         return tags.toArray(new Tag[0]);
     }
