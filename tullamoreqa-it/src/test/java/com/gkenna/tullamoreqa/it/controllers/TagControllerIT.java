@@ -84,6 +84,35 @@ public class TagControllerIT {
     }
 
     @Test
+    public void shouldGetConflictWhenTryingToAddNewTag() throws Exception {
+
+        final Tag tag = new Tag("Numberwang");
+
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang");
+
+        tagRepository.saveAndFlush(tag);
+
+        assert tagRepository.existsById("Numberwang");
+
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Map> entity = this.testRestTemplate.postForEntity(
+                tagEndpoint, tag, Map.class);
+
+        assert (entity.getStatusCode() == HttpStatus.CONFLICT);
+        assert (entity.getHeaders().getLocation()).toString().equals(tagEndpoint + "/Numberwang");
+
+        /*
+        Cleanup the DB for future tests.
+         */
+        tagRepository.deleteById("Numberwang");
+
+        tagRepository.flush();
+    }
+
+    @Test
     public void shouldAddNewTagSuccessfullyWithDescription() throws Exception {
 
         final Tag tag = new Tag("Numberwang");
@@ -157,6 +186,22 @@ public class TagControllerIT {
     }
 
     @Test
+    public void shouldGet404WhenTryingToGetInvalidTag() throws Exception,
+            TagAlreadyExistsException, TagNotFoundException {
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang");
+
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Tag> entity = this.testRestTemplate.getForEntity(
+                tagEndpoint + "/Numberwang", Tag.class);
+
+        assert (entity.getStatusCode() == HttpStatus.NOT_FOUND);
+
+    }
+
+    @Test
     public void shouldDeleteTagSuccessfully() throws Exception,
             TagAlreadyExistsException, TagNotFoundException {
 
@@ -188,7 +233,8 @@ public class TagControllerIT {
          */
         @SuppressWarnings("rawtypes")
         ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
-                tagEndpoint + "/Numberwang", HttpMethod.DELETE, request , Tag.class);
+                tagEndpoint + "/Numberwang", HttpMethod.DELETE, request,
+                Tag.class);
 
         assert (entity.getStatusCode() == HttpStatus.NO_CONTENT); // Deleted
 
@@ -196,6 +242,31 @@ public class TagControllerIT {
         Assert that Numberwang Tag doesn't exist.
          */
         assert !tagRepository.existsById("Numberwang");
+    }
+
+    @Test
+    public void shouldGet404QWhenTringToDeleteInvalidTag() throws Exception,
+            TagAlreadyExistsException, TagNotFoundException {
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+
+        HttpEntity<String> request = new HttpEntity<String>("Empty", headers);
+
+        /*
+        TestRestTemplate doesn't return an EntityResponse for Delete, so we must
+        use the Exchange method.
+         */
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
+                tagEndpoint + "/Numberwang", HttpMethod.DELETE, request,
+                Tag.class);
+
+        assert (entity.getStatusCode() == HttpStatus.NOT_FOUND); // Deleted
     }
 
     @Test
@@ -228,13 +299,15 @@ public class TagControllerIT {
 
         @SuppressWarnings("rawtypes")
         ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
-                tagEndpoint + "/Numberwang", HttpMethod.PUT, request , Tag.class);
+                tagEndpoint + "/Numberwang", HttpMethod.PUT, request,
+                Tag.class);
 
         LOGGER.info("Update Entity is {}", entity.toString());
 
         assert (entity.getStatusCode() == HttpStatus.OK);
         assert (entity.getBody().getName().equals("Numberwang"));
-        assert (entity.getBody().getDescription().equals("New description for Numberwang"));
+        assert (entity.getBody().getDescription().equals("New description for" +
+                " Numberwang"));
 
          /*
         Assert that Numberwang description was updated.
@@ -249,28 +322,29 @@ public class TagControllerIT {
         tagRepository.flush();
     }
 
-
     @Test
-    public void addTagTest() {
-        //Stub
-        assert true;
-    }
+    public void shouldGet404WhenTryingToUpdateInvalidTag() throws Exception,
+            TagAlreadyExistsException, TagNotFoundException {
 
-    @Test
-    public void deleteTagTest() {
-        //Stub
-        assert true;
-    }
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang");
 
-    @Test
-    public void editTagTest() {
-        //Stub
-        assert true;
-    }
+        Tag tag = new Tag("Numberwang");
+        tag.setDescription("New description!");
 
-    @Test
-    public void filterTagTest() {
-        //Stub
-        assert true;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+
+        HttpEntity<Tag> request = new HttpEntity<Tag>(tag, headers);
+
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
+                tagEndpoint + "/Numberwang", HttpMethod.PUT, request,
+                Tag.class);
+
+
+        assert (entity.getStatusCode() == HttpStatus.NOT_FOUND);
     }
 }
