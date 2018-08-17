@@ -190,12 +190,63 @@ public class TagControllerIT {
         ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
                 tagEndpoint + "/Numberwang", HttpMethod.DELETE, request , Tag.class);
 
-        assert (entity.getStatusCode() == HttpStatus.NO_CONTENT);
+        assert (entity.getStatusCode() == HttpStatus.NO_CONTENT); // Deleted
 
        /*
         Assert that Numberwang Tag doesn't exist.
          */
         assert !tagRepository.existsById("Numberwang");
+    }
+
+    @Test
+    public void shouldUpdateTagDescriptionSuccessfully() throws Exception,
+            TagAlreadyExistsException, TagNotFoundException {
+
+        final Tag tag = new Tag("Numberwang");
+        tag.setDescription("The Tag for Numberwang Questions.");
+
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang");
+
+        /*
+        Inject our Tag into the repo before we try retrieve it
+        via the Controller.
+         */
+
+        tagRepository.saveAndFlush(tag);
+
+        assert tagRepository.existsById("Numberwang");
+
+        tag.setDescription("New description for Numberwang");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+
+        HttpEntity<Tag> request = new HttpEntity<Tag>(tag, headers);
+
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
+                tagEndpoint + "/Numberwang", HttpMethod.PUT, request , Tag.class);
+
+        LOGGER.info("Update Entity is {}", entity.toString());
+
+        assert (entity.getStatusCode() == HttpStatus.OK);
+        assert (entity.getBody().getName().equals("Numberwang"));
+        assert (entity.getBody().getDescription().equals("New description for Numberwang"));
+
+         /*
+        Assert that Numberwang description was updated.
+         */
+        assert tagRepository.findById("Numberwang").get().getDescription().equals("New description for Numberwang");
+
+        /*
+        Cleanup the DB for future tests.
+         */
+        tagRepository.deleteById("Numberwang");
+
+        tagRepository.flush();
     }
 
 
