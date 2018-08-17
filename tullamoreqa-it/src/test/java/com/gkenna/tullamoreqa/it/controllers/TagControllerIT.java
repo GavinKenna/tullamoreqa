@@ -18,10 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -151,6 +154,48 @@ public class TagControllerIT {
         tagRepository.deleteById("Numberwang");
 
         tagRepository.flush();
+    }
+
+    @Test
+    public void shouldDeleteTagSuccessfully() throws Exception,
+            TagAlreadyExistsException, TagNotFoundException {
+
+        final Tag tag = new Tag("Numberwang");
+        tag.setDescription("The Tag for Numberwang Questions.");
+
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang");
+
+        /*
+        Inject our Tag into the repo before we try retrieve it
+        via the Controller.
+         */
+
+        tagRepository.saveAndFlush(tag);
+
+        assert tagRepository.existsById("Numberwang");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+
+        HttpEntity<String> request = new HttpEntity<String>("Empty", headers);
+
+        /*
+        TestRestTemplate doesn't return an EntityResponse for Delete, so we must
+        use the Exchange method.
+         */
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Tag> entity = this.testRestTemplate.exchange(
+                tagEndpoint + "/Numberwang", HttpMethod.DELETE, request , Tag.class);
+
+        assert (entity.getStatusCode() == HttpStatus.NO_CONTENT);
+
+       /*
+        Assert that Numberwang Tag doesn't exist.
+         */
+        assert !tagRepository.existsById("Numberwang");
     }
 
 
