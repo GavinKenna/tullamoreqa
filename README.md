@@ -50,15 +50,29 @@ Table of Contents
 # Building
 
   Building TQA does not require any particular tools, other than Java 8 and Maven.
+  
+  **Building for Linux/MacOS**
 
   `$ ./build.sh`
+  
+  **Building for Windows + Linux/MacOS**
+
+  `$ mvn clean install`
 
 # Testing
 
   TQA utilizes Docker to initialize a Postgres DB to connect to. 
 
   For this you will need Docker installed.
-
-  To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle, Cobertura and Javadocs, execute the validate.sh script:     
-
+  
+  **Running full test suite for Linux/MacOS**
+  
+  To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle, Cobertura and Javadocs, execute the validate.sh script:
+  
   `$ ./validate.sh`
+  
+  **Running full test suite for Windows + Linux/MacOS**
+  
+  To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle, Cobertura and Javadocs, execute the following in a terminal :
+  
+  `$ mvn clean install checkstyle:check javadoc:javadoc -Ptest verify`
