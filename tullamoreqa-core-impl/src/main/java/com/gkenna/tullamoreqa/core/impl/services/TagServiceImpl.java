@@ -52,6 +52,8 @@ public class TagServiceImpl implements TagService {
     @Override
     public final void addTag(final Tag tag) throws TagAlreadyExistsException {
         LOGGER.debug("Adding New Tag {}", tag);
+        LOGGER.info("TagRepo is {}", tagRepository.toString());
+
         if (this.doesTagExist(tag.getId())) {
             LOGGER.error("Tag with ID {} already exists!", tag.getId());
             throw new TagAlreadyExistsException(tag.getId()
@@ -116,6 +118,8 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public final Tag getTag(final String tagId) throws TagNotFoundException {
+        LOGGER.info("TagRepo is {}", tagRepository.toString());
+
         if (this.doesTagExist(tagId)) {
             return tagRepository.getOne(tagId);
         }

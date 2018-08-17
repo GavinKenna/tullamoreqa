@@ -20,6 +20,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -39,46 +40,149 @@ public class TagControllerIT {
     @Autowired
     private TagRepository tagRepository;
 
-    @Autowired
-    private TagService tagService;
+   /* @Autowired
+    private TagService tagService;*/
 
-    private String TAG_ENDPOINT;
+    private String tagEndpoint;
 
     @Before
     public void setup() {
-        this.TAG_ENDPOINT = "http://localhost:" + this.port + "/tag";
+        tagEndpoint = "http://localhost:" + this.port + "/tag";
+
+        LOGGER.info("Tag Endpoint is {}", this.tagEndpoint);
+
+        LOGGER.info("TagRepo is {}", tagRepository.toString());
     }
 
-    @Test
-    public void shouldAddNewTagSuccessfully() throws Exception {
+    //@Test
+    //@Transactional
+    public void shouldAddNewTagSuccessfullyWithoutDescription() throws Exception {
 
-        final Tag tag = new Tag("Java");
-        tag.setDescription("The Tag for Java Questions.");
+        final Tag tag = new Tag("Numberwang1");
 
         /*
-        Assert that Java Tag doesn't exist yet.
+        Assert that Numberwang Tag doesn't exist yet.
          */
-        assert !tagRepository.existsById("Java");
-        assert !tagService.doesTagExist("Java");
+        assert !tagRepository.existsById("Numberwang1");
+        //assert !tagService.doesTagExist("Numberwang1");
 
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.postForEntity(
-                TAG_ENDPOINT, tag, Map.class);
+                tagEndpoint, tag, Map.class);
+
+        tagRepository.flush();
 
         assert (entity.getStatusCode() == HttpStatus.CREATED);
-        assert (entity.getHeaders().getLocation()).toString().equals(TAG_ENDPOINT + "/Java");
+        assert (entity.getHeaders().getLocation()).toString().equals(tagEndpoint + "/Numberwang1");
 
         /*
-        Assert that Java Tag was added successfully.
+        Assert that Numberwang Tag was added successfully.
          */
-        assert (tagRepository.existsById("Java"));
-        assert (tagService.doesTagExist("Java"));
+        assert (tagRepository.existsById("Numberwang1"));
+        //assert (tagService.doesTagExist("Numberwang1"));
 
         /*
         Cleanup the DB for future tests.
          */
-        tagRepository.deleteById("Java");
+        tagRepository.deleteById("Numberwang1");
+
+        tagRepository.flush();
     }
+
+    //@Test
+    //@Transactional
+    public void shouldAddNewTagSuccessfullyWithDescription() throws Exception {
+
+        final Tag tag = new Tag("Numberwang2");
+        tag.setDescription("The Tag for Numberwang Questions.");
+
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang2");
+        //assert !tagService.doesTagExist("Numberwang2");
+
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Map> entity = this.testRestTemplate.postForEntity(
+                tagEndpoint, tag, Map.class);
+
+        tagRepository.flush();
+
+        assert (entity.getStatusCode() == HttpStatus.CREATED);
+        assert (entity.getHeaders().getLocation()).toString().equals(tagEndpoint + "/Numberwang2");
+
+        /*
+        Assert that Numberwang Tag was added successfully.
+         */
+        assert (tagRepository.existsById("Numberwang2"));
+        //assert (tagService.doesTagExist("Numberwang2"));
+
+        assert(tagRepository.getOne("Numberwang2").getDescription().equals("The Tag for Numberwang Questions."));
+
+        /*
+        Cleanup the DB for future tests.
+         */
+        tagRepository.deleteById("Numberwang2");
+
+        tagRepository.flush();
+    }
+
+    @Test
+    @Transactional
+    public void shouldGetTagSuccessfully() throws Exception {
+
+        final Tag tag = new Tag("Numberwang3");
+        tag.setDescription("The Tag for Numberwang Questions.");
+
+        /*
+        Assert that Numberwang Tag doesn't exist yet.
+         */
+        assert !tagRepository.existsById("Numberwang3");
+        //assert !tagService.doesTagExist("Numberwang3");
+
+        /*
+        Inject our Tag into the repo before we try retrieve it
+        via the Controller.
+         */
+        //tagRepository.saveAndFlush(tag);
+
+
+        this.testRestTemplate.postForEntity(
+                tagEndpoint, tag, Map.class);
+
+        tagRepository.flush();
+
+        assert tagRepository.existsById("Numberwang3");
+
+        Tag t = tagRepository.getOne("Numberwang3");
+
+        if(t != null){
+            LOGGER.info("Tag is {}", t);
+
+            assert t.equals(tag);
+        }
+
+        assert(tagRepository.existsById("Numberwang3"));
+
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Tag> entity = this.testRestTemplate.getForEntity(
+                tagEndpoint+"/Numberwang3", Tag.class);
+
+        LOGGER.info("Entity is {}", entity.toString());
+
+        assert (entity.getStatusCode() == HttpStatus.OK);
+        assert (entity.getBody().getName().equals("Numberwang3"));
+        assert (entity.getBody().getDescription().equals("The Tag for Numberwang Questions."));
+
+        /*
+        Cleanup the DB for future tests.
+         */
+        tagRepository.deleteById("Numberwang3");
+
+        tagRepository.flush();
+    }
+
+
 
     @Test
     public void addTagTest() {
