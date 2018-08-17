@@ -144,13 +144,14 @@ public class TagControllerIT {
         Inject our Tag into the repo before we try retrieve it
         via the Controller.
          */
-        //tagRepository.saveAndFlush(tag);
+
+        tagRepository.saveAndFlush(tag);
 
 
-        this.testRestTemplate.postForEntity(
+        /*this.testRestTemplate.postForEntity(
                 tagEndpoint, tag, Map.class);
 
-        tagRepository.flush();
+        tagRepository.flush();*/
 
         assert tagRepository.existsById("Numberwang3");
 
