@@ -48,7 +48,7 @@ public class Tag {
      * Default Constructor. Shouldn't be called.
      * See Effective Java (2nd+3rd Edition).
      */
-    private Tag() {
+    public Tag() {
 
     }
 

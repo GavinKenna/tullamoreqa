@@ -45,7 +45,7 @@ public class TagServiceImplTest {
         tag.setDescription("Description for Java Tag.");
         tagService.addTag(tag);
 
-        verify(mockedTagRepository).save(tag);
+        verify(mockedTagRepository).saveAndFlush(tag);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class TagServiceImplTest {
         final Tag tag = new Tag("Java");
         tagService.addTag(tag);
 
-        verify(mockedTagRepository).save(tag);
+        verify(mockedTagRepository).saveAndFlush(tag);
     }
 
     @Test
@@ -67,13 +67,13 @@ public class TagServiceImplTest {
         tagThree.setDescription("Description");
         tagFour.setDescription("Description");
         tagService.addTag(tagOne);
-        verify(mockedTagRepository).save(tagOne);
+        verify(mockedTagRepository).saveAndFlush(tagOne);
         tagService.addTag(tagTwo);
-        verify(mockedTagRepository).save(tagTwo);
+        verify(mockedTagRepository).saveAndFlush(tagTwo);
         tagService.addTag(tagThree);
-        verify(mockedTagRepository).save(tagThree);
+        verify(mockedTagRepository).saveAndFlush(tagThree);
         tagService.addTag(tagFour);
-        verify(mockedTagRepository).save(tagFour);
+        verify(mockedTagRepository).saveAndFlush(tagFour);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class TagServiceImplTest {
         final Tag tag = new Tag("C++");
         tagService.addTag(tag);
 
-        verify(mockedTagRepository).save(tag);
+        verify(mockedTagRepository).saveAndFlush(tag);
     }
 
     @Test(expected = TagAlreadyExistsException.class)
@@ -144,7 +144,7 @@ public class TagServiceImplTest {
         final Tag originalTag = new Tag("OriginalTag");
         originalTag.setDescription("Original Description");
 
-        when(mockedTagRepository.getOne("OriginalTag")).thenReturn(originalTag);
+        when(mockedTagRepository.findById("OriginalTag")).thenReturn(java.util.Optional.ofNullable(originalTag));
 
         final Tag input = new Tag("OriginalTag");
         input.setDescription("New Description");
@@ -152,7 +152,7 @@ public class TagServiceImplTest {
         final Tag updated = tagService.updateTag("OriginalTag", input);
 
         verify(mockedTagRepository).existsById("OriginalTag");
-        verify(mockedTagRepository).save(originalTag);
+        verify(mockedTagRepository).saveAndFlush(originalTag);
 
         assert (updated.equals(input));
         assert (updated.getDescription().equals(input.getDescription()));
@@ -171,7 +171,7 @@ public class TagServiceImplTest {
         final Tag updated = tagService.updateTag("OriginalTag", input);
 
         verify(mockedTagRepository).existsById("OriginalTag");
-        verify(mockedTagRepository).save(originalTag);
+        verify(mockedTagRepository).saveAndFlush(originalTag);
     }
 
     @Test
@@ -180,11 +180,11 @@ public class TagServiceImplTest {
 
         final Tag tag = new Tag("GetMe");
 
-        when(mockedTagRepository.getOne("GetMe")).thenReturn(tag);
+        when(mockedTagRepository.findById("GetMe")).thenReturn(java.util.Optional.ofNullable(tag));
 
         assert (tagService.getTag("GetMe").equals(tag));
 
-        verify(mockedTagRepository).getOne("GetMe");
+        verify(mockedTagRepository).findById("GetMe");
     }
 
     @Test(expected = TagNotFoundException.class)
