@@ -101,7 +101,7 @@ public class TagServiceImpl implements TagService {
         LOGGER.debug("Updating {} to {}", tagId, input);
 
         if (tagRepository.existsById(tagId)) {
-            final Tag output = tagRepository.getOne(tagId);
+            final Tag output = tagRepository.findById(tagId).get();
 
             LOGGER.debug("Tag before update {}", output);
 
