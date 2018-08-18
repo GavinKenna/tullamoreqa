@@ -8,7 +8,7 @@ import com.gkenna.tullamoreqa.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
+
 
 /**
  * Repository for containing {@link Comment}s. Will be called by the responsible
@@ -19,5 +19,5 @@ import java.math.BigInteger;
  * @since 0.0.0
  */
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, BigInteger> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

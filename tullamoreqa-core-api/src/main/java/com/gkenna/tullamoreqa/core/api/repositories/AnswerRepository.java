@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
+
 
 /**
  * Repository for containing {@link Answer}s. Will be called by the responsible
@@ -22,7 +22,7 @@ import java.math.BigInteger;
  * @since 0.0.0
  */
 @Repository
-public interface AnswerRepository extends JpaRepository<Answer, BigInteger> {
+public interface AnswerRepository extends JpaRepository<Answer, Long> {
     /**
      * Return a list of all {@link Answer}s associated with a particular
      * {@link com.gkenna.tullamoreqa.domain.Question}.
@@ -32,7 +32,7 @@ public interface AnswerRepository extends JpaRepository<Answer, BigInteger> {
      * @param pageable   Potentially add Pagination.
      * @return List of {@link Answer}s in Page form.
      */
-    Page<Answer> findByQuestionId(BigInteger questionId, Pageable pageable);
+    Page<Answer> findByQuestionId(Long questionId, Pageable pageable);
 
     /**
      * Return a list of all {@link Answer}s associated with a particular

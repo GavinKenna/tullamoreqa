@@ -9,7 +9,7 @@ import com.gkenna.tullamoreqa.domain.Comment;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
+
 
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Comment}.
@@ -46,7 +46,7 @@ public interface CommentService {
      * @throws CommentNotFoundException Thrown if the {@link Comment}
      *                                  isn't found.
      */
-    Comment deleteComment(final BigInteger commentId)
+    Comment deleteComment(final Long commentId)
             throws CommentNotFoundException;
 
     /**
@@ -65,7 +65,7 @@ public interface CommentService {
      * @return True if the {@link Comment} exists,
      * false if otherwise.
      */
-    boolean doesCommentExist(final BigInteger commentId);
+    boolean doesCommentExist(final Long commentId);
 
     /**
      * Return a {@link Comment} based on its ID.
@@ -73,7 +73,7 @@ public interface CommentService {
      * @param commentId The ID of the {@link Comment} to return.
      * @return A {@link Comment} with the ID passed.
      */
-    Comment getComment(final BigInteger commentId);
+    Comment getComment(final Long commentId);
 
     /**
      * Return all {@link Comment}s in the DB.
@@ -102,6 +102,6 @@ public interface CommentService {
      * @throws CommentNotFoundException Thrown when the {@link Comment} cannot
      *                                  be found.
      */
-    Comment updateComment(final BigInteger commentId, final Comment input)
+    Comment updateComment(final Long commentId, final Comment input)
             throws CommentNotFoundException;
 }

@@ -16,7 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.math.BigInteger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class AnswerServiceImplTest {
     private final AnswerServiceImpl answerService;
     @Mock
     private final Answer answer;
-    private final BigInteger answerId = new BigInteger(String.valueOf(0));
+    private final Long answerId = new Long(String.valueOf(0));
     @Mock
     private AnswerRepository mockedAnswerRepo;
 

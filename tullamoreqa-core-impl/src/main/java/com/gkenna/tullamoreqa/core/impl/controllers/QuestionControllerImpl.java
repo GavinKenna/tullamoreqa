@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.math.BigInteger;
+
 import java.net.URI;
 
 /**
@@ -68,7 +68,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public final ResponseEntity<Question> getQuestion(
-            @PathVariable("id") final BigInteger questionId) {
+            @PathVariable("id") final Long questionId) {
 
         LOGGER.debug("Attempting to get Question {}", questionId);
         Question output = null;
@@ -92,7 +92,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public final ResponseEntity<?> updateQuestion(
-            @PathVariable("id") final BigInteger questionId,
+            @PathVariable("id") final Long questionId,
             @RequestBody final Question input) {
 
         LOGGER.debug("Updating Question {} with the following details {}",
@@ -113,7 +113,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public final ResponseEntity<?> deleteQuestion(
-            @PathVariable("id") final BigInteger questionId) {
+            @PathVariable("id") final Long questionId) {
 
         LOGGER.debug("Deleting Question {}", questionId);
 

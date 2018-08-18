@@ -14,7 +14,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-import java.math.BigInteger;
 
 /**
  * An Abstract class that allows for Users to create
@@ -57,7 +56,7 @@ public abstract class Entry {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigInteger id;
+    private Long id;
 
     /**
      * Create a new Entry.
@@ -83,7 +82,7 @@ public abstract class Entry {
      *
      * @return ID of the Entry.
      */
-    public final BigInteger getId() {
+    public final Long getId() {
         return id;
     }
 

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigInteger;
+
 
 /**
  * Implementation of {@link QuestionService}.
@@ -73,7 +73,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void deleteQuestion(final BigInteger questionId)
+    public final void deleteQuestion(final Long questionId)
             throws QuestionNotFoundException {
 
         LOGGER.debug("Deleting Question with ID {}", questionId);
@@ -88,7 +88,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question updateQuestion(final BigInteger questionId,
+    public final Question updateQuestion(final Long questionId,
                                          final Question input)
             throws QuestionNotFoundException {
 
@@ -127,12 +127,12 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final boolean doesQuestionExist(final BigInteger questionId) {
+    public final boolean doesQuestionExist(final Long questionId) {
         return questionRepository.existsById(questionId);
     }
 
     @Override
-    public final Question getQuestion(final BigInteger questionId) throws
+    public final Question getQuestion(final Long questionId) throws
             QuestionNotFoundException {
         LOGGER.info("QuestionRepo is {}", questionRepository.toString());
 

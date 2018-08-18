@@ -7,7 +7,7 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Comment;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigInteger;
+
 
 /**
  * API Controller for the {@link Comment} Entity. This API will allow
@@ -39,7 +39,7 @@ public interface CommentController {
      * @param commentId The ID of the {@link Comment} to retrieve.
      * @return The Response of this Request.
      */
-    ResponseEntity<Comment> getComment(final BigInteger commentId);
+    ResponseEntity<Comment> getComment(final Long commentId);
 
     /**
      * HTTP PUT Method
@@ -51,7 +51,7 @@ public interface CommentController {
      *                  new values for commentId to update to.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> updateComment(final BigInteger commentId,
+    ResponseEntity<?> updateComment(final Long commentId,
                                     final Comment input);
 
     /**
@@ -62,5 +62,5 @@ public interface CommentController {
      * @param commentId The ID of the {@link Comment} to delete.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteComment(final BigInteger commentId);
+    ResponseEntity<?> deleteComment(final Long commentId);
 }

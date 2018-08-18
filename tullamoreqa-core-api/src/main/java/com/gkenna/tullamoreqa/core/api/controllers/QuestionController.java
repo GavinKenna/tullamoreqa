@@ -7,7 +7,7 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Question;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigInteger;
+
 
 /**
  * API Controller for the {@link Question} Entity. This API will allow
@@ -39,7 +39,7 @@ public interface QuestionController {
      * @param questionId The ID of the {@link Question} to retrieve.
      * @return The Response of this Request.
      */
-    ResponseEntity<Question> getQuestion(final BigInteger questionId);
+    ResponseEntity<Question> getQuestion(final Long questionId);
 
     /**
      * HTTP PUT Method
@@ -51,7 +51,7 @@ public interface QuestionController {
      *                   new values for questionId to update to.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> updateQuestion(final BigInteger questionId,
+    ResponseEntity<?> updateQuestion(final Long questionId,
                                      final Question input);
 
     /**
@@ -62,5 +62,5 @@ public interface QuestionController {
      * @param questionId The ID of the {@link Question} to delete.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteQuestion(final BigInteger questionId);
+    ResponseEntity<?> deleteQuestion(final Long questionId);
 }

@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -27,7 +27,7 @@ import java.util.Set;
  */
 @Repository
 public interface QuestionRepository
-        extends JpaRepository<Question, BigInteger> {
+        extends JpaRepository<Question, Long> {
 
     /**
      * Find a list of {@link Question}s whose Title matches the supplied Title.

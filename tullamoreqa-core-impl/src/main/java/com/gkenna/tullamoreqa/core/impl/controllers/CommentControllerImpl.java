@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.math.BigInteger;
+
 import java.net.URI;
 
 /**
@@ -76,7 +76,7 @@ public class CommentControllerImpl implements CommentController {
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public final ResponseEntity<Comment> getComment(
-            @PathVariable("id") final BigInteger commentId) {
+            @PathVariable("id") final Long commentId) {
 
         LOGGER.debug("Attempting to get Comment {}", commentId);
         Comment output = commentService.getComment(commentId);
@@ -92,7 +92,7 @@ public class CommentControllerImpl implements CommentController {
     @Override
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public final ResponseEntity<?> updateComment(
-            @PathVariable("id") final BigInteger commentId,
+            @PathVariable("id") final Long commentId,
             @RequestBody final Comment input) {
 
         LOGGER.debug("Updating Comment {} with the following details {}",
@@ -113,7 +113,7 @@ public class CommentControllerImpl implements CommentController {
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public final ResponseEntity<?> deleteComment(
-            @PathVariable("id") final BigInteger commentId) {
+            @PathVariable("id") final Long commentId) {
 
         LOGGER.debug("Deleting Comment {}", commentId);
         Comment output;

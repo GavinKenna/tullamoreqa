@@ -10,7 +10,7 @@ import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
+
 
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Question}.
@@ -49,7 +49,7 @@ public interface QuestionService {
      * @throws QuestionNotFoundException Thrown the {@link Question} cannot
      *                                   be found.
      */
-    void deleteQuestion(final BigInteger questionId)
+    void deleteQuestion(final Long questionId)
             throws QuestionNotFoundException;
 
     /**
@@ -62,7 +62,7 @@ public interface QuestionService {
      * @throws QuestionNotFoundException Thrown when the {@link Question}
      *                                   cannot be found.
      */
-    Question updateQuestion(final BigInteger questionId, final Question input)
+    Question updateQuestion(final Long questionId, final Question input)
             throws QuestionNotFoundException;
 
     /**
@@ -83,7 +83,7 @@ public interface QuestionService {
      * @return True if the {@link Question} exists,
      * false if otherwise.
      */
-    boolean doesQuestionExist(final BigInteger questionId);
+    boolean doesQuestionExist(final Long questionId);
 
     /**
      * Return an {@link Question} based on its ID.
@@ -94,7 +94,7 @@ public interface QuestionService {
      * @throws QuestionNotFoundException Thrown if the
      *                                   {@link Question} cannot be found.
      */
-    Question getQuestion(final BigInteger questionId)
+    Question getQuestion(final Long questionId)
             throws QuestionNotFoundException;
 
     /**
