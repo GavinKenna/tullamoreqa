@@ -26,7 +26,9 @@ import java.util.Set;
  * @since 0.0.0
  */
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, BigInteger> {
+public interface QuestionRepository
+        extends JpaRepository<Question, BigInteger> {
+
     /**
      * Find a list of {@link Question}s whose Title matches the supplied Title.
      *

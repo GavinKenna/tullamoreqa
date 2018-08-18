@@ -80,8 +80,10 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Answer updateAnswer(final BigInteger answerId, final Answer input)
+    public final Answer updateAnswer(final BigInteger answerId,
+                                     final Answer input)
             throws AnswerNotFoundException {
+
         LOGGER.debug("Updating {} to {}", answerId, input);
         if (answerRepository.existsById(answerId)) {
             final Answer output = answerRepository.getOne(answerId);

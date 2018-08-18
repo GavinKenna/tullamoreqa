@@ -4,7 +4,6 @@
 
 package com.gkenna.tullamoreqa.core.api.services;
 
-import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -28,11 +27,8 @@ public interface QuestionService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      *
      * @param question {@link Question} to Add.
-     * @throws QuestionAlreadyExistsException Thrown when a Question with the
-     *                                        supplied ID already exists.
      */
-    void addQuestion(final Question question)
-            throws QuestionAlreadyExistsException;
+    void addQuestion(final Question question);
 
     /**
      * Delete a {@link Question} from the

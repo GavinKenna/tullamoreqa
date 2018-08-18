@@ -4,7 +4,6 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
-import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
@@ -27,6 +26,7 @@ import java.math.BigInteger;
  * @since 0.0.0
  */
 @Service("questionService")
+@Transactional
 public class QuestionServiceImpl extends EntryServiceImpl
         implements QuestionService {
 
@@ -56,17 +56,9 @@ public class QuestionServiceImpl extends EntryServiceImpl
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public void addQuestion(final Question question)
-            throws QuestionAlreadyExistsException {
+    public void addQuestion(final Question question) {
 
         LOGGER.debug("Adding New Question {}", question);
-
-        if (this.doesQuestionExist(question.getId())) {
-            LOGGER.error("Question with ID {} already exists!",
-                    question.getId());
-            throw new QuestionAlreadyExistsException(question.getId()
-                    + " already exists.");
-        }
 
         questionRepository.saveAndFlush(question);
 

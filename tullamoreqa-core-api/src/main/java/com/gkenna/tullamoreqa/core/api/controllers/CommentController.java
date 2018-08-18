@@ -51,7 +51,8 @@ public interface CommentController {
      *                  new values for commentId to update to.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> updateComment(final BigInteger commentId, final Comment input);
+    ResponseEntity<?> updateComment(final BigInteger commentId,
+                                    final Comment input);
 
     /**
      * HTTP DELETE Method.

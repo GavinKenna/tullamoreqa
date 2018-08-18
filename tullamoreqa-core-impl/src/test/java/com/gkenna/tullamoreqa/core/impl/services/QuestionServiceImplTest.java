@@ -4,7 +4,8 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
-import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
+//import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
+
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -49,7 +50,7 @@ public class QuestionServiceImplTest {
     }
 
     @Test
-    public void shouldAddValidQuestion() throws QuestionAlreadyExistsException {
+    public void shouldAddValidQuestion() {
         final Question question = new Question();
 
         when(mockedQuestionRepository.existsById(question.getId())).thenReturn(false);
@@ -60,7 +61,7 @@ public class QuestionServiceImplTest {
     }
 
     @Test
-    public void shouldAddFullyValidQuestion() throws QuestionAlreadyExistsException {
+    public void shouldAddFullyValidQuestion() {
         final Question question = new Question();
         question.setUpvotes(0);
         question.setDownvotes(0);
@@ -80,14 +81,14 @@ public class QuestionServiceImplTest {
     }
 
 
-    @Test(expected = QuestionAlreadyExistsException.class)
+   /* @Test(expected = QuestionAlreadyExistsException.class)
     public void shouldThrowQuestionExistsException() throws QuestionAlreadyExistsException {
         final Question question = new Question();
 
         when(mockedQuestionRepository.existsById(question.getId())).thenReturn(true);
 
         questionService.addQuestion(question);
-    }
+    }*/
 
     @Test
     public void shouldDeleteQuestionByIdSuccessfully() throws QuestionNotFoundException {

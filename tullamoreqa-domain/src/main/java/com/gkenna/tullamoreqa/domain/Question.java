@@ -204,6 +204,7 @@ public class Question extends Entry {
     public final String toString() {
         final StringBuilder sb = new StringBuilder("Question{");
         sb.append("modifiedBy=").append(modifiedBy);
+        sb.append(", id=").append(getId());
         sb.append(", tags=").append(tags);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", lastUpdatedAt=").append(lastUpdatedAt);

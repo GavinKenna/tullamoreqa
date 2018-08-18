@@ -46,7 +46,8 @@ public interface CommentService {
      * @throws CommentNotFoundException Thrown if the {@link Comment}
      *                                  isn't found.
      */
-    Comment deleteComment(final BigInteger commentId) throws CommentNotFoundException;
+    Comment deleteComment(final BigInteger commentId)
+            throws CommentNotFoundException;
 
     /**
      * Return if a {@link Comment} exists in the DB or not.

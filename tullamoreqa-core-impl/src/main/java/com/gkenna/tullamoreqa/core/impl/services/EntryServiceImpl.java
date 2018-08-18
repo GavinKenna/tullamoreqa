@@ -18,7 +18,8 @@ import java.math.BigInteger;
  */
 public abstract class EntryServiceImpl implements EntryService {
     @Override
-    public void addUpvote(final BigInteger entryId) throws EntryNotFoundException {
+    public void addUpvote(final BigInteger entryId)
+            throws EntryNotFoundException {
 
     }
 
@@ -29,7 +30,8 @@ public abstract class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    public void addDownvote(final BigInteger entryId) throws EntryNotFoundException {
+    public void addDownvote(final BigInteger entryId)
+            throws EntryNotFoundException {
 
     }
 

@@ -51,7 +51,8 @@ public interface AnswerController {
      *                 new values for answerId to update to.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> updateAnswer(final BigInteger answerId, final Answer input);
+    ResponseEntity<?> updateAnswer(final BigInteger answerId,
+                                   final Answer input);
 
     /**
      * HTTP DELETE Method.

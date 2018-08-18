@@ -5,7 +5,6 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.QuestionController;
-import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -55,12 +54,7 @@ public class QuestionControllerImpl implements QuestionController {
             @RequestBody final Question input) {
 
         LOGGER.info("Add Question : {}", input);
-
-        try {
-            questionService.addQuestion(input);
-        } catch (QuestionAlreadyExistsException e) {
-            e.printStackTrace();
-        }
+        questionService.addQuestion(input);
 
         HttpHeaders headers = new HttpHeaders();
         URI location = ServletUriComponentsBuilder

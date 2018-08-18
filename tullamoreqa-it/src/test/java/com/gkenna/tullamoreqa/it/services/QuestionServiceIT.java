@@ -4,7 +4,6 @@
 
 package com.gkenna.tullamoreqa.it.services;
 
-import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
@@ -13,7 +12,6 @@ import com.gkenna.tullamoreqa.core.impl.Application;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
-import com.gkenna.tullamoreqa.it.AppConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
@@ -78,7 +76,7 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
-    public void addValidQuestion() throws QuestionAlreadyExistsException {
+    public void addValidQuestion()  {
         validQuestion = new Question();
         validQuestion.setUpvotes(0);
         validQuestion.setDownvotes(0);

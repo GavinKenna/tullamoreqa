@@ -47,7 +47,8 @@ public interface AnswerService extends EntryService {
      * @return Answer that was Deleted.
      * @throws AnswerNotFoundException Thrown if {@link Answer} isn't found.
      */
-    Answer deleteAnswer(final BigInteger answerId) throws AnswerNotFoundException;
+    Answer deleteAnswer(final BigInteger answerId)
+            throws AnswerNotFoundException;
 
     /**
      * Return if an {@link Answer} exists in the DB or not.
