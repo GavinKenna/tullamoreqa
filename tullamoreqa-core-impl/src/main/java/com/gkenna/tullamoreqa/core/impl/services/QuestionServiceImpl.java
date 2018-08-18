@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
@@ -14,6 +15,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigInteger;
 
 /**
  * Implementation of {@link QuestionService}.
@@ -50,42 +54,106 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void addQuestion(final Question question) {
-        LOGGER.debug("Adding new Question {}", question);
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void addQuestion(final Question question)
+            throws QuestionAlreadyExistsException {
+
+        LOGGER.debug("Adding New Question {}", question);
+
+        if (this.doesQuestionExist(question.getId())) {
+            LOGGER.error("Question with ID {} already exists!",
+                    question.getId());
+            throw new QuestionAlreadyExistsException(question.getId()
+                    + " already exists.");
+        }
+
         questionRepository.saveAndFlush(question);
-        LOGGER.info("New Question with ID {} added successfully.",
-                question.getId());
+
+        LOGGER.debug("New Question {} added successfully.", question.getId());
     }
 
     @Override
-    public final void deleteQuestion(final Question question) {
-    }
-
-    @Override
-    public final Question deleteQuestion(final Long questionId)
+    public final void deleteQuestion(final Question question)
             throws QuestionNotFoundException {
-        return null;
+
+        this.deleteQuestion(question.getId());
     }
 
     @Override
-    public final Question updateQuestion(final Long questionId,
-                                         final Question input) {
-        return null;
+    public final void deleteQuestion(final BigInteger questionId)
+            throws QuestionNotFoundException {
+
+        LOGGER.debug("Deleting Question with ID {}", questionId);
+
+        if (this.doesQuestionExist(questionId)) {
+            questionRepository.deleteById(questionId);
+            return;
+        }
+
+        throw new QuestionNotFoundException("Question " + questionId
+                + " does not exist.");
+    }
+
+    @Override
+    public final Question updateQuestion(final BigInteger questionId,
+                                         final Question input)
+            throws QuestionNotFoundException {
+
+        LOGGER.debug("Updating {} to {}", questionId, input);
+
+        if (questionRepository.existsById(questionId)) {
+            final Question output =
+                    questionRepository.findById(questionId).get();
+
+            LOGGER.debug("Question before update {}", output);
+
+            output.setBody(input.getBody());
+            output.setTitle(input.getTitle());
+            output.setCreatedAt(input.getCreatedAt());
+            output.setLastUpdatedAt(input.getLastUpdatedAt());
+            output.setModifiedBy(input.getModifiedBy());
+            output.setTags(input.getTags());
+            output.setUser(input.getUser());
+            output.setDownvotes(input.getDownvotes());
+            output.setUpvotes(input.getUpvotes());
+
+            LOGGER.debug("Question after update {}", output);
+
+            questionRepository.saveAndFlush(output);
+            return output;
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot update.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
     }
 
     @Override
     public final boolean doesQuestionExist(final Question question) {
-        return false;
+        return this.doesQuestionExist(question.getId());
     }
 
     @Override
-    public final boolean doesQuestionExist(final Long questionId) {
-        return false;
+    public final boolean doesQuestionExist(final BigInteger questionId) {
+        return questionRepository.existsById(questionId);
     }
 
     @Override
-    public final Question getQuestion(final Long questionId) {
-        return questionRepository.getOne(questionId);
+    public final Question getQuestion(final BigInteger questionId) throws
+            QuestionNotFoundException {
+        LOGGER.info("QuestionRepo is {}", questionRepository.toString());
+
+        /*
+        TODO replace doesExist with Optional<Question> get
+         */
+        if (this.doesQuestionExist(questionId)) {
+            return questionRepository.findById(questionId).get();
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot retrieve.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
     }
 
     @Override
@@ -112,4 +180,5 @@ public class QuestionServiceImpl extends EntryServiceImpl
     public final Question[] findQuestionsByTag(final Tag tag) {
         return new Question[0];
     }
+
 }

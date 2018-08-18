@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import java.math.BigInteger;
 
 /**
  * An Abstract class that allows for Users to create
@@ -55,8 +56,8 @@ public abstract class Entry {
      * The ID of the Entry.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private BigInteger id;
 
     /**
      * Create a new Entry.
@@ -65,6 +66,7 @@ public abstract class Entry {
      * @param body The Body the User is populating.
      */
     public Entry(final User user, final @NotBlank String body) {
+        this();
         this.user = user;
         this.body = body;
     }
@@ -81,7 +83,7 @@ public abstract class Entry {
      *
      * @return ID of the Entry.
      */
-    public final Long getId() {
+    public final BigInteger getId() {
         return id;
     }
 

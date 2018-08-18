@@ -8,6 +8,8 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+
 /**
  * Repository for containing {@link User}s. Will be called by the responsible
  * Service, in this case it will be
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @since 0.0.0
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, BigInteger> {
     /**
      * Return a {@link User} based on its Username.
      *

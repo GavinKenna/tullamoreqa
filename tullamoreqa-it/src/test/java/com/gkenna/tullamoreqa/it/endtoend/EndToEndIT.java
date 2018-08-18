@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.it.endtoend;
 
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
@@ -62,7 +63,7 @@ public class EndToEndIT {
     TagRepository tagRepository;
 
     @Test
-    public void main() {
+    public void main() throws QuestionAlreadyExistsException {
         createTags();
         createUsers();
         createQuestions();
@@ -120,7 +121,7 @@ public class EndToEndIT {
         assert answerRepository.findAll().size() == 3;
     }
 
-    private void createQuestions() {
+    private void createQuestions() throws QuestionAlreadyExistsException {
 
         Optional<Tag> java = tagRepository.findById("Java");
         Optional<Tag> help = tagRepository.findById("Help");

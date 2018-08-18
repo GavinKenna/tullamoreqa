@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+
 /**
  * Implementation of {@link CommentService}.
  *
@@ -61,13 +63,13 @@ public class CommentServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Comment deleteComment(final Long commentId)
+    public final Comment deleteComment(final BigInteger commentId)
             throws CommentNotFoundException {
         return null;
     }
 
     @Override
-    public final Comment updateComment(final Long commentId,
+    public final Comment updateComment(final BigInteger commentId,
                                        final Comment input) {
         return null;
     }
@@ -78,12 +80,12 @@ public class CommentServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final boolean doesCommentExist(final Long commentId) {
+    public final boolean doesCommentExist(final BigInteger commentId) {
         return false;
     }
 
     @Override
-    public final Comment getComment(final Long commentId) {
+    public final Comment getComment(final BigInteger commentId) {
         return commentRepository.getOne(commentId);
     }
 

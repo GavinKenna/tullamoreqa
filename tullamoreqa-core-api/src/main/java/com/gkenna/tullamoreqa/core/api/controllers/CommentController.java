@@ -7,6 +7,8 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Comment;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigInteger;
+
 /**
  * API Controller for the {@link Comment} Entity. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Comments.
@@ -37,7 +39,7 @@ public interface CommentController {
      * @param commentId The ID of the {@link Comment} to retrieve.
      * @return The Response of this Request.
      */
-    ResponseEntity<Comment> getComment(final Long commentId);
+    ResponseEntity<Comment> getComment(final BigInteger commentId);
 
     /**
      * HTTP PUT Method
@@ -49,7 +51,7 @@ public interface CommentController {
      *                  new values for commentId to update to.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> updateComment(final Long commentId, final Comment input);
+    ResponseEntity<?> updateComment(final BigInteger commentId, final Comment input);
 
     /**
      * HTTP DELETE Method.
@@ -59,5 +61,5 @@ public interface CommentController {
      * @param commentId The ID of the {@link Comment} to delete.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteComment(final Long commentId);
+    ResponseEntity<?> deleteComment(final BigInteger commentId);
 }

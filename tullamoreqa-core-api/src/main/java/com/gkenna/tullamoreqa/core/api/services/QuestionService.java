@@ -4,11 +4,14 @@
 
 package com.gkenna.tullamoreqa.core.api.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
+
+import java.math.BigInteger;
 
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Question}.
@@ -25,8 +28,11 @@ public interface QuestionService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      *
      * @param question {@link Question} to Add.
+     * @throws QuestionAlreadyExistsException Thrown when a Question with the
+     *                                        supplied ID already exists.
      */
-    void addQuestion(final Question question);
+    void addQuestion(final Question question)
+            throws QuestionAlreadyExistsException;
 
     /**
      * Delete a {@link Question} from the
@@ -44,11 +50,10 @@ public interface QuestionService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      *
      * @param questionId ID of the {@link Question} to delete.
-     * @return Question that was Deleted.
      * @throws QuestionNotFoundException Thrown the {@link Question} cannot
      *                                   be found.
      */
-    Question deleteQuestion(final Long questionId)
+    void deleteQuestion(final BigInteger questionId)
             throws QuestionNotFoundException;
 
     /**
@@ -61,7 +66,7 @@ public interface QuestionService {
      * @throws QuestionNotFoundException Thrown when the {@link Question}
      *                                   cannot be found.
      */
-    Question updateQuestion(final Long questionId, final Question input)
+    Question updateQuestion(final BigInteger questionId, final Question input)
             throws QuestionNotFoundException;
 
     /**
@@ -82,7 +87,7 @@ public interface QuestionService {
      * @return True if the {@link Question} exists,
      * false if otherwise.
      */
-    boolean doesQuestionExist(final Long questionId);
+    boolean doesQuestionExist(final BigInteger questionId);
 
     /**
      * Return an {@link Question} based on its ID.
@@ -93,7 +98,7 @@ public interface QuestionService {
      * @throws QuestionNotFoundException Thrown if the
      *                                   {@link Question} cannot be found.
      */
-    Question getQuestion(final Long questionId)
+    Question getQuestion(final BigInteger questionId)
             throws QuestionNotFoundException;
 
     /**

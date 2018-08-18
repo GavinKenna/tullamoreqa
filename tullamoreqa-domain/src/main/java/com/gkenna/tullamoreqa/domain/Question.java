@@ -75,6 +75,7 @@ public class Question extends Entry {
      * Question Constructor.
      */
     public Question() {
+        //super();
         this.tags = new HashSet<Tag>();
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();

@@ -9,6 +9,8 @@ import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Answer}.
  * This API communicates directly with the
@@ -45,7 +47,7 @@ public interface AnswerService extends EntryService {
      * @return Answer that was Deleted.
      * @throws AnswerNotFoundException Thrown if {@link Answer} isn't found.
      */
-    Answer deleteAnswer(final Long answerId) throws AnswerNotFoundException;
+    Answer deleteAnswer(final BigInteger answerId) throws AnswerNotFoundException;
 
     /**
      * Return if an {@link Answer} exists in the DB or not.
@@ -65,7 +67,7 @@ public interface AnswerService extends EntryService {
      * @return True if the {@link Answer} exists,
      * false if otherwise.
      */
-    boolean doesAnswerExist(final Long answerId);
+    boolean doesAnswerExist(final BigInteger answerId);
 
     /**
      * Return an {@link Answer} based on its ID.
@@ -76,7 +78,7 @@ public interface AnswerService extends EntryService {
      * @throws AnswerNotFoundException Thrown if the {@link Answer}
      *                                 cannot be found.
      */
-    Answer getAnswer(final Long answerId) throws AnswerNotFoundException;
+    Answer getAnswer(final BigInteger answerId) throws AnswerNotFoundException;
 
     /**
      * Return all {@link Answer}s in the DB.
@@ -115,7 +117,7 @@ public interface AnswerService extends EntryService {
      * @throws AnswerNotFoundException Thrown when the {@link Answer} cannot
      *                                 be found.
      */
-    Answer updateAnswer(final Long answerId,
+    Answer updateAnswer(final BigInteger answerId,
                         final Answer input) throws AnswerNotFoundException;
 
 }

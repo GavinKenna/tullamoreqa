@@ -7,6 +7,8 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 import com.gkenna.tullamoreqa.domain.Answer;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigInteger;
+
 /**
  * API Controller for the {@link Answer} Entity. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Answers.
@@ -37,7 +39,7 @@ public interface AnswerController {
      * @param answerId The ID of the {@link Answer} to retrieve.
      * @return The Response of this Request.
      */
-    ResponseEntity<Answer> getAnswer(final Long answerId);
+    ResponseEntity<Answer> getAnswer(final BigInteger answerId);
 
     /**
      * HTTP PUT Method
@@ -49,7 +51,7 @@ public interface AnswerController {
      *                 new values for answerId to update to.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> updateAnswer(final Long answerId, final Answer input);
+    ResponseEntity<?> updateAnswer(final BigInteger answerId, final Answer input);
 
     /**
      * HTTP DELETE Method.
@@ -59,5 +61,5 @@ public interface AnswerController {
      * @param answerId The ID of the {@link Answer} to delete.
      * @return The Response of this Request.
      */
-    ResponseEntity<?> deleteAnswer(final Long answerId);
+    ResponseEntity<?> deleteAnswer(final BigInteger answerId);
 }

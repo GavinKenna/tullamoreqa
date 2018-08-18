@@ -26,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
@@ -114,7 +115,7 @@ public class AnswerControllerIT {
 
         LOGGER.info("ValidAnswer is {}", validAnswer);
 
-        Long id = answerRepository.save(validAnswer).getId();
+        BigInteger id = answerRepository.save(validAnswer).getId();
 
         LOGGER.info("ID for getAnswerTest is {}", id);
 

@@ -6,6 +6,8 @@ package com.gkenna.tullamoreqa.core.api.services;
 
 import com.gkenna.tullamoreqa.core.api.exceptions.EntryNotFoundException;
 
+import java.math.BigInteger;
+
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Entry}
  * subclasses, i.e.{@link com.gkenna.tullamoreqa.domain.Answer},
@@ -25,7 +27,7 @@ public interface EntryService {
      * @throws EntryNotFoundException Thrown if ID of the
      *                                Entry isn't found.
      */
-    void addUpvote(final Long entryId) throws EntryNotFoundException;
+    void addUpvote(final BigInteger entryId) throws EntryNotFoundException;
 
     /**
      * Decrease the {@link com.gkenna.tullamoreqa.domain.Entry} total Upvotes
@@ -36,7 +38,7 @@ public interface EntryService {
      * @throws EntryNotFoundException Thrown if ID of the
      *                                Entry isn't found.
      */
-    void removeUpvote(final Long entryId) throws EntryNotFoundException;
+    void removeUpvote(final BigInteger entryId) throws EntryNotFoundException;
 
     /**
      * Increase the {@link com.gkenna.tullamoreqa.domain.Entry} total Downvotes
@@ -47,7 +49,7 @@ public interface EntryService {
      * @throws EntryNotFoundException Thrown if ID of the
      *                                Entry isn't found.
      */
-    void addDownvote(final Long entryId) throws EntryNotFoundException;
+    void addDownvote(final BigInteger entryId) throws EntryNotFoundException;
 
     /**
      * Decrease the {@link com.gkenna.tullamoreqa.domain.Entry} total Downvotes
@@ -58,5 +60,5 @@ public interface EntryService {
      * @throws EntryNotFoundException Thrown if ID of the
      *                                Entry isn't found.
      */
-    void removeDownvote(final Long entryId) throws EntryNotFoundException;
+    void removeDownvote(final BigInteger entryId) throws EntryNotFoundException;
 }

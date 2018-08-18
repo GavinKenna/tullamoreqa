@@ -4,10 +4,12 @@
 
 package com.gkenna.tullamoreqa.it.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
+import com.gkenna.tullamoreqa.core.impl.Application;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
@@ -28,7 +30,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {AppConfiguration.class})
+@SpringBootTest(classes = Application.class, webEnvironment =
+        SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class QuestionServiceIT {
     private static final Logger LOGGER = LogManager.getLogger(QuestionServiceIT.class);
 
@@ -75,7 +78,7 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
-    public void addValidQuestion() {
+    public void addValidQuestion() throws QuestionAlreadyExistsException {
         validQuestion = new Question();
         validQuestion.setUpvotes(0);
         validQuestion.setDownvotes(0);

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.math.BigInteger;
 import java.util.Optional;
 
 /**
@@ -66,7 +67,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Answer deleteAnswer(final Long answerId)
+    public final Answer deleteAnswer(final BigInteger answerId)
             throws AnswerNotFoundException {
         LOGGER.debug("Deleting {}", answerId);
         if (answerRepository.existsById(answerId)) {
@@ -79,7 +80,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Answer updateAnswer(final Long answerId, final Answer input)
+    public final Answer updateAnswer(final BigInteger answerId, final Answer input)
             throws AnswerNotFoundException {
         LOGGER.debug("Updating {} to {}", answerId, input);
         if (answerRepository.existsById(answerId)) {
@@ -104,7 +105,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void addUpvote(final Long answerId)
+    public final void addUpvote(final BigInteger answerId)
             throws AnswerNotFoundException {
         // TODO Will have to add logic to check if a user
         // has already Upvoted this answer.
@@ -126,7 +127,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void removeUpvote(final Long answerId)
+    public final void removeUpvote(final BigInteger answerId)
             throws AnswerNotFoundException {
         LOGGER.debug("Attempting to remove Upvote on Answer {}", answerId);
         Answer output;
@@ -144,7 +145,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void addDownvote(final Long answerId)
+    public final void addDownvote(final BigInteger answerId)
             throws AnswerNotFoundException {
         LOGGER.debug("Attempting to Downvote Answer {}", answerId);
         Answer output;
@@ -162,7 +163,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void removeDownvote(final Long answerId)
+    public final void removeDownvote(final BigInteger answerId)
             throws AnswerNotFoundException {
         LOGGER.debug("Attempting to remove Downvote on Answer {}", answerId);
         Answer output;
@@ -185,12 +186,12 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final boolean doesAnswerExist(final Long answerId) {
+    public final boolean doesAnswerExist(final BigInteger answerId) {
         return answerRepository.existsById(answerId);
     }
 
     @Override
-    public final Answer getAnswer(final Long answerId)
+    public final Answer getAnswer(final BigInteger answerId)
             throws AnswerNotFoundException {
         LOGGER.debug("Attempting to get Answer {}", answerId);
         Optional<Answer> answer = answerRepository.findById(answerId);

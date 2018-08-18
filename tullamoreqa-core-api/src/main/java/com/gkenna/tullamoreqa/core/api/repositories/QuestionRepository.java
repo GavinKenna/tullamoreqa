@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ import java.util.Set;
  * @since 0.0.0
  */
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Long> {
+public interface QuestionRepository extends JpaRepository<Question, BigInteger> {
     /**
      * Find a list of {@link Question}s whose Title matches the supplied Title.
      *
@@ -82,7 +83,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
      * @return Collection of Questions that may have supplied Tags.
      */
     @Query("SELECT DISTINCT q FROM Question q INNER JOIN q.tags t "
-           + "WHERE t.name IN :super")
+            + "WHERE t.name IN :super")
     Collection<Question> findQuestionsBasedOnAnyTagName(
             @Param("super") Set<String> tag);
 

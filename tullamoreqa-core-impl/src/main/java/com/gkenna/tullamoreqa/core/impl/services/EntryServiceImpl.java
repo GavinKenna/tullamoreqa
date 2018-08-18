@@ -7,6 +7,8 @@ package com.gkenna.tullamoreqa.core.impl.services;
 import com.gkenna.tullamoreqa.core.api.exceptions.EntryNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.EntryService;
 
+import java.math.BigInteger;
+
 /**
  * Implementation of {@link EntryService}.
  *
@@ -16,23 +18,23 @@ import com.gkenna.tullamoreqa.core.api.services.EntryService;
  */
 public abstract class EntryServiceImpl implements EntryService {
     @Override
-    public void addUpvote(final Long entryId) throws EntryNotFoundException {
+    public void addUpvote(final BigInteger entryId) throws EntryNotFoundException {
 
     }
 
     @Override
-    public void removeUpvote(final Long entryId)
+    public void removeUpvote(final BigInteger entryId)
             throws EntryNotFoundException {
 
     }
 
     @Override
-    public void addDownvote(final Long entryId) throws EntryNotFoundException {
+    public void addDownvote(final BigInteger entryId) throws EntryNotFoundException {
 
     }
 
     @Override
-    public void removeDownvote(final Long entryId)
+    public void removeDownvote(final BigInteger entryId)
             throws EntryNotFoundException {
 
     }

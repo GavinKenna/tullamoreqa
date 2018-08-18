@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.QuestionController;
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigInteger;
 import java.net.URI;
 
 /**
@@ -54,7 +56,11 @@ public class QuestionControllerImpl implements QuestionController {
 
         LOGGER.info("Add Question : {}", input);
 
-        questionService.addQuestion(input);
+        try {
+            questionService.addQuestion(input);
+        } catch (QuestionAlreadyExistsException e) {
+            e.printStackTrace();
+        }
 
         HttpHeaders headers = new HttpHeaders();
         URI location = ServletUriComponentsBuilder
@@ -68,7 +74,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public final ResponseEntity<Question> getQuestion(
-            @PathVariable("id") final Long questionId) {
+            @PathVariable("id") final BigInteger questionId) {
 
         LOGGER.debug("Attempting to get Question {}", questionId);
         Question output = null;
@@ -92,7 +98,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public final ResponseEntity<?> updateQuestion(
-            @PathVariable("id") final Long questionId,
+            @PathVariable("id") final BigInteger questionId,
             @RequestBody final Question input) {
 
         LOGGER.debug("Updating Question {} with the following details {}",
@@ -113,18 +119,18 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public final ResponseEntity<?> deleteQuestion(
-            @PathVariable("id") final Long questionId) {
+            @PathVariable("id") final BigInteger questionId) {
 
         LOGGER.debug("Deleting Question {}", questionId);
-        Question output;
+
         try {
-            output = questionService.deleteQuestion(questionId);
+            questionService.deleteQuestion(questionId);
         } catch (QuestionNotFoundException e) {
             LOGGER.error("Question with id {} not found.", questionId);
             // TODO Replace this exception with custom exception
             return new ResponseEntity(new Exception("Question with id "
                     + questionId + " not found"), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Question>(output, HttpStatus.OK);
+        return new ResponseEntity<Question>(HttpStatus.OK);
     }
 }
