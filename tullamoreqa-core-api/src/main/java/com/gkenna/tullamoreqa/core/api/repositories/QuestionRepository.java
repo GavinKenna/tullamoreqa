@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.Collection;
 import java.util.Set;
 
@@ -81,23 +80,39 @@ public interface QuestionRepository
      * least one tag that matches. Still looking for one that makes sure it
      * contains all tags.
      *
-     * @param tag List of tags that the Question may contain.
+     * @param tag      List of tags that the Question may contain.
+     * @param pageable Potentially add Pagination.
      * @return Collection of Questions that may have supplied Tags.
      */
     @Query("SELECT DISTINCT q FROM Question q INNER JOIN q.tags t "
             + "WHERE t.name IN :super")
-    Collection<Question> findQuestionsBasedOnAnyTagName(
-            @Param("super") Set<String> tag);
+    Page<Question> findQuestionsBasedOnAnyTagName(
+            @Param("super") Set<String> tag, Pageable pageable);
 
     /**
      * Find questions that contain all supplied tags.
      * We add 0L to the length to convert it to a long type.
      *
-     * @param tags List of tags we wish to filter questions by.
+     * @param tags     List of tags we wish to filter questions by.
+     * @param pageable Potentially add Pagination.
      * @return 0 or more Questions that contain all Tags.
      */
     @Query("SELECT q FROM Question q JOIN q.tags t WHERE t.name IN :tags "
             + "GROUP BY q.id HAVING COUNT(q.id) = :#{#tags.length + 0L}")
-    Collection<Question> findQuestionsBasedOnAllTagNames(
-            @Param("tags") String[] tags);
+    Page<Question> findQuestionsBasedOnAllTagNames(
+            @Param("tags") String[] tags, Pageable pageable);
+
+    /**
+     * Find questions that contain the supplied tag.
+     * We add 0L to the length to convert it to a long type.
+     *
+     * @param tag      Tag to filter questions by.
+     * @param pageable Potentially add Pagination.
+     * @return 0 or more Questions that contain the Tag.
+     */
+    /*@Query("SELECT q FROM Question q JOIN q.tags t WHERE t.name = :tag "
+            + "GROUP BY q.id")*/
+    Page<Question> findAllByTagsName(
+            @Param("tags") String tag, Pageable pageable);
+
 }

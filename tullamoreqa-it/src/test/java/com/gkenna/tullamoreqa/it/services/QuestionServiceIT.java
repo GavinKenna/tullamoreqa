@@ -19,12 +19,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(SpringRunner.class)
@@ -76,7 +80,7 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
-    public void addValidQuestion()  {
+    public void addValidQuestion() {
         validQuestion = new Question();
         validQuestion.setUpvotes(0);
         validQuestion.setDownvotes(0);
@@ -93,6 +97,46 @@ public class QuestionServiceIT {
 
         assert fromRepo != null;
         assert fromRepo.equals(validQuestion);
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnListOfQuestionsBasedOnTag() {
+        List<Question> questionList = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        tags.add(new Tag("Test1"));
+        tags.add(new Tag("Test2"));
+        tags.add(new Tag("Test3"));
+        for (Tag t : tags) {
+            tagRepository.saveAndFlush(t);
+        }
+
+        Question question1 = new Question();
+        question1.addTag(tagRepository.getOne("Test1"));
+        question1.addTag(tagRepository.getOne("Test2"));
+
+        Question question2 = new Question();
+        question2.addTag(tagRepository.getOne("Test1"));
+        question2.addTag(tagRepository.getOne("Test3"));
+
+        Question question3 = new Question();
+        question3.addTag(tagRepository.getOne("Test2"));
+
+        questionList.add(question1);
+        questionList.add(question2);
+        questionList.add(question3);
+
+        for (Question q : questionList) {
+            questionRepository.saveAndFlush(q);
+        }
+
+        Page<Question> questions = questionRepository.findAllByTagsName("Test1", Pageable.unpaged());
+
+        List<Question> returnedQuestions = questions.getContent();
+        assert returnedQuestions.contains(question1);
+        assert returnedQuestions.contains(question2);
+        assert !returnedQuestions.contains(question3);
+
     }
 
     @Test

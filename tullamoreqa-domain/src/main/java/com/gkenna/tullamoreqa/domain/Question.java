@@ -200,6 +200,30 @@ public class Question extends Entry {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
+    /**
+     * Add a Tag to the list of Tags within this Question.
+     *
+     * @param tag Tag to add.
+     * @since 0.0.11
+     */
+    public final void addTag(final Tag tag) {
+        if (!tags.contains(tag)) {
+            this.tags.add(tag);
+        }
+    }
+
+    /**
+     * Remove a Tag to the list of Tags within this Question.
+     *
+     * @param tag Tag to remove.
+     * @since 0.0.11
+     */
+    public final void remoteTag(final Tag tag) {
+        if (!tags.contains(tag)) {
+            this.tags.remove(tag);
+        }
+    }
+
     @Override
     public final String toString() {
         final StringBuilder sb = new StringBuilder("Question{");

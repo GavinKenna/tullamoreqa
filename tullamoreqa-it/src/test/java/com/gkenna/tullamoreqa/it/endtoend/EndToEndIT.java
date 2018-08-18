@@ -5,7 +5,6 @@
 package com.gkenna.tullamoreqa.it.endtoend;
 
 
-import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
@@ -63,7 +62,7 @@ public class EndToEndIT {
     TagRepository tagRepository;
 
     @Test
-    public void main() throws QuestionAlreadyExistsException {
+    public void main() {
         createTags();
         createUsers();
         createQuestions();
@@ -80,12 +79,12 @@ public class EndToEndIT {
         Page<Question> questionsByGavin = questionRepository.findQuestionsByUserUsername("Gavin", Pageable.unpaged());
         assert questionsByGavin.hasContent();
 
-        List<Question> questionsByJavaTag = (List<Question>) questionRepository.findQuestionsBasedOnAllTagNames
-                (new String[]{"Java"});
+        List<Question> questionsByJavaTag = questionRepository.findQuestionsBasedOnAllTagNames
+                (new String[]{"Java"}, Pageable.unpaged()).getContent();
         assert questionsByJavaTag.size() == 2;
 
-        List<Question> questionsByJavaAndHelpTag = (List<Question>) questionRepository
-                .findQuestionsBasedOnAllTagNames(new String[]{"Java", "Help"});
+        List<Question> questionsByJavaAndHelpTag = questionRepository
+                .findQuestionsBasedOnAllTagNames(new String[]{"Java", "Help"}, Pageable.unpaged()).getContent();
         assert questionsByJavaAndHelpTag.size() == 1;
 
     }
@@ -121,7 +120,7 @@ public class EndToEndIT {
         assert answerRepository.findAll().size() == 3;
     }
 
-    private void createQuestions() throws QuestionAlreadyExistsException {
+    private void createQuestions() {
 
         Optional<Tag> java = tagRepository.findById("Java");
         Optional<Tag> help = tagRepository.findById("Help");

@@ -13,9 +13,10 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 
 /**
@@ -100,6 +101,12 @@ public class QuestionServiceImpl extends EntryServiceImpl
 
             LOGGER.debug("Question before update {}", output);
 
+            /*
+            TODO How should we update Questions?
+            Say if we send a request and only send in an update
+            to the description, everything below would be set,
+            which could result in nulls.
+             */
             output.setBody(input.getBody());
             output.setTitle(input.getTitle());
             output.setCreatedAt(input.getCreatedAt());
@@ -155,22 +162,74 @@ public class QuestionServiceImpl extends EntryServiceImpl
 
     @Override
     public final Question[] findQuestionsByTitle(final String title) {
-        return new Question[0];
+        /*
+        TODO Assert Title isn't null, throw exception if it is.
+         */
+        /*
+        TODO Choose strategy on how we Page.
+         */
+        /*
+        TODO All below is temporary until we utilize Pagination correctly.
+         */
+        final Page<Question> pageableQuestions =
+                this.questionRepository.findByTitle(title, Pageable.unpaged());
+        final Question[] questions = new Question[pageableQuestions.getSize()];
+        int i = 0;
+        while (pageableQuestions.iterator().hasNext()) {
+            questions[i] = pageableQuestions.iterator().next();
+            i++;
+        }
+        return questions;
     }
 
     @Override
     public final Question[] findQuestionsAskedByUser(final User user) {
-        return new Question[0];
+        /*
+        TODO Assert Title isn't null, throw exception if it is.
+         */
+        /*
+        TODO Choose strategy on how we Page.
+         */
+        /*
+        TODO All below is temporary until we utilize Pagination correctly.
+         */
+        final Page<Question> pageableQuestions =
+                this.questionRepository.findQuestionsByUserUsername(
+                        user.getUsername(), Pageable.unpaged());
+        final Question[] questions = new Question[pageableQuestions.getSize()];
+        int i = 0;
+        while (pageableQuestions.iterator().hasNext()) {
+            questions[i] = pageableQuestions.iterator().next();
+            i++;
+        }
+        return questions;
     }
 
     @Override
     public final Question[] findQuestionsAnsweredByUser(final User user) {
+        /*
+        TODO Should this API be supported?
+         */
         return new Question[0];
     }
 
     @Override
     public final Question[] findQuestionsByTag(final Tag tag) {
-        return new Question[0];
+        /*
+        TODO Assert Title isn't null, throw exception if it is.
+        TODO Choose strategy on how we Page.
+        TODO All below is temporary until we utilize Pagination correctly.
+         */
+        final Page<Question> pageableQuestions =
+                this.questionRepository.findAllByTagsName(tag.getId(),
+                        Pageable.unpaged());
+        final Question[] questions = new Question[pageableQuestions.getSize()];
+        int i = 0;
+        while (pageableQuestions.iterator().hasNext()) {
+            questions[i] = pageableQuestions.iterator().next();
+            i++;
+        }
+        return questions;
     }
 
 }

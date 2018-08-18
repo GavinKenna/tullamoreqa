@@ -80,16 +80,6 @@ public class QuestionServiceImplTest {
         verify(mockedQuestionRepository).saveAndFlush(question);
     }
 
-
-   /* @Test(expected = QuestionAlreadyExistsException.class)
-    public void shouldThrowQuestionExistsException() throws QuestionAlreadyExistsException {
-        final Question question = new Question();
-
-        when(mockedQuestionRepository.existsById(question.getId())).thenReturn(true);
-
-        questionService.addQuestion(question);
-    }*/
-
     @Test
     public void shouldDeleteQuestionByIdSuccessfully() throws QuestionNotFoundException {
         final Question question = new Question();

@@ -56,7 +56,6 @@ public class TagServiceImpl implements TagService {
     @SuppressWarnings("checkstyle:DesignForExtension")
     public void addTag(final Tag tag) throws TagAlreadyExistsException {
         LOGGER.debug("Adding New Tag {}", tag);
-        LOGGER.info("TagRepo is {}", tagRepository.toString());
 
         if (this.doesTagExist(tag.getId())) {
             LOGGER.error("Tag with ID {} already exists!", tag.getId());
