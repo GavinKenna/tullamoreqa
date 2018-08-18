@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -110,8 +109,6 @@ public interface QuestionRepository
      * @param pageable Potentially add Pagination.
      * @return 0 or more Questions that contain the Tag.
      */
-    /*@Query("SELECT q FROM Question q JOIN q.tags t WHERE t.name = :tag "
-            + "GROUP BY q.id")*/
     Page<Question> findAllByTagsName(
             @Param("tags") String tag, Pageable pageable);
 
