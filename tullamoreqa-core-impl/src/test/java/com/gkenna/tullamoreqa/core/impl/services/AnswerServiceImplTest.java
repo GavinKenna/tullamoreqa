@@ -89,7 +89,7 @@ public class AnswerServiceImplTest {
 
         assert answer.getQuestion().equals(q);
         assert answer.getBody().equals(body);
-        assert answer.getUser().equals(u);
+        assert answer.getCreatedBy().equals(u);
     }
 
     @Test(expected = AnswerNotFoundException.class)

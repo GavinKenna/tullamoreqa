@@ -5,7 +5,6 @@
 package com.gkenna.tullamoreqa.core.api.repositories;
 
 import com.gkenna.tullamoreqa.domain.Question;
-import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,34 +44,8 @@ public interface QuestionRepository
      * @param pageable Potentially add Pagination.
      * @return List of {@link Question}s in Page form.
      */
-    Page<Question> findByUserUsername(String username, Pageable pageable);
-
-    /**
-     * Return a list of all {@link Question}s associated with a particular
-     * {@link com.gkenna.tullamoreqa.domain.Tag}.
-     *
-     * @param tags     Filter all  {@link Question}s based on this
-     *                 {@link com.gkenna.tullamoreqa.domain.Tag} Username.
-     * @param pageable Potentially add Pagination.
-     * @return List of {@link Question}s in Page form.
-     */
-    Page<Question> getByTagsIn(Set<Tag> tags, Pageable pageable);
-
-    /*
-    TODO This may be a duplication.
-     */
-
-    /**
-     * Return a list of all {@link Question}s associated with a particular
-     * {@link com.gkenna.tullamoreqa.domain.User}.
-     *
-     * @param username Filter all  {@link Question}s based on this
-     *                 {@link com.gkenna.tullamoreqa.domain.User} Username.
-     * @param pageable Potentially add Pagination.
-     * @return List of {@link Question}s in Page form.
-     */
-    Page<Question> findQuestionsByUserUsername(
-            String username, Pageable pageable);
+    Page<Question> findQuestionsByCreatedByUsername(String username,
+                                                    Pageable pageable);
 
     /**
      * This works, but much like the others above. This makes sure there's at

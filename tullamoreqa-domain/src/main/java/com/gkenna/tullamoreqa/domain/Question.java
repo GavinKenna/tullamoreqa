@@ -233,7 +233,7 @@ public class Question extends Entry {
         sb.append(", createdAt=").append(createdAt);
         sb.append(", lastUpdatedAt=").append(lastUpdatedAt);
         sb.append(", title='").append(title).append('\'');
-        sb.append(", user=").append(getUser());
+        sb.append(", createdBy=").append(getCreatedAt());
         sb.append(", body='").append(getBody()).append('\'');
         sb.append(", upvotes=").append(getUpvotes());
         sb.append(", downvotes=").append(getDownvotes());

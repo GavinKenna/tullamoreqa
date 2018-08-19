@@ -113,7 +113,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
             output.setLastUpdatedAt(input.getLastUpdatedAt());
             output.setModifiedBy(input.getModifiedBy());
             output.setTags(input.getTags());
-            output.setUser(input.getUser());
+            output.setCreatedAt(input.getCreatedAt());
             output.setDownvotes(input.getDownvotes());
             output.setUpvotes(input.getUpvotes());
 
@@ -156,12 +156,14 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Iterable<Question> getAllQuestions() {
-        return questionRepository.findAll();
+    public final Question[] getAllQuestions(final Pageable pageable) {
+        return questionRepository.findAll().toArray(new Question[0]);
     }
 
     @Override
-    public final Question[] findQuestionsByTitle(final String title) {
+    public final Question[] findQuestionsByTitle(final String title,
+                                                 final Pageable pageable) {
+
         /*
         TODO Assert Title isn't null, throw exception if it is.
          */
@@ -173,17 +175,12 @@ public class QuestionServiceImpl extends EntryServiceImpl
          */
         final Page<Question> pageableQuestions =
                 this.questionRepository.findByTitle(title, Pageable.unpaged());
-        final Question[] questions = new Question[pageableQuestions.getSize()];
-        int i = 0;
-        while (pageableQuestions.iterator().hasNext()) {
-            questions[i] = pageableQuestions.iterator().next();
-            i++;
-        }
-        return questions;
+        return pageableQuestions.getContent().toArray(new Question[0]);
     }
 
     @Override
-    public final Question[] findQuestionsAskedByUser(final User user) {
+    public final Question[] findQuestionsAskedByUser(final User user,
+                                                     final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
          */
@@ -194,19 +191,15 @@ public class QuestionServiceImpl extends EntryServiceImpl
         TODO All below is temporary until we utilize Pagination correctly.
          */
         final Page<Question> pageableQuestions =
-                this.questionRepository.findQuestionsByUserUsername(
-                        user.getUsername(), Pageable.unpaged());
-        final Question[] questions = new Question[pageableQuestions.getSize()];
-        int i = 0;
-        while (pageableQuestions.iterator().hasNext()) {
-            questions[i] = pageableQuestions.iterator().next();
-            i++;
-        }
-        return questions;
+                this.questionRepository.findQuestionsByCreatedByUsername(
+                        user.getUsername(), pageable);
+        return pageableQuestions.getContent().toArray(new Question[0]);
     }
 
     @Override
-    public final Question[] findQuestionsAnsweredByUser(final User user) {
+    public final Question[] findQuestionsAnsweredByUser(
+            final User user, final Pageable pageable) {
+
         /*
         TODO Should this API be supported?
          */
@@ -214,7 +207,8 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question[] findQuestionsByTag(final Tag tag) {
+    public final Question[] findQuestionsByTag(final Tag tag,
+                                               final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
         TODO Choose strategy on how we Page.
@@ -223,13 +217,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
         final Page<Question> pageableQuestions =
                 this.questionRepository.findAllByTagsName(tag.getId(),
                         Pageable.unpaged());
-        final Question[] questions = new Question[pageableQuestions.getSize()];
-        int i = 0;
-        while (pageableQuestions.iterator().hasNext()) {
-            questions[i] = pageableQuestions.iterator().next();
-            i++;
-        }
-        return questions;
+        return pageableQuestions.getContent().toArray(new Question[0]);
     }
 
 }

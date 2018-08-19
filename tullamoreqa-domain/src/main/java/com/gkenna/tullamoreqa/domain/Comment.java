@@ -66,7 +66,7 @@ public final class Comment extends Entry {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Comment{");
         sb.append("parent=").append(parent);
-        sb.append(", user=").append(getUser());
+        sb.append(", createdBy=").append(getCreatedBy());
         sb.append(", body='").append(getBody()).append('\'');
         sb.append(", upvotes=").append(getUpvotes());
         sb.append(", downvotes=").append(getDownvotes());

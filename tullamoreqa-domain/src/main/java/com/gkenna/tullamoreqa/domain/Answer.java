@@ -114,14 +114,14 @@ public class Answer extends Entry {
                 && Objects.equals(getId(), answer.getId())
                 && Objects.equals(getUpvotes(), answer.getUpvotes())
                 && Objects.equals(getDownvotes(), answer.getDownvotes())
-                && Objects.equals(getUser(), answer.getUser());
+                && Objects.equals(getCreatedBy(), answer.getCreatedBy());
     }
 
     @Override
     public final int hashCode() {
         return Objects.hash(getQuestion(), isChosenAnswer(), getBody(),
                 getId(), getUpvotes(), getDownvotes(),
-                getUser());
+                getCreatedBy());
     }
 
     @Override
@@ -129,7 +129,7 @@ public class Answer extends Entry {
         final StringBuilder sb = new StringBuilder("Answer{");
         sb.append("question=").append(question);
         sb.append(", chosenAnswer=").append(chosenAnswer);
-        sb.append(", user=").append(getUser());
+        sb.append(", createdBy=").append(getCreatedBy());
         sb.append(", body='").append(getBody()).append('\'');
         sb.append(", upvotes=").append(getUpvotes());
         sb.append(", downvotes=").append(getDownvotes());

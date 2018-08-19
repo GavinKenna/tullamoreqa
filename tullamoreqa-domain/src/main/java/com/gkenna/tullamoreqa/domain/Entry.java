@@ -30,8 +30,8 @@ public abstract class Entry {
      * The User who created the Entry.
      */
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "user_username")
-    private User user;
+    @JoinColumn(name = "createdBy_username")
+    private User createdBy;
 
     /**
      * The Body of the Entry. Contains the bulk of the textual
@@ -61,12 +61,12 @@ public abstract class Entry {
     /**
      * Create a new Entry.
      *
-     * @param user The User creating this Entry.
-     * @param body The Body the User is populating.
+     * @param createdBy The User creating this Entry.
+     * @param body      The Body the User is populating.
      */
-    public Entry(final User user, final @NotBlank String body) {
+    public Entry(final User createdBy, final @NotBlank String body) {
         this();
-        this.user = user;
+        this.createdBy = createdBy;
         this.body = body;
     }
 
@@ -91,17 +91,17 @@ public abstract class Entry {
      *
      * @return User who created this Entry.
      */
-    public final User getUser() {
-        return user;
+    public final User getCreatedBy() {
+        return createdBy;
     }
 
     /**
      * Set the User who created this Entry.
      *
-     * @param user User who created this Entry.
+     * @param createdBy User who created this Entry.
      */
-    public final void setUser(final User user) {
-        this.user = user;
+    public final void setCreatedBy(final User createdBy) {
+        this.createdBy = createdBy;
     }
 
     /**

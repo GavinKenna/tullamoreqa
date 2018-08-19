@@ -79,7 +79,7 @@ public class AnswerControllerIT {
         mockedQuestion = new Question();
         mockedQuestion.setBody("MockedBody");
         mockedQuestion.setTitle("MockedTitle");
-        mockedQuestion.setUser(mockedUser);
+        mockedQuestion.setCreatedBy(mockedUser);
         mockedQuestion.setCreatedAt(Date.from(Instant.EPOCH));
         mockedQuestion.setLastUpdatedAt(Date.from(Instant.EPOCH));
         mockedQuestion.setModifiedBy(mockedUser);

@@ -43,7 +43,8 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
      * @param pageable Potentially add Pagination.
      * @return List of {@link Answer}s in Page form.
      */
-    Page<Answer> findByUserUsername(String username, Pageable pageable);
+    Page<Answer> findQuestionsByCreatedByUsername(String username,
+                                                  Pageable pageable);
 
     /**
      * Return a list of all {@link Answer}s based on their Chosen Answer
@@ -65,7 +66,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
      * @param pageable     Potentially add Pagination.
      * @return List of {@link Answer}s in Page form.
      */
-    @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.user u "
+    @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.createdBy u "
             + "WHERE u.username = ?1")
     Page<Answer> findAnswersByUserUsername(
             String userUsername, Pageable pageable);
@@ -78,7 +79,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
      *                     {@link com.gkenna.tullamoreqa.domain.User} Username.
      * @return Array of {@link Answer}s.
      */
-    @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.user u "
+    @Query("SELECT DISTINCT a FROM Answer a INNER JOIN a.createdBy u "
            + "WHERE u.username = ?1")
     Answer[] findAnswersByUserUsername(String userUsername);
 

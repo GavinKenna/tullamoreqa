@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Pageable;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -186,14 +187,7 @@ public class QuestionServiceImplTest {
 
         when(mockedQuestionRepository.findAll()).thenReturn(questions);
 
-        questionService.getAllQuestions().iterator();
-        List<Question> qs = new ArrayList<>();
-
-        for (Question q : questionService.getAllQuestions()) {
-            qs.add(q);
-        }
-
-        final Question[] allQuestions = qs.toArray(new Question[0]);
+        Question[] allQuestions = questionService.getAllQuestions(Pageable.unpaged());
 
         assert allQuestions[0].equals(question1);
         assert allQuestions[1].equals(question2);

@@ -92,7 +92,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
 
             output.setBody(input.getBody());
             output.setQuestion(input.getQuestion());
-            output.setUser(input.getUser());
+            output.setCreatedBy(input.getCreatedBy());
             output.setChosenAnswer(input.isChosenAnswer());
             output.setDownvotes(input.getDownvotes());
             output.setUpvotes(input.getUpvotes());
