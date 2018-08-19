@@ -76,3 +76,8 @@ Table of Contents
   To run the full Integration Test suite (and bring up the Postgres Docker Container), Checkstyle, Cobertura and Javadocs, execute the following in a terminal :
   
   `$ mvn clean install checkstyle:check javadoc:javadoc -Ptest verify`
+  
+  *Windows Issues*
+  
+  Sometimes when running the Integration Tests with Windows and 'Docker for Windows', you may see some Connection Timeout issues. To solve this simply execute the following (as admin) in a command prompt:
+  ``route add 172.17.0.0 MASK 255.255.0.0 10.0.75.2``
