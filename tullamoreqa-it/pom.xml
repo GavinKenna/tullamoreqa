@@ -88,6 +88,10 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>
@@ -232,6 +236,7 @@
                         <executions>
                             <execution>
                                 <goals>
+                                    <goal>integration-test</goal>
                                     <goal>integration-test</goal>
                                     <goal>verify</goal>
                                 </goals>

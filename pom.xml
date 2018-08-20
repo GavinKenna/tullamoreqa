@@ -53,6 +53,10 @@
         <maven-compiler-plugin.source>8</maven-compiler-plugin.source>
         <maven-compiler-plugin.target>8</maven-compiler-plugin.target>
         <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
+        <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
+        <mysql-connector-java.version>8.0.12</mysql-connector-java.version>
+        <h2.version>1.4.193</h2.version>
     </properties>
 
     <build>                                                                
@@ -60,7 +64,7 @@
         <plugin>                                                       
             <groupId>org.apache.maven.plugins</groupId>                
             <artifactId>maven-checkstyle-plugin</artifactId>           
-            <version>3.0.0</version>                                   
+            <version>${maven-checkstyle-plugin.version}</version>
             <executions>                                               
                 <execution>                                            
                     <id>validate</id>                                  
@@ -88,7 +92,7 @@
             <plugin>                                                   
                 <groupId>org.codehaus.mojo</groupId>                   
                 <artifactId>cobertura-maven-plugin</artifactId>        
-                <version>2.7</version>                                 
+                <version>${cobertura-maven-plugin.version}</version>
                 <configuration>                                        
                     <formats>                                          
                         <format>html</format>                          
@@ -131,12 +135,12 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.12</version>
+                <version>${mysql-connector-java.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.193</version>
+                <version>${h2.version}</version>
                 <scope>runtime</scope>
             </dependency>
             <dependency>
