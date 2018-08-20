@@ -46,6 +46,7 @@ Table of Contents
  * Swagger integration for the TQA API
  * OAuth authentication
  * User roles (Admin, Regular User, etc)
+ * Implement HATEOAS / HAL support
 
 # Building
 
