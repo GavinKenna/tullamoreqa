@@ -55,7 +55,7 @@ public abstract class Entry {
      * The ID of the Entry.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     /**
