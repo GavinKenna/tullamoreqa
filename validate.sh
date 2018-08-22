@@ -35,4 +35,4 @@ fi
 
 # Execute build of TQA
 
-mvn checkstyle:check javadoc:javadoc cobertura:cobertura -Ptest verify
+mvn checkstyle:check javadoc:javadoc cobertura:cobertura -PdockerIT verify
