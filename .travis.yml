@@ -7,9 +7,9 @@ script:
   - mvn checkstyle:check
   - mvn test cobertura:cobertura
   - mvn javadoc:javadoc
-  - mvn -PdockerIT -Ddb=postgres
-  - mvn -PdockerIT -Ddb=h2
-  - mvn -PdockerIT -Ddb=mysql
+  - mvn integration-test -PdockerIT -Ddb=postgres
+  - mvn integration-test -PdockerIT -Ddb=h2
+  - mvn integration-test -PdockerIT -Ddb=mysql
 
 after_success: 
 - bash <(curl -s https://codecov.io/bash)
