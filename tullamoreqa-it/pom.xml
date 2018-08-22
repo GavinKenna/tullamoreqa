@@ -23,10 +23,6 @@
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
         <!--Default DocketIT properties. If DB isn't specified then we use Postgres-->
         <db>postgres</db>
-        <!--<db.port>5432</db.port>
-        <db.timeout>20000</db.timeout>-->
-        <!--<docker-db-image.name>${db}</docker-db-image.name>-->
-        <!---->
         <properties-maven-plugin.version>
             1.0-alpha-2
         </properties-maven-plugin.version>
