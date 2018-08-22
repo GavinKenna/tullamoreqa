@@ -8,7 +8,9 @@ import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Question}.
@@ -44,11 +46,10 @@ public interface QuestionService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      *
      * @param questionId ID of the {@link Question} to delete.
-     * @return Question that was Deleted.
      * @throws QuestionNotFoundException Thrown the {@link Question} cannot
      *                                   be found.
      */
-    Question deleteQuestion(final Long questionId)
+    void deleteQuestion(final Long questionId)
             throws QuestionNotFoundException;
 
     /**
@@ -99,47 +100,54 @@ public interface QuestionService {
     /**
      * Return all {@link Question}s in the DB.
      *
+     * @param pageable Potentially add Pagination.
      * @return All {@link Question}s in the DB.
      */
-    Iterable<Question> getAllQuestions();
+    Question[] getAllQuestions(final Pageable pageable);
 
     /**
      * Retrieve list of {@link Question}s whose Title matches the
      * supplied Title.
      *
-     * @param title Title of the {@link Question}(s) to return.
+     * @param title    Title of the {@link Question}(s) to return.
+     * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsByTitle(final String title);
+    Question[] findQuestionsByTitle(final String title,
+                                    final Pageable pageable);
 
     /**
      * Return a list of all {@link Question}s asked by a particular
      * {@link com.gkenna.tullamoreqa.domain.User}.
      *
-     * @param user Filter all  {@link Question}s based on this
-     *             {@link com.gkenna.tullamoreqa.domain.User}.
+     * @param user     Filter all  {@link Question}s based on this
+     *                 {@link com.gkenna.tullamoreqa.domain.User}.
+     * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsAskedByUser(final User user);
+    Question[] findQuestionsAskedByUser(final User user,
+                                        final Pageable pageable);
 
     /**
      * Return a list of all {@link Question}s answered by a particular
      * {@link com.gkenna.tullamoreqa.domain.User}.
      *
-     * @param user Filter all  {@link Question}s based on this
-     *             {@link com.gkenna.tullamoreqa.domain.User}.
+     * @param user     Filter all  {@link Question}s based on this
+     *                 {@link com.gkenna.tullamoreqa.domain.User}.
+     * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsAnsweredByUser(final User user);
+    Question[] findQuestionsAnsweredByUser(final User user,
+                                           final Pageable pageable);
 
     /**
      * Return a list of all {@link Question}s that are tagged by a particular
      * {@link Tag}.
      *
-     * @param tag Filter all  {@link Question}s based on this
-     *            {@link com.gkenna.tullamoreqa.domain.Tag}.
+     * @param tag      Filter all  {@link Question}s based on this
+     *                 {@link com.gkenna.tullamoreqa.domain.Tag}.
+     * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsByTag(final Tag tag);
-
+    Question[] findQuestionsByTag(final Tag tag, final Pageable pageable);
 }

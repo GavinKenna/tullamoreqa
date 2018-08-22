@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class AnswerServiceImplTest {
     private final AnswerServiceImpl answerService;
     @Mock
     private final Answer answer;
-    private final Long answerId = 0L;
+    private final Long answerId = new Long(String.valueOf(0));
     @Mock
     private AnswerRepository mockedAnswerRepo;
 
@@ -88,7 +89,7 @@ public class AnswerServiceImplTest {
 
         assert answer.getQuestion().equals(q);
         assert answer.getBody().equals(body);
-        assert answer.getUser().equals(u);
+        assert answer.getCreatedBy().equals(u);
     }
 
     @Test(expected = AnswerNotFoundException.class)

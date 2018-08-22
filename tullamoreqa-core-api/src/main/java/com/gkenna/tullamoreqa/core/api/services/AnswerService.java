@@ -9,6 +9,8 @@ import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
+
+
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Answer}.
  * This API communicates directly with the
@@ -45,7 +47,8 @@ public interface AnswerService extends EntryService {
      * @return Answer that was Deleted.
      * @throws AnswerNotFoundException Thrown if {@link Answer} isn't found.
      */
-    Answer deleteAnswer(final Long answerId) throws AnswerNotFoundException;
+    Answer deleteAnswer(final Long answerId)
+            throws AnswerNotFoundException;
 
     /**
      * Return if an {@link Answer} exists in the DB or not.

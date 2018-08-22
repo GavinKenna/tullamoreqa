@@ -9,6 +9,8 @@ import com.gkenna.tullamoreqa.domain.Comment;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
+
+
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Comment}.
  * This API communicates directly with the
@@ -44,7 +46,8 @@ public interface CommentService {
      * @throws CommentNotFoundException Thrown if the {@link Comment}
      *                                  isn't found.
      */
-    Comment deleteComment(final Long commentId) throws CommentNotFoundException;
+    Comment deleteComment(final Long commentId)
+            throws CommentNotFoundException;
 
     /**
      * Return if a {@link Comment} exists in the DB or not.

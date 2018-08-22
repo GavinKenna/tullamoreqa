@@ -13,7 +13,11 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * Implementation of {@link QuestionService}.
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service("questionService")
+@Transactional
 public class QuestionServiceImpl extends EntryServiceImpl
         implements QuestionService {
 
@@ -50,66 +55,169 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void addQuestion(final Question question) {
-        LOGGER.debug("Adding new Question {}", question);
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void addQuestion(final Question question) {
+
+        LOGGER.debug("Adding New Question {}", question);
+
         questionRepository.saveAndFlush(question);
-        LOGGER.info("New Question with ID {} added successfully.",
-                question.getId());
+
+        LOGGER.debug("New Question {} added successfully.", question.getId());
     }
 
     @Override
-    public final void deleteQuestion(final Question question) {
-    }
-
-    @Override
-    public final Question deleteQuestion(final Long questionId)
+    public final void deleteQuestion(final Question question)
             throws QuestionNotFoundException {
-        return null;
+
+        this.deleteQuestion(question.getId());
+    }
+
+    @Override
+    public final void deleteQuestion(final Long questionId)
+            throws QuestionNotFoundException {
+
+        LOGGER.debug("Deleting Question with ID {}", questionId);
+
+        if (this.doesQuestionExist(questionId)) {
+            questionRepository.deleteById(questionId);
+            return;
+        }
+
+        throw new QuestionNotFoundException("Question " + questionId
+                + " does not exist.");
     }
 
     @Override
     public final Question updateQuestion(final Long questionId,
-                                         final Question input) {
-        return null;
+                                         final Question input)
+            throws QuestionNotFoundException {
+
+        LOGGER.debug("Updating {} to {}", questionId, input);
+
+        if (questionRepository.existsById(questionId)) {
+            final Question output =
+                    questionRepository.findById(questionId).get();
+
+            LOGGER.debug("Question before update {}", output);
+
+            /*
+            TODO How should we update Questions?
+            Say if we send a request and only send in an update
+            to the description, everything below would be set,
+            which could result in nulls.
+             */
+            output.setBody(input.getBody());
+            output.setTitle(input.getTitle());
+            output.setCreatedAt(input.getCreatedAt());
+            output.setLastUpdatedAt(input.getLastUpdatedAt());
+            output.setModifiedBy(input.getModifiedBy());
+            output.setTags(input.getTags());
+            output.setCreatedAt(input.getCreatedAt());
+            output.setDownvotes(input.getDownvotes());
+            output.setUpvotes(input.getUpvotes());
+
+            LOGGER.debug("Question after update {}", output);
+
+            questionRepository.saveAndFlush(output);
+            return output;
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot update.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
     }
 
     @Override
     public final boolean doesQuestionExist(final Question question) {
-        return false;
+        return this.doesQuestionExist(question.getId());
     }
 
     @Override
     public final boolean doesQuestionExist(final Long questionId) {
-        return false;
+        return questionRepository.existsById(questionId);
     }
 
     @Override
-    public final Question getQuestion(final Long questionId) {
-        return questionRepository.getOne(questionId);
+    public final Question getQuestion(final Long questionId) throws
+            QuestionNotFoundException {
+        LOGGER.info("QuestionRepo is {}", questionRepository.toString());
+
+        /*
+        TODO replace doesExist with Optional<Question> get
+         */
+        if (this.doesQuestionExist(questionId)) {
+            return questionRepository.findById(questionId).get();
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot retrieve.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
     }
 
     @Override
-    public final Iterable<Question> getAllQuestions() {
-        return questionRepository.findAll();
+    public final Question[] getAllQuestions(final Pageable pageable) {
+        return questionRepository.findAll().toArray(new Question[0]);
     }
 
     @Override
-    public final Question[] findQuestionsByTitle(final String title) {
+    public final Question[] findQuestionsByTitle(final String title,
+                                                 final Pageable pageable) {
+
+        /*
+        TODO Assert Title isn't null, throw exception if it is.
+         */
+        /*
+        TODO Choose strategy on how we Page.
+         */
+        /*
+        TODO All below is temporary until we utilize Pagination correctly.
+         */
+        final Page<Question> pageableQuestions =
+                this.questionRepository.findByTitle(title, Pageable.unpaged());
+        return pageableQuestions.getContent().toArray(new Question[0]);
+    }
+
+    @Override
+    public final Question[] findQuestionsAskedByUser(final User user,
+                                                     final Pageable pageable) {
+        /*
+        TODO Assert Title isn't null, throw exception if it is.
+         */
+        /*
+        TODO Choose strategy on how we Page.
+         */
+        /*
+        TODO All below is temporary until we utilize Pagination correctly.
+         */
+        final Page<Question> pageableQuestions =
+                this.questionRepository.findQuestionsByCreatedByUsername(
+                        user.getUsername(), pageable);
+        return pageableQuestions.getContent().toArray(new Question[0]);
+    }
+
+    @Override
+    public final Question[] findQuestionsAnsweredByUser(
+            final User user, final Pageable pageable) {
+
+        /*
+        TODO Should this API be supported?
+         */
         return new Question[0];
     }
 
     @Override
-    public final Question[] findQuestionsAskedByUser(final User user) {
-        return new Question[0];
+    public final Question[] findQuestionsByTag(final Tag tag,
+                                               final Pageable pageable) {
+        /*
+        TODO Assert Title isn't null, throw exception if it is.
+        TODO Choose strategy on how we Page.
+        TODO All below is temporary until we utilize Pagination correctly.
+         */
+        final Page<Question> pageableQuestions =
+                this.questionRepository.findAllByTagsName(tag.getId(),
+                        Pageable.unpaged());
+        return pageableQuestions.getContent().toArray(new Question[0]);
     }
 
-    @Override
-    public final Question[] findQuestionsAnsweredByUser(final User user) {
-        return new Question[0];
-    }
-
-    @Override
-    public final Question[] findQuestionsByTag(final Tag tag) {
-        return new Question[0];
-    }
 }

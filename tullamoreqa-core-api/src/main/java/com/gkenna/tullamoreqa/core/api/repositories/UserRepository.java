@@ -8,6 +8,8 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
+
 /**
  * Repository for containing {@link User}s. Will be called by the responsible
  * Service, in this case it will be

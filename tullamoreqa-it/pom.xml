@@ -3,7 +3,9 @@
   ~ Copyright (c) 2018. Gavin Kenna
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tullamoreqa</artifactId>
         <groupId>com.gkenna.tullamoreqa</groupId>
@@ -18,7 +20,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <docker-maven-plugin.version>0.20.1</docker-maven-plugin.version>
-        <docker-db-image.name>postgres:9.5.4</docker-db-image.name>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <!--Default DocketIT properties. If DB isn't specified then we use Postgres-->
+        <db>postgres</db>
+        <properties-maven-plugin.version>
+            1.0-alpha-2
+        </properties-maven-plugin.version>
+        <docker-maven-plugin.envPropertyFile>
+            ${project.basedir}/src/test/resources/dbProperties/${db}.properties
+        </docker-maven-plugin.envPropertyFile>
     </properties>
 
     <dependencies>
@@ -84,6 +94,14 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>
@@ -99,22 +117,51 @@
                     <target>${maven-compiler-plugin.target}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <resources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>*.properties</include>
+                                <include>**/*.properties</include>
+                            </includes>
+                            <directory>src/test/resources</directory>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <profiles>
         <profile>
-            <id>test</id>
+            <id>dockerIT</id>
+            <properties>
+                <spring.profiles.active>${db}DockerIT</spring.profiles.active>
+            </properties>
             <build>
-                <resources>
-                    <resource>
-                        <directory>src/test/resources</directory>
-                        <targetPath>${project.build.directory}</targetPath>
-                        <includes>
-                            <include>log4j2.xml</include>
-                        </includes>
-                    </resource>
-                </resources>
                 <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>${properties-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${docker-maven-plugin.envPropertyFile}</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
@@ -129,12 +176,20 @@
                         </executions>
                         <configuration>
                             <systemProperties>
-                                <it-database.port>${it-database.port}</it-database.port>
-                                <docker.host.address>${docker.container.it-database.ip}</docker.host.address>
+                                <it-database.port>
+                                    ${it-database.port}
+                                </it-database.port>
+                                <docker.host.address>
+                                    ${docker.container.it-database.ip}
+                                </docker.host.address>
                             </systemProperties>
                             <environmentVariables>
-                                <it-database.port>${it-database.port}</it-database.port>
-                                <docker.host.address>${docker.container.it-database.ip}</docker.host.address>
+                                <it-database.port>
+                                    ${it-database.port}
+                                </it-database.port>
+                                <docker.host.address>
+                                    ${docker.container.it-database.ip}
+                                </docker.host.address>
                             </environmentVariables>
                         </configuration>
                     </plugin>
@@ -155,12 +210,17 @@
                                             <name>${docker-db-image.name}</name>
                                             <alias>it-database</alias>
                                             <run>
-                                                <ports>
-                                                    <port>it-database.port:5432</port>
-                                                </ports>
+                                                <!--Wait until the DB docker port is alive-->
                                                 <wait>
-                                                    <time>20000</time>
+                                                    <time>${db.timeout}</time>
+                                                    <tcp>
+                                                        <host>${docker.container.it-database.ip}</host>
+                                                        <ports>
+                                                            <port>${db.port}</port>
+                                                        </ports>
+                                                    </tcp>
                                                 </wait>
+                                                <envPropertyFile>${docker-maven-plugin.envPropertyFile}</envPropertyFile>
                                             </run>
                                         </image>
                                     </images>
@@ -194,6 +254,39 @@
                     <scope>test</scope>
                 </dependency>
             </dependencies>
+        </profile>
+        <profile>
+            <id>localIT</id>
+            <properties>
+                <spring.profiles.active>${db}LocalIT</spring.profiles.active>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>${maven-compiler-plugin.source}</source>
+                            <target>${maven-compiler-plugin.target}</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
         </profile>
     </profiles>
 </project>

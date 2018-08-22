@@ -76,15 +76,15 @@ public class EndToEndIT {
         LOGGER.info("Answer size by Gavin == " + answersByGavin.getTotalPages());
         assert answersByGavin.hasContent();
 
-        Page<Question> questionsByGavin = questionRepository.findQuestionsByUserUsername("Gavin", Pageable.unpaged());
+        Page<Question> questionsByGavin = questionRepository.findQuestionsByCreatedByUsername("Gavin", Pageable.unpaged());
         assert questionsByGavin.hasContent();
 
-        List<Question> questionsByJavaTag = (List<Question>) questionRepository.findQuestionsBasedOnAllTagNames
-                (new String[]{"Java"});
+        List<Question> questionsByJavaTag = questionRepository.findQuestionsBasedOnAllTagNames
+                (new String[]{"Java"}, Pageable.unpaged()).getContent();
         assert questionsByJavaTag.size() == 2;
 
-        List<Question> questionsByJavaAndHelpTag = (List<Question>) questionRepository
-                .findQuestionsBasedOnAllTagNames(new String[]{"Java", "Help"});
+        List<Question> questionsByJavaAndHelpTag = questionRepository
+                .findQuestionsBasedOnAllTagNames(new String[]{"Java", "Help"}, Pageable.unpaged()).getContent();
         assert questionsByJavaAndHelpTag.size() == 1;
 
     }
@@ -131,7 +131,7 @@ public class EndToEndIT {
         Question question = new Question();
         question.setBody("Help help help");
         question.setTitle("Help");
-        question.setUser(userRepository.findByUsername("Gavin"));
+        question.setCreatedBy(userRepository.findByUsername("Gavin"));
         question.getTags().add(java.get());
         questionService.addQuestion(question);
 
@@ -140,7 +140,7 @@ public class EndToEndIT {
         Question questionTwo = new Question();
         questionTwo.setBody("HAAAALP");
         questionTwo.setTitle("Halp");
-        questionTwo.setUser(userRepository.findByUsername("Alice"));
+        questionTwo.setCreatedBy(userRepository.findByUsername("Alice"));
         questionTwo.getTags().add(help.get());
         questionTwo.getTags().add(java.get());
         questionService.addQuestion(questionTwo);

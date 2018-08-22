@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
 import java.util.Optional;
 
 /**
@@ -79,8 +80,10 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Answer updateAnswer(final Long answerId, final Answer input)
+    public final Answer updateAnswer(final Long answerId,
+                                     final Answer input)
             throws AnswerNotFoundException {
+
         LOGGER.debug("Updating {} to {}", answerId, input);
         if (answerRepository.existsById(answerId)) {
             final Answer output = answerRepository.getOne(answerId);
@@ -89,7 +92,7 @@ public class AnswerServiceImpl extends EntryServiceImpl
 
             output.setBody(input.getBody());
             output.setQuestion(input.getQuestion());
-            output.setUser(input.getUser());
+            output.setCreatedBy(input.getCreatedBy());
             output.setChosenAnswer(input.isChosenAnswer());
             output.setDownvotes(input.getDownvotes());
             output.setUpvotes(input.getUpvotes());

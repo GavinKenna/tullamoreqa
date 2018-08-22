@@ -26,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
@@ -78,7 +79,7 @@ public class AnswerControllerIT {
         mockedQuestion = new Question();
         mockedQuestion.setBody("MockedBody");
         mockedQuestion.setTitle("MockedTitle");
-        mockedQuestion.setUser(mockedUser);
+        mockedQuestion.setCreatedBy(mockedUser);
         mockedQuestion.setCreatedAt(Date.from(Instant.EPOCH));
         mockedQuestion.setLastUpdatedAt(Date.from(Instant.EPOCH));
         mockedQuestion.setModifiedBy(mockedUser);

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import java.net.URI;
 
 /**
@@ -53,7 +54,6 @@ public class QuestionControllerImpl implements QuestionController {
             @RequestBody final Question input) {
 
         LOGGER.info("Add Question : {}", input);
-
         questionService.addQuestion(input);
 
         HttpHeaders headers = new HttpHeaders();
@@ -116,15 +116,15 @@ public class QuestionControllerImpl implements QuestionController {
             @PathVariable("id") final Long questionId) {
 
         LOGGER.debug("Deleting Question {}", questionId);
-        Question output;
+
         try {
-            output = questionService.deleteQuestion(questionId);
+            questionService.deleteQuestion(questionId);
         } catch (QuestionNotFoundException e) {
             LOGGER.error("Question with id {} not found.", questionId);
             // TODO Replace this exception with custom exception
             return new ResponseEntity(new Exception("Question with id "
                     + questionId + " not found"), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Question>(output, HttpStatus.OK);
+        return new ResponseEntity<Question>(HttpStatus.OK);
     }
 }

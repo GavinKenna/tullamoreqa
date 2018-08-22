@@ -75,6 +75,7 @@ public class Question extends Entry {
      * Question Constructor.
      */
     public Question() {
+        //super();
         this.tags = new HashSet<Tag>();
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
@@ -199,15 +200,40 @@ public class Question extends Entry {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
+    /**
+     * Add a Tag to the list of Tags within this Question.
+     *
+     * @param tag Tag to add.
+     * @since 0.0.11
+     */
+    public final void addTag(final Tag tag) {
+        if (!tags.contains(tag)) {
+            this.tags.add(tag);
+        }
+    }
+
+    /**
+     * Remove a Tag to the list of Tags within this Question.
+     *
+     * @param tag Tag to remove.
+     * @since 0.0.11
+     */
+    public final void remoteTag(final Tag tag) {
+        if (!tags.contains(tag)) {
+            this.tags.remove(tag);
+        }
+    }
+
     @Override
     public final String toString() {
         final StringBuilder sb = new StringBuilder("Question{");
         sb.append("modifiedBy=").append(modifiedBy);
+        sb.append(", id=").append(getId());
         sb.append(", tags=").append(tags);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", lastUpdatedAt=").append(lastUpdatedAt);
         sb.append(", title='").append(title).append('\'');
-        sb.append(", user=").append(getUser());
+        sb.append(", createdBy=").append(getCreatedAt());
         sb.append(", body='").append(getBody()).append('\'');
         sb.append(", upvotes=").append(getUpvotes());
         sb.append(", downvotes=").append(getDownvotes());
