@@ -10,10 +10,18 @@ An open-source Q&A System (In the works). Currently on a pre-release version tha
 Table of Contents
 =================
 
-* [Components of TQA](#components-of-tqa)
-* [What will version 1.0.0 look like?](#what-will-version-100-look-like)
-* [Building](#building)
-* [Testing](#testing)
+   * [TullamoreQA](#tullamoreqa)
+   * [Table of Contents](#table-of-contents)
+   * [Components of TQA](#components-of-tqa)
+   * [What will version 1.0.0 look like?](#what-will-version-100-look-like)
+   * [Building](#building)
+   * [Integration Tests](#integration-tests)
+      * [Using a Local DB](#using-a-local-db)
+         * [Example](#example)
+      * [Using Docker](#using-docker)
+         * [Example](#example-1)
+   * [Before You Commit](#before-you-commit)
+   * [Windows Issues](#windows-issues)
 
 # Components of TQA
 
