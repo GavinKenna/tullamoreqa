@@ -1,7 +1,0 @@
-<!--
-  ~ Copyright (c) 2018. Gavin Kenna
-  -->
-
-<ports>
-    <port>5432:3306</port>
-</ports>
