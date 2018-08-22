@@ -21,9 +21,18 @@
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <docker-maven-plugin.version>0.20.1</docker-maven-plugin.version>
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <!--Default DocketIT properties. If DB isn't specified then we use Postgres-->
         <db>postgres</db>
-        <dbPort>5432</dbPort>
-        <docker-db-image.name>${db}</docker-db-image.name>
+        <!--<db.port>5432</db.port>
+        <db.timeout>20000</db.timeout>-->
+        <!--<docker-db-image.name>${db}</docker-db-image.name>-->
+        <!---->
+        <properties-maven-plugin.version>
+            1.0-alpha-2
+        </properties-maven-plugin.version>
+        <docker-maven-plugin.envPropertyFile>
+            ${project.basedir}/src/test/resources/dbProperties/${db}.properties
+        </docker-maven-plugin.envPropertyFile>
     </properties>
 
     <dependencies>
@@ -93,6 +102,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>
@@ -135,6 +148,24 @@
             </properties>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>${properties-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${docker-maven-plugin.envPropertyFile}</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
@@ -183,24 +214,17 @@
                                             <name>${docker-db-image.name}</name>
                                             <alias>it-database</alias>
                                             <run>
-                                                <ports>
-                                                    <port>
-                                                        it-database.port:${dbPort}
-                                                    </port>
-                                                </ports>
-                                               <!-- <portPropertyFile>${project.basedir}/src/test/resources
-                                                    /portMapping/${db}.xml</portPropertyFile>-->
+                                                <!--Wait until the DB docker port is alive-->
                                                 <wait>
-                                                    <time>10000000</time>
+                                                    <time>${db.timeout}</time>
                                                     <tcp>
                                                         <host>${docker.container.it-database.ip}</host>
                                                         <ports>
-                                                            <port>@importantPort@</port>
+                                                            <port>${db.port}</port>
                                                         </ports>
                                                     </tcp>
                                                 </wait>
-
-                                                <envPropertyFile>${project.basedir}/src/test/resources/application-${db}DockerIT.properties</envPropertyFile>
+                                                <envPropertyFile>${docker-maven-plugin.envPropertyFile}</envPropertyFile>
                                             </run>
                                         </image>
                                     </images>
