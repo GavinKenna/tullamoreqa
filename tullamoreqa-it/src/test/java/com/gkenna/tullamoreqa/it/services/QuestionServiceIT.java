@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.it.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
@@ -141,16 +142,59 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
-    public void deleteValidQuestion() {
-        //Stub
-        assert true;
+    public void shouldDeleteValidQuestionByIdSuccessfully() throws QuestionNotFoundException {
+        final Question question = new Question();
+        question.setUpvotes(0);
+        question.setDownvotes(0);
+        question.setTags(tags);
+        question.setModifiedBy(user);
+        question.setModifiedBy(modifiedByUser);
+        question.setLastUpdatedAt(lastUpdatedAt);
+        question.setCreatedAt(createdAt);
+        question.setTitle("Question Title");
+        question.setBody("Question Body");
+        question.setTitle("I want to be deleted please.");
+
+        final Long id = questionRepository.save(question).getId();
+
+        LOGGER.info("GK: Valid Question ID is {}", id);
+        LOGGER.info("GK: QuestionService is {}", questionService);
+
+        assert questionRepository.existsById(id);
+
+        questionService.deleteQuestion(id);
+
+        assert !questionRepository.existsById(id);
     }
 
-    @Test
+    //@Test
     @Transactional
-    public void deleteInValidQuestion() {
-        //Stub
-        assert true;
+    public void shouldDeleteValidQuestionByReferenceSuccessfully() throws QuestionNotFoundException {
+        final Question question = new Question();
+        question.setTitle("I want to be deleted please.");
+
+        final Long id = questionRepository.save(question).getId();
+
+        assert questionRepository.existsById(id);
+
+        final Question reference = questionRepository.findById(id).get();
+
+        questionService.deleteQuestion(reference);
+
+        assert !questionRepository.existsById(id);
+    }
+
+    //@Test
+    @Transactional
+    public void shouldDeleteValidQuestionByOriginalReferenceSuccessfully() throws QuestionNotFoundException {
+        final Question question = new Question();
+        question.setTitle("I want to be deleted please.");
+
+        assert questionRepository.existsById(question.getId());
+
+        questionService.deleteQuestion(question);
+
+        assert !questionRepository.existsById(question.getId());
     }
 
     @Test

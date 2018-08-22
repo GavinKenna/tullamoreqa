@@ -129,18 +129,6 @@ public interface QuestionService {
                                         final Pageable pageable);
 
     /**
-     * Return a list of all {@link Question}s answered by a particular
-     * {@link com.gkenna.tullamoreqa.domain.User}.
-     *
-     * @param user     Filter all  {@link Question}s based on this
-     *                 {@link com.gkenna.tullamoreqa.domain.User}.
-     * @param pageable Potentially add Pagination.
-     * @return Array of {@link Question}s.
-     */
-    Question[] findQuestionsAnsweredByUser(final User user,
-                                           final Pageable pageable);
-
-    /**
      * Return a list of all {@link Question}s that are tagged by a particular
      * {@link Tag}.
      *

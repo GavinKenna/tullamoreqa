@@ -197,16 +197,6 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question[] findQuestionsAnsweredByUser(
-            final User user, final Pageable pageable) {
-
-        /*
-        TODO Should this API be supported?
-         */
-        return new Question[0];
-    }
-
-    @Override
     public final Question[] findQuestionsByTag(final Tag tag,
                                                final Pageable pageable) {
         /*
