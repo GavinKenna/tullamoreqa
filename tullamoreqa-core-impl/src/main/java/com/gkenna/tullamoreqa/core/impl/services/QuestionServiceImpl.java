@@ -67,14 +67,18 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void deleteQuestion(final Question question)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void deleteQuestion(final Question question)
             throws QuestionNotFoundException {
 
         this.deleteQuestion(question.getId());
     }
 
     @Override
-    public final void deleteQuestion(final Long questionId)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void deleteQuestion(final Long questionId)
             throws QuestionNotFoundException {
 
         LOGGER.debug("Deleting Question with ID {}", questionId);
@@ -89,8 +93,10 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question updateQuestion(final Long questionId,
-                                         final Question input)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question updateQuestion(final Long questionId,
+                                   final Question input)
             throws QuestionNotFoundException {
 
         LOGGER.debug("Updating {} to {}", questionId, input);
@@ -129,17 +135,23 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final boolean doesQuestionExist(final Question question) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public boolean doesQuestionExist(final Question question) {
         return this.doesQuestionExist(question.getId());
     }
 
     @Override
-    public final boolean doesQuestionExist(final Long questionId) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public boolean doesQuestionExist(final Long questionId) {
         return questionRepository.existsById(questionId);
     }
 
     @Override
-    public final Question getQuestion(final Long questionId) throws
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question getQuestion(final Long questionId) throws
             QuestionNotFoundException {
         LOGGER.info("QuestionRepo is {}", questionRepository.toString());
 
@@ -156,13 +168,17 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question[] getAllQuestions(final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question[] getAllQuestions(final Pageable pageable) {
         return questionRepository.findAll().toArray(new Question[0]);
     }
 
     @Override
-    public final Question[] findQuestionsByTitle(final String title,
-                                                 final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question[] findQuestionsByTitle(final String title,
+                                           final Pageable pageable) {
 
         /*
         TODO Assert Title isn't null, throw exception if it is.
@@ -179,8 +195,10 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question[] findQuestionsAskedByUser(final User user,
-                                                     final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question[] findQuestionsAskedByUser(final User user,
+                                               final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
          */
@@ -197,8 +215,10 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question[] findQuestionsByTag(final Tag tag,
-                                               final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question[] findQuestionsByTag(final Tag tag,
+                                         final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
         TODO Choose strategy on how we Page.
