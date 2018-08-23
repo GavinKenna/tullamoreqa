@@ -167,7 +167,7 @@ public class QuestionServiceIT {
         assert !questionRepository.existsById(id);
     }
 
-    //@Test
+    @Test
     @Transactional
     public void shouldDeleteValidQuestionByReferenceSuccessfully() throws QuestionNotFoundException {
         final Question question = new Question();
@@ -184,17 +184,20 @@ public class QuestionServiceIT {
         assert !questionRepository.existsById(id);
     }
 
-    //@Test
+    @Test
     @Transactional
     public void shouldDeleteValidQuestionByOriginalReferenceSuccessfully() throws QuestionNotFoundException {
         final Question question = new Question();
         question.setTitle("I want to be deleted please.");
+
+        Long id = questionRepository.save(question).getId();
 
         assert questionRepository.existsById(question.getId());
 
         questionService.deleteQuestion(question);
 
         assert !questionRepository.existsById(question.getId());
+        assert !questionRepository.existsById(id);
     }
 
     @Test
