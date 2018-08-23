@@ -1,3 +1,12 @@
+# TullamoreQA Travis CI Job. This job concerns itself with failing fast, so we break up the job into steps.
+# Here we do the following:
+#
+# 1) Build TullamoreQA. We skip tests as we are just concerned that the code compiles
+# 2) We run checkstyle on the code. If the code doesn't look correct then we fail straight away.addons:
+# 3) We run unit tests.
+# 4) We generate javadocs
+# 5-7) We run Integration Tests on post, h2 and then mysql.
+
 language: java
 sudo: required
 services:
@@ -7,9 +16,9 @@ script:
   - mvn checkstyle:check
   - mvn test cobertura:cobertura
   - mvn javadoc:javadoc
-  - mvn integration-test -PdockerIT -Ddb=postgres
-  - mvn integration-test -PdockerIT -Ddb=h2
-  - mvn integration-test -PdockerIT -Ddb=mysql
+  - mvn verify -PdockerIT -Ddb=postgres
+  - mvn verify -PdockerIT -Ddb=h2
+  - mvn verify -PdockerIT -Ddb=mysql
 
 after_success: 
 - bash <(curl -s https://codecov.io/bash)
