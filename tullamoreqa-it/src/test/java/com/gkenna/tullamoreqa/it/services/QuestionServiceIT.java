@@ -310,6 +310,33 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
+    public void shouldNotUpdateCreatedDate() throws QuestionNotFoundException {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2008, 06, 15);
+        final Date createdDate = calendar.getTime();
+        calendar.set(2018, 06, 14);
+        final Date modifiedAt = calendar.getTime();
+
+        final Question originalQuestion = new Question();
+        originalQuestion.setTitle("OriginalTitle");
+        originalQuestion.setCreatedAt(createdDate);
+
+        final Long id = questionRepository.save(originalQuestion).getId();
+
+        assert questionRepository.existsById(id);
+
+        final Question updatedQuestion = new Question();
+        updatedQuestion.setCreatedAt(modifiedAt);
+
+        questionService.updateQuestion(id, updatedQuestion);
+
+        final Question returnQuestion = questionRepository.findById(id).get();
+        assert returnQuestion.getCreatedAt().equals(createdDate);
+        assert !returnQuestion.getCreatedAt().equals(modifiedAt);
+    }
+
+    @Test
+    @Transactional
     public void editInValidQuestion() {
         //Stub
         assert true;
