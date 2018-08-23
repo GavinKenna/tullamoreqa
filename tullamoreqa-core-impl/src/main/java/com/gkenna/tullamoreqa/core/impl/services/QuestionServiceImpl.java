@@ -105,7 +105,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
             final Question output =
                     questionRepository.findById(questionId).get();
 
-            LOGGER.debug("Question before update {}", output);
+            LOGGER.info("Question before update {}", output);
 
             /*
             TODO How should we update Questions?
@@ -115,7 +115,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
              */
             output.update(input);
 
-            LOGGER.debug("Question after update {}", output);
+            LOGGER.info("Question after update {}", output);
 
             questionRepository.saveAndFlush(output);
             return output;

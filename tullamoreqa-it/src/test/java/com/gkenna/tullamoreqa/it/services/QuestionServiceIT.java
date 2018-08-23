@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -274,6 +275,12 @@ public class QuestionServiceIT {
     @Test
     @Transactional
     public void shouldPartiallyUpdateQuestionSuccessfully() throws QuestionNotFoundException {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2008, 06, 15);
+        final Date createdDate = calendar.getTime();
+        calendar.set(2018, 06, 14);
+        final Date modifiedAt = calendar.getTime();
+
         final Question originalQuestion = new Question();
         originalQuestion.setTitle("OriginalTitle");
         originalQuestion.setCreatedBy(user);
@@ -281,6 +288,8 @@ public class QuestionServiceIT {
         originalQuestion.setBody("Original Body");
         originalQuestion.setDownvotes(12);
         originalQuestion.setUpvotes(12);
+        originalQuestion.setCreatedAt(createdDate);
+        originalQuestion.setLastUpdatedAt(modifiedAt);
 
         final Long id = questionRepository.save(originalQuestion).getId();
 
@@ -295,6 +304,8 @@ public class QuestionServiceIT {
         assert returnQuestion.getDownvotes() == 11;
         assert returnQuestion.getUpvotes() == 12;
         assert returnQuestion.getTitle().equals("OriginalTitle");
+        assert returnQuestion.getCreatedAt().equals(createdDate);
+        assert returnQuestion.getLastUpdatedAt().equals(modifiedAt);
     }
 
     @Test
