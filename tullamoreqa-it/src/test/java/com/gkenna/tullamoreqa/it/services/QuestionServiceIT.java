@@ -157,9 +157,6 @@ public class QuestionServiceIT {
 
         final Long id = questionRepository.save(question).getId();
 
-        LOGGER.info("GK: Valid Question ID is {}", id);
-        LOGGER.info("GK: QuestionService is {}", questionService);
-
         assert questionRepository.existsById(id);
 
         questionService.deleteQuestion(id);
@@ -200,11 +197,104 @@ public class QuestionServiceIT {
         assert !questionRepository.existsById(id);
     }
 
+    @Test(expected = QuestionNotFoundException.class)
+    @Transactional
+    public void shouldThrowExceptionWhenTryingToDeleteValidQuestionByIdSuccessfully() throws QuestionNotFoundException {
+        final Question question = new Question();
+        question.setUpvotes(0);
+        question.setDownvotes(0);
+        question.setTags(tags);
+        question.setModifiedBy(user);
+        question.setModifiedBy(modifiedByUser);
+        question.setLastUpdatedAt(lastUpdatedAt);
+        question.setCreatedAt(createdAt);
+        question.setTitle("Question Title");
+        question.setBody("Question Body");
+        question.setTitle("I want to be deleted please.");
+
+        final Long id = questionRepository.save(question).getId();
+
+        assert questionRepository.existsById(id);
+
+        /*
+        Remove it before we continue.
+         */
+        questionRepository.deleteById(id);
+
+        /*
+        Should throw a QuestionDoesNotExist exception.
+         */
+        questionService.deleteQuestion(id);
+    }
+
+    @Test(expected = QuestionNotFoundException.class)
+    @Transactional
+    public void shouldThrowExceptionWhenTryingToDeleteValidQuestionByReferenceSuccessfully() throws QuestionNotFoundException {
+        final Question question = new Question();
+        question.setTitle("I want to be deleted please.");
+
+        final Long id = questionRepository.save(question).getId();
+
+        assert questionRepository.existsById(id);
+
+        final Question reference = questionRepository.findById(id).get();
+
+        /*
+        Remove it before we continue.
+         */
+        questionRepository.deleteById(id);
+
+        questionService.deleteQuestion(reference);
+
+        assert !questionRepository.existsById(id);
+    }
+
+    @Test(expected = QuestionNotFoundException.class)
+    @Transactional
+    public void shouldThrowExceptionWhenTryingToDeleteValidQuestionByOriginalReferenceSuccessfully() throws
+            QuestionNotFoundException {
+        final Question question = new Question();
+        question.setTitle("I want to be deleted please.");
+
+        Long id = questionRepository.save(question).getId();
+
+        assert questionRepository.existsById(question.getId());
+
+        /*
+        Remove it before we continue.
+         */
+        questionRepository.deleteById(id);
+
+        questionService.deleteQuestion(question);
+
+        assert !questionRepository.existsById(question.getId());
+        assert !questionRepository.existsById(id);
+    }
+
     @Test
     @Transactional
-    public void editValidQuestion() {
-        //Stub
-        assert true;
+    public void shouldPartiallyUpdateQuestionSuccessfully() throws QuestionNotFoundException {
+        final Question originalQuestion = new Question();
+        originalQuestion.setTitle("OriginalTitle");
+        originalQuestion.setCreatedBy(user);
+        originalQuestion.setModifiedBy(user);
+        originalQuestion.setBody("Original Body");
+        originalQuestion.setDownvotes(12);
+        originalQuestion.setUpvotes(12);
+
+        final Long id = questionRepository.save(originalQuestion).getId();
+
+        assert questionRepository.existsById(id);
+
+        final Question updatedQuestion = new Question();
+        updatedQuestion.setDownvotes(11);
+
+        questionService.updateQuestion(id, updatedQuestion);
+
+        final Question returnQuestion = questionRepository.findById(id).get();
+        assert returnQuestion.getDownvotes() == 11;
+        assert returnQuestion.getUpvotes() == 12;
+        assert returnQuestion.getTitle().equals("OriginalTitle");
     }
 
     @Test

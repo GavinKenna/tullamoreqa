@@ -41,6 +41,9 @@ public class AnswerTest {
         fullyFormedAnswer.setChosenAnswer(true);
         fullyFormedAnswer.setDownvotes(100);
         fullyFormedAnswer.setUpvotes(200);
+
+        validAnswer.setUpvotes(0);
+        validAnswer.setDownvotes(0);
     }
 
     @Test

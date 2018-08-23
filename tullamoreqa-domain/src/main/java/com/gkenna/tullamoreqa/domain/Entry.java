@@ -4,7 +4,11 @@
 
 package com.gkenna.tullamoreqa.domain;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +17,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /**
  * An Abstract class that allows for Users to create
@@ -34,6 +41,31 @@ public abstract class Entry {
     private User createdBy;
 
     /**
+     * The last User to modify the Entry,
+     * be it updating the Body or anything else.
+     */
+    @ManyToOne
+    @JoinColumn(name = "mod_user_username", nullable = true)
+    private User modifiedBy = null;
+
+    /**
+     * The exact Date and Time the Entry was created at.
+     */
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdAt;
+
+    /**
+     * The exact Date and Time the Entry was last updated
+     * at.
+     */
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date lastUpdatedAt;
+
+    /**
      * The Body of the Entry. Contains the bulk of the textual
      * information.
      * If this was a Question it would contain the Question.
@@ -44,12 +76,12 @@ public abstract class Entry {
     /**
      * How many Upvotes from other Users does this Entry have.
      */
-    private int upvotes;
+    private Integer upvotes;
 
     /**
      * How many Downvotes from other Users does this Entry have.
      */
-    private int downvotes;
+    private Integer downvotes;
 
     /**
      * The ID of the Entry.
@@ -75,6 +107,8 @@ public abstract class Entry {
      * See Effective Java (2nd+3rd Edition).
      */
     protected Entry() {
+        this.createdAt = new Date();
+        this.lastUpdatedAt = new Date();
     }
 
     /**
@@ -127,7 +161,7 @@ public abstract class Entry {
      *
      * @return Upvotes of the Entry.
      */
-    public final int getUpvotes() {
+    public final Integer getUpvotes() {
         return upvotes;
     }
 
@@ -136,7 +170,7 @@ public abstract class Entry {
      *
      * @param upvotes Upvotes of this Entry.
      */
-    public final void setUpvotes(final int upvotes) {
+    public final void setUpvotes(final Integer upvotes) {
         this.upvotes = upvotes;
     }
 
@@ -145,7 +179,7 @@ public abstract class Entry {
      *
      * @return Downvotes of the Entry.
      */
-    public final int getDownvotes() {
+    public final Integer getDownvotes() {
         return downvotes;
     }
 
@@ -154,7 +188,7 @@ public abstract class Entry {
      *
      * @param downvotes Downvotes of this Entry.
      */
-    public final void setDownvotes(final int downvotes) {
+    public final void setDownvotes(final Integer downvotes) {
         this.downvotes = downvotes;
     }
 
@@ -163,8 +197,64 @@ public abstract class Entry {
      *
      * @return Upvotes - Downvotes.
      */
-    public final int getScore() {
-        return this.getUpvotes() - this.getDownvotes();
+    public final Integer getScore() {
+        final int upvotes = this.getUpvotes() != null ? this.upvotes : 0;
+        final int downvotes = this.getDownvotes() != null ? this.downvotes : 0;
+        return upvotes - downvotes;
+    }
+
+    /**
+     * Return the User who last modified this Entry.
+     *
+     * @return User who last modified this Entry.
+     */
+    public final User getModifiedBy() {
+        return modifiedBy;
+    }
+
+    /**
+     * Set the User who last modified this Entry.
+     *
+     * @param modifiedBy User who last modified this Entry.
+     */
+    public final void setModifiedBy(final User modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    /**
+     * Return the Date and Time that this Entry was created.
+     *
+     * @return Date and Time that this Entry was created.
+     */
+    public final Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Set the Date and Time that this Entry was created.
+     *
+     * @param createdAt Date and Time that this Entry was created.
+     */
+    public final void setCreatedAt(final Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * Return the Date and Time that this Entry was last modified.
+     *
+     * @return Date and Time that this Entry was last modified.
+     */
+    public final Date getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    /**
+     * Set the Date and Time that this Entry was last modified.
+     *
+     * @param lastUpdatedAt Date and Time that this Entry was last modified.
+     */
+    public final void setLastUpdatedAt(final Date lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
     }
 
     @Override
@@ -175,4 +265,28 @@ public abstract class Entry {
 
     @Override
     public abstract int hashCode();
+
+    public <T extends Entry> void update(final T entry) {
+        final String body = entry.getBody();
+        final User user = entry.getCreatedBy();
+        final User modifiedBy = entry.getModifiedBy();
+        final Integer upvotes = entry.getUpvotes();
+        final Integer downvotes = entry.getDownvotes();
+
+        if (body != null) {
+            this.setBody(body);
+        }
+        if (user != null) {
+            this.setCreatedBy(user);
+        }
+        if (modifiedBy != null) {
+            this.setModifiedBy(modifiedBy);
+        }
+        if (upvotes != null) {
+            this.setUpvotes(upvotes);
+        }
+        if (downvotes != null) {
+            this.setDownvotes(downvotes);
+        }
+    }
 }

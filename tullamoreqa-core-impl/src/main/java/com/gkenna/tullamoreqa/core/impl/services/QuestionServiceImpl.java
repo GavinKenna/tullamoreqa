@@ -113,15 +113,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
             to the description, everything below would be set,
             which could result in nulls.
              */
-            output.setBody(input.getBody());
-            output.setTitle(input.getTitle());
-            output.setCreatedAt(input.getCreatedAt());
-            output.setLastUpdatedAt(input.getLastUpdatedAt());
-            output.setModifiedBy(input.getModifiedBy());
-            output.setTags(input.getTags());
-            output.setCreatedAt(input.getCreatedAt());
-            output.setDownvotes(input.getDownvotes());
-            output.setUpvotes(input.getUpvotes());
+            output.update(input);
 
             LOGGER.debug("Question after update {}", output);
 

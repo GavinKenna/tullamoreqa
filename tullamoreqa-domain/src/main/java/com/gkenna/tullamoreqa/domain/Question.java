@@ -4,19 +4,11 @@
 
 package com.gkenna.tullamoreqa.domain;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,35 +27,10 @@ import java.util.Set;
 public class Question extends Entry {
 
     /**
-     * The last User to modify the Question,
-     * be it updating the Body or anything else.
-     */
-    @ManyToOne
-    @JoinColumn(name = "mod_user_username", nullable = true)
-    private User modifiedBy = null;
-
-    /**
      * List of Tags that help describe the Question, i.e. 'Java' related.
      */
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Tag> tags;
-
-    /**
-     * The exact Date and Time the Question was created at.
-     */
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date createdAt;
-
-    /**
-     * The exact Date and Time the Question was last updated
-     * at.
-     */
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date lastUpdatedAt;
 
     /**
      * The Title of the Question, i.e. "How do I increment an integer in Java?"
@@ -75,10 +42,8 @@ public class Question extends Entry {
      * Question Constructor.
      */
     public Question() {
-        //super();
+        super();
         this.tags = new HashSet<Tag>();
-        this.createdAt = new Date();
-        this.lastUpdatedAt = new Date();
     }
 
     @Override
@@ -110,6 +75,23 @@ public class Question extends Entry {
                 getUpvotes(), getDownvotes(), getScore());
     }
 
+    public final void update(final Question entry) {
+        if (entry == null) {
+            return;
+        }
+        super.update(entry);
+
+        final String title = entry.getTitle();
+        final Set<Tag> tags = entry.tags;
+
+        if (title != null) {
+            this.setTitle(title);
+        }
+        if (tags != null) {
+            this.setTags(tags);
+        }
+    }
+
     /**
      * Return the Title of this Question.
      *
@@ -129,24 +111,6 @@ public class Question extends Entry {
     }
 
     /**
-     * Return the User who last modified this Question.
-     *
-     * @return User who last modified this Question.
-     */
-    public final User getModifiedBy() {
-        return modifiedBy;
-    }
-
-    /**
-     * Set the User who last modified this Question.
-     *
-     * @param modifiedBy User who last modified this Question.
-     */
-    public final void setModifiedBy(final User modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    /**
      * Return the list of Tags that filter this Question.
      *
      * @return List of Tags that filter this Question.
@@ -162,42 +126,6 @@ public class Question extends Entry {
      */
     public final void setTags(final Set<Tag> tags) {
         this.tags = tags;
-    }
-
-    /**
-     * Return the Date and Time that this Question was created.
-     *
-     * @return Date and Time that this Question was created.
-     */
-    public final Date getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * Set the Date and Time that this Question was created.
-     *
-     * @param createdAt Date and Time that this Question was created.
-     */
-    public final void setCreatedAt(final Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    /**
-     * Return the Date and Time that this Question was last modified.
-     *
-     * @return Date and Time that this Question was last modified.
-     */
-    public final Date getLastUpdatedAt() {
-        return lastUpdatedAt;
-    }
-
-    /**
-     * Set the Date and Time that this Question was last modified.
-     *
-     * @param lastUpdatedAt Date and Time that this Question was last modified.
-     */
-    public final void setLastUpdatedAt(final Date lastUpdatedAt) {
-        this.lastUpdatedAt = lastUpdatedAt;
     }
 
     /**
@@ -227,11 +155,11 @@ public class Question extends Entry {
     @Override
     public final String toString() {
         final StringBuilder sb = new StringBuilder("Question{");
-        sb.append("modifiedBy=").append(modifiedBy);
+        sb.append("modifiedBy=").append(getModifiedBy());
         sb.append(", id=").append(getId());
         sb.append(", tags=").append(tags);
-        sb.append(", createdAt=").append(createdAt);
-        sb.append(", lastUpdatedAt=").append(lastUpdatedAt);
+        sb.append(", createdAt=").append(getCreatedAt());
+        sb.append(", lastUpdatedAt=").append(getLastUpdatedAt());
         sb.append(", title='").append(title).append('\'');
         sb.append(", createdBy=").append(getCreatedAt());
         sb.append(", body='").append(getBody()).append('\'');
