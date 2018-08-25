@@ -134,7 +134,7 @@ For Linux/MacOS users you can simply call the script:
 
 `$ ./validate.sh`
 
-For Windows users I don't have a `.bat` script yet so you will have to manually execute :
+For Windows users I don't have a `.bat` or `.cmd` script yet so you will have to manually execute :
 
 `$ mvn clean install checkstyle:check javadoc:javadoc -PdockerIT verify`
   
