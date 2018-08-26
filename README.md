@@ -28,7 +28,7 @@ Table of Contents
 * tullamore-ui
     * Web end UI for creating Questions, adding Answers, logging in and creating user accounts.
     * Not yet written
-    * Angular 3
+    * Angular 3 or React
 * tullamoreqa-core-api
     * Public API of TQA
     * Service, Repository and Controller APIs
