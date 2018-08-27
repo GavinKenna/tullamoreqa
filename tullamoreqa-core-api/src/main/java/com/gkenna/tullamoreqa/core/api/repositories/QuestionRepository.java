@@ -65,6 +65,8 @@ public interface QuestionRepository
      * Find questions that contain all supplied tags.
      * We add 0L to the length to convert it to a long type.
      *
+     * TODO Change tags from String[] to Tag List.
+     *
      * @param tags     List of tags we wish to filter questions by.
      * @param pageable Potentially add Pagination.
      * @return 0 or more Questions that contain all Tags.

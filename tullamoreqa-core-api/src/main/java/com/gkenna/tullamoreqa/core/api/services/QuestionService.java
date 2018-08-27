@@ -11,6 +11,8 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Question}.
@@ -103,7 +105,7 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return All {@link Question}s in the DB.
      */
-    Question[] getAllQuestions(final Pageable pageable);
+    List<Question> getAllQuestions(final Pageable pageable);
 
     /**
      * Retrieve list of {@link Question}s whose Title matches the
@@ -113,7 +115,7 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsByTitle(final String title,
+    List<Question> findQuestionsByTitle(final String title,
                                     final Pageable pageable);
 
     /**
@@ -125,7 +127,7 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsAskedByUser(final User user,
+    List<Question> findQuestionsAskedByUser(final User user,
                                         final Pageable pageable);
 
     /**
@@ -137,5 +139,5 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsByTag(final Tag tag, final Pageable pageable);
+    List<Question> findQuestionsByTag(final Tag tag, final Pageable pageable);
 }

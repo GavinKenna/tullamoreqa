@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 /**
  * Implementation of {@link QuestionService}.
@@ -162,14 +164,14 @@ public class QuestionServiceImpl extends EntryServiceImpl
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public Question[] getAllQuestions(final Pageable pageable) {
-        return questionRepository.findAll().toArray(new Question[0]);
+    public List<Question> getAllQuestions(final Pageable pageable) {
+        return questionRepository.findAll();
     }
 
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public Question[] findQuestionsByTitle(final String title,
+    public List<Question> findQuestionsByTitle(final String title,
                                            final Pageable pageable) {
 
         /*
@@ -183,14 +185,14 @@ public class QuestionServiceImpl extends EntryServiceImpl
          */
         final Page<Question> pageableQuestions =
                 this.questionRepository.findByTitle(title, Pageable.unpaged());
-        return pageableQuestions.getContent().toArray(new Question[0]);
+        return pageableQuestions.getContent();
     }
 
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public Question[] findQuestionsAskedByUser(final User user,
-                                               final Pageable pageable) {
+    public List<Question> findQuestionsAskedByUser(final User user,
+                                                   final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
          */
@@ -203,13 +205,13 @@ public class QuestionServiceImpl extends EntryServiceImpl
         final Page<Question> pageableQuestions =
                 this.questionRepository.findQuestionsByCreatedByUsername(
                         user.getUsername(), pageable);
-        return pageableQuestions.getContent().toArray(new Question[0]);
+        return pageableQuestions.getContent();
     }
 
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public Question[] findQuestionsByTag(final Tag tag,
+    public List<Question> findQuestionsByTag(final Tag tag,
                                          final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
@@ -219,7 +221,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
         final Page<Question> pageableQuestions =
                 this.questionRepository.findAllByTagsName(tag.getId(),
                         Pageable.unpaged());
-        return pageableQuestions.getContent().toArray(new Question[0]);
+        return pageableQuestions.getContent();
     }
 
 }

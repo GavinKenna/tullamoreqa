@@ -9,6 +9,8 @@ import com.gkenna.tullamoreqa.core.api.exceptions.TagNotFoundException;
 import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Tag}.
  * This API communicates directly with the
@@ -96,6 +98,6 @@ public interface TagService {
      *
      * @return All {@link Tag}s in the DB.
      */
-    Tag[] getAllTags();
+    List<Tag> getAllTags();
 
 }
