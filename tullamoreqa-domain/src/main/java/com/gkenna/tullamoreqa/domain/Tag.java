@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Tag is an entity that can be associated with a Question. A Question can
@@ -20,7 +21,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "tags")
-public class Tag {
+public class Tag implements Domain {
 
     /**
      * The Label of the Tag. Acts as the ID of the tag.
@@ -113,5 +114,14 @@ public class Tag {
         sb.append(", description='").append(description).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public final <T extends Domain> void patch(final T entity) {
+        final Tag input = (Tag) entity;
+        final String description = input.getDescription();
+
+        if (description != null) {
+            this.setDescription(description);
+        }
     }
 }

@@ -123,7 +123,7 @@ public class AnswerControllerIT {
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
                 "http://localhost:" + this.port + "/answer/" + id, Map.class);
 
-        LOGGER.info("Answer Entity {}", entity.toString());
+        LOGGER.info("Answer Domain {}", entity.toString());
 
         assert (entity.getStatusCode() == HttpStatus.OK);
     }

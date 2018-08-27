@@ -140,4 +140,18 @@ public interface QuestionService {
      * @return Array of {@link Question}s.
      */
     List<Question> findQuestionsByTag(final Tag tag, final Pageable pageable);
+
+    /**
+     * Patch a {@link Question} on the Database.
+     *
+     * @param questionId The ID of the {@link Question} to patch.
+     * @param input A {@link Question} container that holds
+     *              new values for questionId to update to.
+     * @return The {@link Question} that was updated.
+     * @since 0.0.11
+     * @throws QuestionNotFoundException Thrown when the {@link Question} cannot
+     *                              be found.
+     */
+    Question patchQuestion(final Long questionId, final Question input)
+            throws QuestionNotFoundException;
 }

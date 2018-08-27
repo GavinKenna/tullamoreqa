@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Answer Entity, that is in response to a Question. Contains information about
+ * Answer Domain, that is in response to a Question. Contains information about
  * the User who wrote it , and the Question it is Answering.
  *
  * @author Gavin Kenna
@@ -97,6 +97,17 @@ public class Answer extends Entry {
      */
     public final void setChosenAnswer(final boolean chosenAnswer) {
         this.chosenAnswer = chosenAnswer;
+    }
+
+    @Override
+    public final <T extends Domain> void patch(final T entry) {
+        super.patch(entry);
+        final Answer input = (Answer) entry;
+        final Question question = input.getQuestion();
+
+        if (question != null) {
+            this.setQuestion(question);
+        }
     }
 
     @Override

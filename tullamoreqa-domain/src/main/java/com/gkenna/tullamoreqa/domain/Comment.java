@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Comment entity, which is written by a User in
@@ -43,6 +44,10 @@ public final class Comment extends Entry {
     private Comment() {
     }
 
+    @Override
+    public final <T extends Domain> void patch(final T entry) {
+        super.patch(entry);
+    }
 
     @Override
     public boolean equals(final Object o) {

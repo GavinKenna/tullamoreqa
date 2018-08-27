@@ -8,7 +8,7 @@ import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.http.ResponseEntity;
 
 /**
- * API Controller for the {@link Tag} Entity. This API will allow
+ * API Controller for the {@link Tag} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Tags.
  * <p>
  * The Implementation of this API will in turn call the
@@ -60,4 +60,17 @@ public interface TagController {
      * @return The Response of this Request.
      */
     ResponseEntity<?> deleteTag(final String tagId);
+
+    /**
+     * HTTP PATCH Method
+     * <p>
+     * Update an {@link Tag} on the Database.
+     *
+     * @param tagId The ID of the {@link Tag} to update.
+     * @param input An {@link Tag} container that holds
+     *              new values for tagId to update to.
+     * @since 0.0.11
+     * @return The Response of this Request.
+     */
+    ResponseEntity<?> patchTag(final String tagId, final Tag input);
 }

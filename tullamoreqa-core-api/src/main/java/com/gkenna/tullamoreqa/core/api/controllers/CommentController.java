@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 
 /**
- * API Controller for the {@link Comment} Entity. This API will allow
+ * API Controller for the {@link Comment} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Comments.
  * <p>
  * The Implementation of this API will in turn call the
@@ -63,4 +63,17 @@ public interface CommentController {
      * @return The Response of this Request.
      */
     ResponseEntity<?> deleteComment(final Long commentId);
+
+    /**
+     * HTTP PATCH Method
+     * <p>
+     * Update an {@link Comment} on the Database.
+     *
+     * @param commentId The ID of the {@link Comment} to update.
+     * @param input An {@link Comment} container that holds
+     *              new values for commentId to update to.
+     * @since 0.0.11
+     * @return The Response of this Request.
+     */
+    ResponseEntity<?> patchTag(final String commentId, final Comment input);
 }

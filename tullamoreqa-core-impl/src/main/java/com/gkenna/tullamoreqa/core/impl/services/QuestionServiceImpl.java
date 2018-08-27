@@ -110,12 +110,9 @@ public class QuestionServiceImpl extends EntryServiceImpl
             LOGGER.info("Question before update {}", output);
 
             /*
-            TODO How should we update Questions?
-            Say if we send a request and only send in an update
-            to the description, everything below would be set,
-            which could result in nulls.
+            TODO make sure this below uses correct ID
              */
-            output.update(input);
+            questionRepository.save(input);
 
             LOGGER.info("Question after update {}", output);
 
@@ -222,6 +219,38 @@ public class QuestionServiceImpl extends EntryServiceImpl
                 this.questionRepository.findAllByTagsName(tag.getId(),
                         Pageable.unpaged());
         return pageableQuestions.getContent();
+    }
+
+    @Override
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question patchQuestion(final Long questionId, final Question input)
+            throws QuestionNotFoundException {
+        LOGGER.debug("Updating {} to {}", questionId, input);
+
+        if (questionRepository.existsById(questionId)) {
+            final Question output =
+                    questionRepository.findById(questionId).get();
+
+            LOGGER.info("Question before update {}", output);
+
+            /*
+            TODO How should we update Questions?
+            Say if we send a request and only send in an update
+            to the description, everything below would be set,
+            which could result in nulls.
+             */
+            output.patch(input);
+
+            LOGGER.info("Question after update {}", output);
+
+            questionRepository.saveAndFlush(output);
+            return output;
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot update.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
     }
 
 }

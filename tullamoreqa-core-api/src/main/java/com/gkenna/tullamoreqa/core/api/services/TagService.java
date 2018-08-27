@@ -100,4 +100,18 @@ public interface TagService {
      */
     List<Tag> getAllTags();
 
+    /**
+     * Patch a {@link Tag} on the Database.
+     *
+     * @param tagId The ID of the {@link Tag} to patch.
+     * @param input An {@link Tag} container that holds
+     *              new values for tagId to update to.
+     * @return The {@link Tag} that was updated.
+     * @since 0.0.11
+     * @throws TagNotFoundException Thrown when the {@link Tag} cannot
+     *                              be found.
+     */
+    Tag patchTag(final String tagId, final Tag input)
+            throws TagNotFoundException;
+
 }

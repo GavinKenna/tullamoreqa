@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A representative of a User.
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Domain {
 
     /**
      * The username of the User, seen as the ID.
@@ -28,6 +29,16 @@ public class User {
     @NotBlank
     @NotNull
     private String username;
+
+    private Set<Role> roles;
+
+    private String firstName;
+    private String secondName;
+    private String password;
+    private String avatarURL;
+    private String description;
+    private boolean isEnabled;
+
 
     /**
      * Create a new User.
@@ -87,5 +98,11 @@ public class User {
         sb.append("username='").append(username).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public final <T extends Domain> void patch(final T entity) {
+        final User input = (User) entity;
+
+
     }
 }

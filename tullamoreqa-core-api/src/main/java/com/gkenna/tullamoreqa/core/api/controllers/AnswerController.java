@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 
 /**
- * API Controller for the {@link Answer} Entity. This API will allow
+ * API Controller for the {@link Answer} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Answers.
  * <p>
  * The Implementation of this API will in turn call the
@@ -63,4 +63,17 @@ public interface AnswerController {
      * @return The Response of this Request.
      */
     ResponseEntity<?> deleteAnswer(final Long answerId);
+
+    /**
+     * HTTP PATCH Method
+     * <p>
+     * Update an {@link Answer} on the Database.
+     *
+     * @param answerId The ID of the {@link Answer} to update.
+     * @param input An {@link Answer} container that holds
+     *              new values for answerId to update to.
+     * @since 0.0.11
+     * @return The Response of this Request.
+     */
+    ResponseEntity<?> patchTag(final String answerId, final Answer input);
 }

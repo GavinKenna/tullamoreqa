@@ -95,4 +95,18 @@ public interface UserService {
      */
     User[] getAllUsers();
 
+    /**
+     * Patch a {@link User} on the Database.
+     *
+     * @param username The username of the {@link User} to patch.
+     * @param input An {@link User} container that holds
+     *              new values for username to update to.
+     * @return The {@link User} that was updated.
+     * @since 0.0.11
+     * @throws sun.nio.fs.UnixUserPrincipals.User Thrown when the {@link User} cannot
+     *                              be found.
+     */
+    User patchUser(final String username, final User input)
+            throws UserNotFoundException;
+
 }

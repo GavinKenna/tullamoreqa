@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 
 /**
- * API Controller for the {@link Question} Entity. This API will allow
+ * API Controller for the {@link Question} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Questions.
  * <p>
  * The Implementation of this API will in turn call the
@@ -63,4 +63,17 @@ public interface QuestionController {
      * @return The Response of this Request.
      */
     ResponseEntity<?> deleteQuestion(final Long questionId);
+
+    /**
+     * HTTP PATCH Method
+     * <p>
+     * Update a {@link Question} on the Database.
+     *
+     * @param questionId The ID of the {@link Question} to update.
+     * @param input An {@link Question} container that holds
+     *              new values for questionId to update to.
+     * @since 0.0.11
+     * @return The Response of this Request.
+     */
+    ResponseEntity<?> patchTag(final String questionId, final Question input);
 }

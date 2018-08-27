@@ -75,14 +75,12 @@ public class Question extends Entry {
                 getUpvotes(), getDownvotes(), getScore());
     }
 
-    public final void update(final Question entry) {
-        if (entry == null) {
-            return;
-        }
-        super.update(entry);
-
-        final String title = entry.getTitle();
-        final Set<Tag> tags = entry.tags;
+    @Override
+    public final <T extends Domain> void patch(final T entry) {
+        super.patch(entry);
+        final Question input = (Question) entry;
+        final String title = input.getTitle();
+        final Set<Tag> tags = input.tags;
 
         if (title != null) {
             this.setTitle(title);

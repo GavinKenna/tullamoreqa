@@ -302,7 +302,7 @@ public class TagControllerIT {
                 tagEndpoint + "/Numberwang", HttpMethod.PUT, request,
                 Tag.class);
 
-        LOGGER.info("Update Entity is {}", entity.toString());
+        LOGGER.info("Update Domain is {}", entity.toString());
 
         assert (entity.getStatusCode() == HttpStatus.OK);
         assert (entity.getBody().getName().equals("Numberwang"));

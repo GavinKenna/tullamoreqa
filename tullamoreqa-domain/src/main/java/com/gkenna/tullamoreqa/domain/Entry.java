@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Entry {
+public abstract class Entry implements Domain {
 
     /**
      * The User who created the Entry.
@@ -266,12 +266,22 @@ public abstract class Entry {
     @Override
     public abstract int hashCode();
 
-    public <T extends Entry> void update(final T entry) {
-        final String body = entry.getBody();
-        final User user = entry.getCreatedBy();
-        final User modifiedBy = entry.getModifiedBy();
-        final Integer upvotes = entry.getUpvotes();
-        final Integer downvotes = entry.getDownvotes();
+    /**
+     * Patch the {@link Entry} with the given entity. Patch differs
+     * from Update in that it checks what values are set in the update.
+     * If the value is set (not null) then we use it.
+     *
+     * @param entry Updated values to use.
+     * @param <T>   {@link Entry} subtype, be it Answer, Question, etc.
+     * @since 0.0.11
+     */
+    public <T extends Domain> void patch(final T entry) {
+        final Entry input = (Entry) entry;
+        final String body = input.getBody();
+        final User user = input.getCreatedBy();
+        final User modifiedBy = input.getModifiedBy();
+        final Integer upvotes = input.getUpvotes();
+        final Integer downvotes = input.getDownvotes();
 
         if (body != null) {
             this.setBody(body);
