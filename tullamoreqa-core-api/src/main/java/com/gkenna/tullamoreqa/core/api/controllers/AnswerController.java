@@ -8,7 +8,6 @@ import com.gkenna.tullamoreqa.domain.Answer;
 import org.springframework.http.ResponseEntity;
 
 
-
 /**
  * API Controller for the {@link Answer} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Answers.
@@ -19,7 +18,7 @@ import org.springframework.http.ResponseEntity;
  * @author Gavin Kenna
  * @since 0.0.0
  */
-public interface AnswerController {
+public interface AnswerController extends EntryController {
     /**
      * HTTP POST Method
      * <p>
@@ -70,10 +69,10 @@ public interface AnswerController {
      * Update an {@link Answer} on the Database.
      *
      * @param answerId The ID of the {@link Answer} to update.
-     * @param input An {@link Answer} container that holds
-     *              new values for answerId to update to.
-     * @since 0.0.11
+     * @param input    An {@link Answer} container that holds
+     *                 new values for answerId to update to.
      * @return The Response of this Request.
+     * @since 0.0.11
      */
     ResponseEntity<?> patchAnswer(final Long answerId, final Answer input);
 }

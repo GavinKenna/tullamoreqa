@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
  * @author Gavin Kenna
  * @since 0.0.0
  */
-public interface QuestionController {
+public interface QuestionController extends EntryController {
     /**
      * HTTP POST Method
      * <p>

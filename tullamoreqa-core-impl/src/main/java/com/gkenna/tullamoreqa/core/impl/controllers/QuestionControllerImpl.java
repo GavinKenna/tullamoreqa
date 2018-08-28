@@ -8,6 +8,7 @@ import com.gkenna.tullamoreqa.core.api.controllers.QuestionController;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
+import com.gkenna.tullamoreqa.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 import java.net.URI;
 
@@ -136,5 +136,13 @@ public class QuestionControllerImpl implements QuestionController {
         }
 
         return new ResponseEntity<Question>(HttpStatus.NO_CONTENT);
+    }
+
+    @Override
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}/vote")
+    public ResponseEntity<?> castVote(final @RequestBody User userCastingVote,
+                                      final @PathVariable("isUpvote")
+                                              boolean isUpvote) {
+        return null;
     }
 }
