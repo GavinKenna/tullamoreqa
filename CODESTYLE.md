@@ -4,6 +4,7 @@
 | Tabs vs Spaces      | Spaces 
 | Spacing      | 4      
 | Encoding | UTF-8     
+| Line Separator  | LF (Unix and OS X) \n 
 | Line Limit | 80
 | Hard Limit? | YES
 
