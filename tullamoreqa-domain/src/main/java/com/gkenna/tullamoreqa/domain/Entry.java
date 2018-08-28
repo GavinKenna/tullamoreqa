@@ -266,16 +266,8 @@ public abstract class Entry implements Domain {
     @Override
     public abstract int hashCode();
 
-    /**
-     * Patch the {@link Entry} with the given entity. Patch differs
-     * from Update in that it checks what values are set in the update.
-     * If the value is set (not null) then we use it.
-     *
-     * @param entry Updated values to use.
-     * @param <T>   {@link Entry} subtype, be it Answer, Question, etc.
-     * @since 0.0.11
-     */
-    public final <T extends Domain> void patch(final T entry) {
+    @Override
+    public <T extends Domain> void patch(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
         final User entryCreatedBy = input.getCreatedBy();
@@ -298,5 +290,21 @@ public abstract class Entry implements Domain {
         if (entryDownvotes != null) {
             this.setDownvotes(entryDownvotes);
         }
+    }
+
+    @Override
+    public <T extends Domain> void update(final T entry) {
+        final Entry input = (Entry) entry;
+        final String entryBody = input.getBody();
+        final User entryCreatedBy = input.getCreatedBy();
+        final User entryModifiedBy = input.getModifiedBy();
+        final Integer entryUpvotes = input.getUpvotes();
+        final Integer entryDownvotes = input.getDownvotes();
+
+        this.setBody(entryBody);
+        this.setCreatedBy(entryCreatedBy);
+        this.setModifiedBy(entryModifiedBy);
+        this.setUpvotes(entryUpvotes);
+        this.setDownvotes(entryDownvotes);
     }
 }

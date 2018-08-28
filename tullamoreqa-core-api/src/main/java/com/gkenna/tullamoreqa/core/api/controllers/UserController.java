@@ -72,5 +72,5 @@ public interface UserController {
      * @since 0.0.11
      * @return The Response of this Request.
      */
-    ResponseEntity<?> patchTag(final String username, final User input);
+    ResponseEntity<?> patchUser(final String username, final User input);
 }

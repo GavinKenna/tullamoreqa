@@ -116,6 +116,51 @@ public class User implements Domain {
     @Override
     public final <T extends Domain> void patch(final T entity) {
         final User input = (User) entity;
+        final String inputAvatarURL = input.getAvatarURL();
+        final String inputDescription = input.getDescription();
+        final String inputEmail = input.getEmail();
+        final boolean inputIsEnabled = input.isEnabled();
+        final String inputFirstName = input.getFirstName();
+        final String inputSecondName = input.getSecondName();
+        final String inputPassword = input.getPassword();
+        final Set<Role> inputRoles = input.getRoles();
+
+        this.setEnabled(inputIsEnabled);
+
+        if (inputAvatarURL != null) {
+            this.setAvatarURL(inputAvatarURL);
+        }
+        if (inputDescription != null) {
+            this.setDescription(inputDescription);
+        }
+        if (inputEmail != null) {
+            this.setEmail(inputEmail);
+        }
+        if (inputFirstName != null) {
+            this.setFirstName(inputFirstName);
+        }
+        if (inputSecondName != null) {
+            this.setSecondName(inputSecondName);
+        }
+        if (inputPassword != null) {
+            this.setPassword(inputPassword);
+        }
+        if (inputRoles != null) {
+            this.setRoles(inputRoles);
+        }
+    }
+
+    @Override
+    public final <T extends Domain> void update(final T entity) {
+        final User input = (User) entity;
+        this.setAvatarURL(input.getAvatarURL());
+        this.setDescription(input.getDescription());
+        this.setEmail(input.getEmail());
+        this.setEnabled(input.isEnabled());
+        this.setFirstName(input.getFirstName());
+        this.setSecondName(input.getSecondName());
+        this.setPassword(this.getPassword());
+        this.setRoles(this.getRoles());
     }
 
     /**
@@ -229,7 +274,7 @@ public class User implements Domain {
     }
 
     /**
-     * Set the {@link User}s password. It will be hashed in this method.
+     * Set the {@link User}s password. It should be hashed before setting.
      *
      * @param password Password of the User.
      * @since 0.0.11

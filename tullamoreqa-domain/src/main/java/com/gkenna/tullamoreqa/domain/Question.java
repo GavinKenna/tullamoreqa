@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -88,6 +87,17 @@ public class Question extends Entry {
         if (tags != null) {
             this.setTags(tags);
         }
+    }
+
+    @Override
+    public final <T extends Domain> void update(final T entry) {
+        super.patch(entry);
+        final Question input = (Question) entry;
+        final String title = input.getTitle();
+        final Set<Tag> tags = input.tags;
+
+        this.setTitle(title);
+        this.setTags(tags);
     }
 
     /**

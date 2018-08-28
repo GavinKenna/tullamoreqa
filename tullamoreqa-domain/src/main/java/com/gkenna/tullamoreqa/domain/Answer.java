@@ -111,6 +111,14 @@ public class Answer extends Entry {
     }
 
     @Override
+    public final <T extends Domain> void update(final T entity) {
+        super.update(entity);
+        final Answer input = (Answer) entity;
+        final Question question = input.getQuestion();
+        this.setQuestion(question);
+    }
+
+    @Override
     public final boolean equals(final Object o) {
         if (this == o) {
             return true;

@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A Tag is an entity that can be associated with a Question. A Question can
@@ -123,5 +122,12 @@ public class Tag implements Domain {
         if (description != null) {
             this.setDescription(description);
         }
+    }
+
+    @Override
+    public final <T extends Domain> void update(final T entity) {
+        final Tag input = (Tag) entity;
+        final String description = input.getDescription();
+        this.setDescription(description);
     }
 }
