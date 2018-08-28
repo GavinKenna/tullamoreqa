@@ -75,5 +75,5 @@ public interface CommentController {
      * @since 0.0.11
      * @return The Response of this Request.
      */
-    ResponseEntity<?> patchTag(final String commentId, final Comment input);
+    ResponseEntity<?> patchComment(final Long commentId, final Comment input);
 }

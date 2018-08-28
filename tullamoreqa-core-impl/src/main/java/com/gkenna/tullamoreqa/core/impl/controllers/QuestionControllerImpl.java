@@ -103,6 +103,25 @@ public class QuestionControllerImpl implements QuestionController {
     }
 
     @Override
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{id}")
+    public final ResponseEntity<?> patchQuestion(
+            @PathVariable("id") final Long questionId,
+            @RequestBody final Question input) {
+
+        LOGGER.debug("Patching Question {} with the following details {}",
+                questionId, input);
+
+        Question output;
+        try {
+            output = questionService.patchQuestion(questionId, input);
+        } catch (QuestionNotFoundException e) {
+            LOGGER.error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(output, HttpStatus.OK);
+    }
+
+    @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public final ResponseEntity<?> deleteQuestion(
             @PathVariable("id") final Long questionId) {

@@ -52,6 +52,7 @@ public class Role implements Domain {
         this.roleName = roleName;
     }
 
+    @Override
     public final <T extends Domain> void patch(final T entity) {
         final Role input = (Role) entity;
         final Set<Authority> inputAuthorities = input.getAuthorities();

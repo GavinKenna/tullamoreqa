@@ -75,5 +75,5 @@ public interface AnswerController {
      * @since 0.0.11
      * @return The Response of this Request.
      */
-    ResponseEntity<?> patchTag(final String answerId, final Answer input);
+    ResponseEntity<?> patchAnswer(final Long answerId, final Answer input);
 }

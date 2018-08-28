@@ -125,4 +125,9 @@ public class AnswerControllerImpl implements AnswerController {
         }
         return new ResponseEntity<Answer>(output, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> patchAnswer(Long answerId, Answer input) {
+        return null;
+    }
 }

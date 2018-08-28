@@ -17,10 +17,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * An Abstract class that allows for Users to create
@@ -33,13 +35,14 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entry implements Domain {
 
+    @OneToMany
+    Set<Vote> votes;
     /**
      * The User who created the Entry.
      */
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "createdBy_username")
     private User createdBy;
-
     /**
      * The last User to modify the Entry,
      * be it updating the Body or anything else.
@@ -47,7 +50,6 @@ public abstract class Entry implements Domain {
     @ManyToOne
     @JoinColumn(name = "mod_user_username", nullable = true)
     private User modifiedBy = null;
-
     /**
      * The exact Date and Time the Entry was created at.
      */
@@ -55,7 +57,6 @@ public abstract class Entry implements Domain {
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
-
     /**
      * The exact Date and Time the Entry was last updated
      * at.
@@ -64,7 +65,6 @@ public abstract class Entry implements Domain {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date lastUpdatedAt;
-
     /**
      * The Body of the Entry. Contains the bulk of the textual
      * information.
@@ -72,17 +72,6 @@ public abstract class Entry implements Domain {
      */
     @NotBlank
     private String body;
-
-    /**
-     * How many Upvotes from other Users does this Entry have.
-     */
-    private Integer upvotes;
-
-    /**
-     * How many Downvotes from other Users does this Entry have.
-     */
-    private Integer downvotes;
-
     /**
      * The ID of the Entry.
      */
@@ -162,16 +151,13 @@ public abstract class Entry implements Domain {
      * @return Upvotes of the Entry.
      */
     public final Integer getUpvotes() {
+        int upvotes = 0;
+        for (Vote v : this.votes) {
+            if (v.isUpvote()) {
+                upvotes++;
+            }
+        }
         return upvotes;
-    }
-
-    /**
-     * Set the Upvotes of this Entry.
-     *
-     * @param upvotes Upvotes of this Entry.
-     */
-    public final void setUpvotes(final Integer upvotes) {
-        this.upvotes = upvotes;
     }
 
     /**
@@ -180,16 +166,13 @@ public abstract class Entry implements Domain {
      * @return Downvotes of the Entry.
      */
     public final Integer getDownvotes() {
+        int downvotes = 0;
+        for (Vote v : this.votes) {
+            if (!v.isUpvote()) {
+                downvotes++;
+            }
+        }
         return downvotes;
-    }
-
-    /**
-     * Set the Downvotes of this Entry.
-     *
-     * @param downvotes Downvotes of this Entry.
-     */
-    public final void setDownvotes(final Integer downvotes) {
-        this.downvotes = downvotes;
     }
 
     /**
@@ -198,9 +181,7 @@ public abstract class Entry implements Domain {
      * @return Upvotes - Downvotes.
      */
     public final Integer getScore() {
-        final int upvotes = this.getUpvotes() != null ? this.upvotes : 0;
-        final int downvotes = this.getDownvotes() != null ? this.downvotes : 0;
-        return upvotes - downvotes;
+        return this.getUpvotes() - this.getDownvotes();
     }
 
     /**
@@ -266,7 +247,6 @@ public abstract class Entry implements Domain {
     @Override
     public abstract int hashCode();
 
-    @Override
     public <T extends Domain> void patch(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
@@ -284,15 +264,8 @@ public abstract class Entry implements Domain {
         if (entryModifiedBy != null) {
             this.setModifiedBy(entryModifiedBy);
         }
-        if (entryUpvotes != null) {
-            this.setUpvotes(entryUpvotes);
-        }
-        if (entryDownvotes != null) {
-            this.setDownvotes(entryDownvotes);
-        }
     }
 
-    @Override
     public <T extends Domain> void update(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
@@ -304,7 +277,5 @@ public abstract class Entry implements Domain {
         this.setBody(entryBody);
         this.setCreatedBy(entryCreatedBy);
         this.setModifiedBy(entryModifiedBy);
-        this.setUpvotes(entryUpvotes);
-        this.setDownvotes(entryDownvotes);
     }
 }

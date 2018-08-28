@@ -127,4 +127,9 @@ public class CommentControllerImpl implements CommentController {
         }
         return new ResponseEntity<Comment>(output, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> patchComment(Long commentId, Comment input) {
+        return null;
+    }
 }

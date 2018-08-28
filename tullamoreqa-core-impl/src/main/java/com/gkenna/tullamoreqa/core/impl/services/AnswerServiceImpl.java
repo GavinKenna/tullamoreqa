@@ -94,8 +94,6 @@ public class AnswerServiceImpl extends EntryServiceImpl
             output.setQuestion(input.getQuestion());
             output.setCreatedBy(input.getCreatedBy());
             output.setChosenAnswer(input.isChosenAnswer());
-            output.setDownvotes(input.getDownvotes());
-            output.setUpvotes(input.getUpvotes());
 
             LOGGER.debug("Answer after update {}", output);
 
@@ -104,6 +102,11 @@ public class AnswerServiceImpl extends EntryServiceImpl
         }
         LOGGER.error("Answer {} does not exist. Cannot update.", answerId);
         throw new AnswerNotFoundException(answerId + " does not exist.");
+    }
+
+    @Override
+    public Answer patchAnswer(String answerId, Answer input) throws AnswerNotFoundException {
+        return null;
     }
 
     @Override

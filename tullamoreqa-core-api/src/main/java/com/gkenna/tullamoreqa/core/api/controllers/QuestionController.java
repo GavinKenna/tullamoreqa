@@ -8,7 +8,6 @@ import com.gkenna.tullamoreqa.domain.Question;
 import org.springframework.http.ResponseEntity;
 
 
-
 /**
  * API Controller for the {@link Question} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Questions.
@@ -70,10 +69,10 @@ public interface QuestionController {
      * Update a {@link Question} on the Database.
      *
      * @param questionId The ID of the {@link Question} to update.
-     * @param input An {@link Question} container that holds
-     *              new values for questionId to update to.
-     * @since 0.0.11
+     * @param input      An {@link Question} container that holds
+     *                   new values for questionId to update to.
      * @return The Response of this Request.
+     * @since 0.0.11
      */
-    ResponseEntity<?> patchTag(final String questionId, final Question input);
+    ResponseEntity<?> patchQuestion(final Long questionId, final Question input);
 }

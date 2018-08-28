@@ -103,10 +103,10 @@ public class Answer extends Entry {
     public final <T extends Domain> void patch(final T entry) {
         super.patch(entry);
         final Answer input = (Answer) entry;
-        final Question question = input.getQuestion();
+        final Question inputQuestion = input.getQuestion();
 
-        if (question != null) {
-            this.setQuestion(question);
+        if (inputQuestion != null) {
+            this.setQuestion(inputQuestion);
         }
     }
 
@@ -114,8 +114,8 @@ public class Answer extends Entry {
     public final <T extends Domain> void update(final T entity) {
         super.update(entity);
         final Answer input = (Answer) entity;
-        final Question question = input.getQuestion();
-        this.setQuestion(question);
+        final Question inputQuestion = input.getQuestion();
+        this.setQuestion(inputQuestion);
     }
 
     @Override

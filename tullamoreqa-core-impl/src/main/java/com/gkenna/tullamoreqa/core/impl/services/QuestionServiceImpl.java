@@ -109,10 +109,9 @@ public class QuestionServiceImpl extends EntryServiceImpl
 
             LOGGER.info("Question before update {}", output);
 
-            /*
-            TODO make sure this below uses correct ID
-             */
-            questionRepository.save(input);
+            output.update(input);
+
+            questionRepository.save(output);
 
             LOGGER.info("Question after update {}", output);
 
@@ -121,6 +120,32 @@ public class QuestionServiceImpl extends EntryServiceImpl
         }
 
         LOGGER.error("Question {} does not exist. Cannot update.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
+    }
+
+    @Override
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question patchQuestion(final Long questionId, final Question input)
+            throws QuestionNotFoundException {
+        LOGGER.debug("Patching {} to {}", questionId, input);
+
+        if (questionRepository.existsById(questionId)) {
+            final Question output =
+                    questionRepository.findById(questionId).get();
+
+            LOGGER.info("Question before patch {}", output);
+
+            output.patch(input);
+
+            LOGGER.info("Question after patch {}", output);
+
+            questionRepository.saveAndFlush(output);
+            return output;
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot patch.",
                 questionId);
         throw new QuestionNotFoundException(questionId + " does not exist.");
     }
@@ -169,7 +194,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
     public List<Question> findQuestionsByTitle(final String title,
-                                           final Pageable pageable) {
+                                               final Pageable pageable) {
 
         /*
         TODO Assert Title isn't null, throw exception if it is.
@@ -209,7 +234,7 @@ public class QuestionServiceImpl extends EntryServiceImpl
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
     public List<Question> findQuestionsByTag(final Tag tag,
-                                         final Pageable pageable) {
+                                             final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
         TODO Choose strategy on how we Page.
@@ -221,36 +246,5 @@ public class QuestionServiceImpl extends EntryServiceImpl
         return pageableQuestions.getContent();
     }
 
-    @Override
-    @Transactional
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public Question patchQuestion(final Long questionId, final Question input)
-            throws QuestionNotFoundException {
-        LOGGER.debug("Updating {} to {}", questionId, input);
-
-        if (questionRepository.existsById(questionId)) {
-            final Question output =
-                    questionRepository.findById(questionId).get();
-
-            LOGGER.info("Question before update {}", output);
-
-            /*
-            TODO How should we update Questions?
-            Say if we send a request and only send in an update
-            to the description, everything below would be set,
-            which could result in nulls.
-             */
-            output.patch(input);
-
-            LOGGER.info("Question after update {}", output);
-
-            questionRepository.saveAndFlush(output);
-            return output;
-        }
-
-        LOGGER.error("Question {} does not exist. Cannot update.",
-                questionId);
-        throw new QuestionNotFoundException(questionId + " does not exist.");
-    }
 
 }

@@ -56,12 +56,12 @@ public final class Comment extends Entry {
     }
 
     @Override
-    public final <T extends Domain> void patch(final T entry) {
+    public <T extends Domain> void patch(final T entry) {
         super.patch(entry);
     }
 
     @Override
-    public final <T extends Domain> void update(final T entry) {
+    public <T extends Domain> void update(final T entry) {
         super.update(entry);
     }
 
