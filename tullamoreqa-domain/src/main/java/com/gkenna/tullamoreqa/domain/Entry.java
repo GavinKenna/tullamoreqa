@@ -275,28 +275,28 @@ public abstract class Entry implements Domain {
      * @param <T>   {@link Entry} subtype, be it Answer, Question, etc.
      * @since 0.0.11
      */
-    public <T extends Domain> void patch(final T entry) {
+    public final <T extends Domain> void patch(final T entry) {
         final Entry input = (Entry) entry;
-        final String body = input.getBody();
-        final User user = input.getCreatedBy();
-        final User modifiedBy = input.getModifiedBy();
-        final Integer upvotes = input.getUpvotes();
-        final Integer downvotes = input.getDownvotes();
+        final String entryBody = input.getBody();
+        final User entryCreatedBy = input.getCreatedBy();
+        final User entryModifiedBy = input.getModifiedBy();
+        final Integer entryUpvotes = input.getUpvotes();
+        final Integer entryDownvotes = input.getDownvotes();
 
-        if (body != null) {
-            this.setBody(body);
+        if (entryBody != null) {
+            this.setBody(entryBody);
         }
-        if (user != null) {
-            this.setCreatedBy(user);
+        if (entryCreatedBy != null) {
+            this.setCreatedBy(entryCreatedBy);
         }
-        if (modifiedBy != null) {
-            this.setModifiedBy(modifiedBy);
+        if (entryModifiedBy != null) {
+            this.setModifiedBy(entryModifiedBy);
         }
-        if (upvotes != null) {
-            this.setUpvotes(upvotes);
+        if (entryUpvotes != null) {
+            this.setUpvotes(entryUpvotes);
         }
-        if (downvotes != null) {
-            this.setDownvotes(downvotes);
+        if (entryDownvotes != null) {
+            this.setDownvotes(entryDownvotes);
         }
     }
 }
