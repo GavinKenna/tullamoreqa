@@ -5,7 +5,7 @@
 package com.gkenna.tullamoreqa.domain;
 
 /**
- * Comment Domain interface for all Domain classes.
+ * Domain interface for all Domain classes.
  *
  * @author Gavin Kenna
  * @since 0.0.11
@@ -17,7 +17,7 @@ public interface Domain {
      * If the value is set (not null) then we use it.
      *
      * @param entity Updated values to use.
-     * @param <T>    {@link Entry} subtype, be it Answer, Question, etc.
+     * @param <T>   Domain subtype, be it Answer, Question, User etc.
      * @since 0.0.11
      */
     <T extends Domain> void patch(T entity);
