@@ -29,9 +29,10 @@ public interface EntryController {
      * <p>
      * If the Vote type is the same then we delete the Vote.
      *
-     * @param input An {@link Tag} container that should be inserted into
-     *              the Database.
+     * @param userCastingVote The User who is casting the vote.
+     * @param isUpvote        If this Vote is an upvote or not (i.e. Downvote).
      * @return The Response of this Request.
+     * @since 0.0.11
      */
     ResponseEntity<?> castVote(final User userCastingVote, final boolean isUpvote);
 }
