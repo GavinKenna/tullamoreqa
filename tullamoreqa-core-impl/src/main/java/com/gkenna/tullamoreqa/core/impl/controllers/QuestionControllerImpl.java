@@ -9,6 +9,7 @@ import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,10 +140,19 @@ public class QuestionControllerImpl implements QuestionController {
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.POST, value = "/{id}/vote")
-    public ResponseEntity<?> castVote(final @RequestBody User userCastingVote,
-                                      final @PathVariable("isUpvote")
-                                              boolean isUpvote) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
+    public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
+                                      @RequestBody Vote vote) {
+
+        LOGGER.debug("Casting Vote {} ", vote);
+        questionService.castVote(entryId, vote);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
+    public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
+                                        @RequestBody Vote vote) {
         return null;
     }
 }

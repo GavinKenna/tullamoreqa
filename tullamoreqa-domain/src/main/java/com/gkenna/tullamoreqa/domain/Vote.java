@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "votes")
@@ -25,7 +26,7 @@ public class Vote implements Domain {
     private Long id;
 
     @NotBlank
-    private boolean isUpvote;
+    private VoteType voteType;
 
     @Column(nullable = false, updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,9 +41,9 @@ public class Vote implements Domain {
     @JoinColumn(name = "entry_id", nullable = false)
     private Entry entry;
 
-    public Vote(final User voteCastBy, final boolean isUpvote) {
+    public Vote(final User voteCastBy, final VoteType voteType) {
         this.setVoteCastBy(voteCastBy);
-        this.setUpvote(isUpvote);
+        this.setVoteType(voteType);
     }
 
     @Override
@@ -59,14 +60,6 @@ public class Vote implements Domain {
         return id;
     }
 
-    public boolean isUpvote() {
-        return isUpvote;
-    }
-
-    public void setUpvote(boolean upvote) {
-        isUpvote = upvote;
-    }
-
     public Date getVoteCastDate() {
         return voteCastDate;
     }
@@ -81,5 +74,47 @@ public class Vote implements Domain {
 
     public void setVoteCastBy(User voteCastBy) {
         this.voteCastBy = voteCastBy;
+    }
+
+    public VoteType getVoteType() {
+        return voteType;
+    }
+
+    public void setVoteType(VoteType voteType) {
+        this.voteType = voteType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Vote)) {
+            return false;
+        }
+        Vote vote = (Vote) o;
+        return Objects.equals(getId(), vote.getId())
+                && getVoteType() == vote.getVoteType()
+                && Objects.equals(getVoteCastDate(), vote.getVoteCastDate())
+                && Objects.equals(getVoteCastBy(), vote.getVoteCastBy())
+                && Objects.equals(entry, vote.entry);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getVoteType(), getVoteCastDate(),
+                getVoteCastBy(), entry);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Vote{");
+        sb.append("id=").append(id);
+        sb.append(", voteType=").append(voteType);
+        sb.append(", voteCastDate=").append(voteCastDate);
+        sb.append(", voteCastBy=").append(voteCastBy);
+        sb.append(", entry=").append(entry);
+        sb.append('}');
+        return sb.toString();
     }
 }

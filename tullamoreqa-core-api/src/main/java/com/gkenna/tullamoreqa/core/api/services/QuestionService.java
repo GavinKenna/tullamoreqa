@@ -23,7 +23,7 @@ import java.util.List;
  * @since 0.0.0
  */
 @Service
-public interface QuestionService {
+public interface QuestionService extends EntryService {
     /**
      * Insert a new {@link Question} to the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.

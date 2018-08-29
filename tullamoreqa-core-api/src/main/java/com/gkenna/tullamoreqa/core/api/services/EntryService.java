@@ -5,7 +5,7 @@
 package com.gkenna.tullamoreqa.core.api.services;
 
 import com.gkenna.tullamoreqa.core.api.exceptions.EntryNotFoundException;
-
+import com.gkenna.tullamoreqa.domain.Vote;
 
 
 /**
@@ -18,47 +18,8 @@ import com.gkenna.tullamoreqa.core.api.exceptions.EntryNotFoundException;
  * @since 0.0.0
  */
 public interface EntryService {
-    /**
-     * Increase the {@link com.gkenna.tullamoreqa.domain.Entry} total Upvotes
-     * by 1.
-     *
-     * @param entryId The ID of the {@link com.gkenna.tullamoreqa.domain.Entry}
-     *                to update.
-     * @throws EntryNotFoundException Thrown if ID of the
-     *                                Entry isn't found.
-     */
-    void addUpvote(final Long entryId) throws EntryNotFoundException;
 
-    /**
-     * Decrease the {@link com.gkenna.tullamoreqa.domain.Entry} total Upvotes
-     * by 1.
-     *
-     * @param entryId The ID of the {@link com.gkenna.tullamoreqa.domain.Entry}
-     *                to update.
-     * @throws EntryNotFoundException Thrown if ID of the
-     *                                Entry isn't found.
-     */
-    void removeUpvote(final Long entryId) throws EntryNotFoundException;
+    void castVote(final Long entryId, final Vote vote);
 
-    /**
-     * Increase the {@link com.gkenna.tullamoreqa.domain.Entry} total Downvotes
-     * by 1.
-     *
-     * @param entryId The ID of the {@link com.gkenna.tullamoreqa.domain.Entry}
-     *                to update.
-     * @throws EntryNotFoundException Thrown if ID of the
-     *                                Entry isn't found.
-     */
-    void addDownvote(final Long entryId) throws EntryNotFoundException;
-
-    /**
-     * Decrease the {@link com.gkenna.tullamoreqa.domain.Entry} total Downvotes
-     * by 1.
-     *
-     * @param entryId The ID of the {@link com.gkenna.tullamoreqa.domain.Entry}
-     *                to update.
-     * @throws EntryNotFoundException Thrown if ID of the
-     *                                Entry isn't found.
-     */
-    void removeDownvote(final Long entryId) throws EntryNotFoundException;
+    void deleteVote(final Long entryId, final Vote vote);
 }

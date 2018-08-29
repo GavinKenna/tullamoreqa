@@ -8,6 +8,7 @@ import com.gkenna.tullamoreqa.core.api.controllers.AnswerController;
 import com.gkenna.tullamoreqa.core.api.exceptions.AnswerNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +129,20 @@ public class AnswerControllerImpl implements AnswerController {
 
     @Override
     public ResponseEntity<?> patchAnswer(Long answerId, Answer input) {
+        return null;
+    }
+
+    @Override
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
+    public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
+                                      @RequestBody Vote vote) {
+        return null;
+    }
+
+    @Override
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
+    public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
+                                        @RequestBody Vote vote) {
         return null;
     }
 }

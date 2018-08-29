@@ -10,6 +10,7 @@ import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,7 @@ import java.util.List;
  */
 @Service("questionService")
 @Transactional
-public class QuestionServiceImpl extends EntryServiceImpl
-        implements QuestionService {
+public class QuestionServiceImpl implements QuestionService {
 
     /**
      * Question Service Logger.
@@ -246,5 +246,13 @@ public class QuestionServiceImpl extends EntryServiceImpl
         return pageableQuestions.getContent();
     }
 
+    @Override
+    public final void castVote(final Long entryId, final Vote vote) {
 
+    }
+
+    @Override
+    public final void deleteVote(final Long entryId, final Vote vote) {
+
+    }
 }

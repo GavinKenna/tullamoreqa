@@ -153,4 +153,9 @@ public class TagServiceImpl implements TagService {
         List<Tag> tags = tagRepository.findAll();
         return tags;
     }
+
+    @Override
+    public Tag patchTag(String tagId, Tag input) throws TagNotFoundException {
+        return null;
+    }
 }

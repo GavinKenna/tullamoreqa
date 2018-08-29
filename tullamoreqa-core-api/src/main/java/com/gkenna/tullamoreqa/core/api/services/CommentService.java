@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service
-public interface CommentService {
+public interface CommentService extends EntryService{
     /**
      * Insert a new {@link Comment} to the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.CommentRepository}.

@@ -6,6 +6,7 @@ package com.gkenna.tullamoreqa.core.api.controllers;
 
 import com.gkenna.tullamoreqa.domain.Entry;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -19,20 +20,27 @@ import org.springframework.http.ResponseEntity;
 public interface EntryController {
 
     /**
-     * HTTP POST Method
+     * HTTP PUT Method
      * <p>
      * Cast a Vote to the #{@link Entry}. We pass in the #{@link User} casting
      * the vote and whether it is an Upvote or not.
-     * If the #{@link User} has already Voted on this #{@link Entry} then we
-     * check if the Vote type has changed. If so then we update the Vote type
-     * (i.e., Upvote or not).
-     * <p>
-     * If the Vote type is the same then we delete the Vote.
      *
-     * @param userCastingVote The User who is casting the vote.
-     * @param isUpvote        If this Vote is an upvote or not (i.e. Downvote).
+     * @param entryId Id of the Entry we wish to vote on.
+     * @param vote The #{@link Vote} entity, be it upvote or downvote.
      * @return The Response of this Request.
      * @since 0.0.11
      */
-    ResponseEntity<?> castVote(final User userCastingVote, final boolean isUpvote);
+    ResponseEntity<?> castVote(final Long entryId, final Vote vote);
+
+    /**
+     * HTTP DELETE Method
+     * <p>
+     * Delete a Vote to the #{@link Entry}.
+     *
+     * @param entryId Id of the Entry we wish to delete the vote from.
+     * @param vote The #{@link Vote} entity to delete.
+     * @return The Response of this Request.
+     * @since 0.0.11
+     */
+    ResponseEntity<?> deleteVote(final Long entryId, final Vote vote);
 }

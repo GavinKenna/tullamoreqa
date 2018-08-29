@@ -153,7 +153,7 @@ public abstract class Entry implements Domain {
     public final Integer getUpvotes() {
         int upvotes = 0;
         for (Vote v : this.votes) {
-            if (v.isUpvote()) {
+            if (v.getVoteType() == VoteType.UPVOTE) {
                 upvotes++;
             }
         }
@@ -168,7 +168,7 @@ public abstract class Entry implements Domain {
     public final Integer getDownvotes() {
         int downvotes = 0;
         for (Vote v : this.votes) {
-            if (!v.isUpvote()) {
+            if (v.getVoteType() == VoteType.DOWNVOTE) {
                 downvotes++;
             }
         }
@@ -181,7 +181,11 @@ public abstract class Entry implements Domain {
      * @return Upvotes - Downvotes.
      */
     public final Integer getScore() {
-        return this.getUpvotes() - this.getDownvotes();
+        int score = 0;
+        for (Vote v : this.votes) {
+           score += v.getVoteType().getVoteValue();
+        }
+        return score;
     }
 
     /**
