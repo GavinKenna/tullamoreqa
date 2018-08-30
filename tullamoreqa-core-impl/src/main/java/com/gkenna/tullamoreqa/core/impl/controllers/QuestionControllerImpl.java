@@ -153,6 +153,8 @@ public class QuestionControllerImpl implements QuestionController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
     public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
                                         @RequestBody Vote vote) {
-        return null;
+        LOGGER.debug("Deleting Vote {} ", vote);
+        questionService.deleteVote(entryId, vote);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
