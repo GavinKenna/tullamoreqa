@@ -84,8 +84,8 @@ public class QuestionServiceIT {
     @Transactional
     public void addValidQuestion() {
         validQuestion = new Question();
-        validQuestion.setUpvotes(0);
-        validQuestion.setDownvotes(0);
+        /*validQuestion.setUpvotes(0);
+        validQuestion.setDownvotes(0);*/
         validQuestion.setTags(tags);
         validQuestion.setModifiedBy(user);
         validQuestion.setModifiedBy(modifiedByUser);
@@ -145,8 +145,8 @@ public class QuestionServiceIT {
     @Transactional
     public void shouldDeleteValidQuestionByIdSuccessfully() throws QuestionNotFoundException {
         final Question question = new Question();
-        question.setUpvotes(0);
-        question.setDownvotes(0);
+        /*question.setUpvotes(0);
+        question.setDownvotes(0);*/
         question.setTags(tags);
         question.setModifiedBy(user);
         question.setModifiedBy(modifiedByUser);
@@ -202,8 +202,8 @@ public class QuestionServiceIT {
     @Transactional
     public void shouldThrowExceptionWhenTryingToDeleteValidQuestionByIdSuccessfully() throws QuestionNotFoundException {
         final Question question = new Question();
-        question.setUpvotes(0);
-        question.setDownvotes(0);
+        /*question.setUpvotes(0);
+        question.setDownvotes(0);*/
         question.setTags(tags);
         question.setModifiedBy(user);
         question.setModifiedBy(modifiedByUser);
@@ -286,8 +286,8 @@ public class QuestionServiceIT {
         originalQuestion.setCreatedBy(user);
         originalQuestion.setModifiedBy(user);
         originalQuestion.setBody("Original Body");
-        originalQuestion.setDownvotes(12);
-        originalQuestion.setUpvotes(12);
+        /*originalQuestion.setDownvotes(12);
+        originalQuestion.setUpvotes(12);*/
         originalQuestion.setCreatedAt(createdDate);
         originalQuestion.setLastUpdatedAt(modifiedAt);
 
@@ -296,7 +296,9 @@ public class QuestionServiceIT {
         assert questionRepository.existsById(id);
 
         final Question updatedQuestion = new Question();
+/*
         updatedQuestion.setDownvotes(11);
+*/
 
         questionService.updateQuestion(id, updatedQuestion);
 

@@ -33,7 +33,8 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/answer")
-public class AnswerControllerImpl implements AnswerController {
+public class AnswerControllerImpl extends EntryControllerImpl
+        implements AnswerController {
 
     /**
      * Answer Controller Logger.
@@ -136,13 +137,14 @@ public class AnswerControllerImpl implements AnswerController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
     public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
                                       @RequestBody Vote vote) {
-        return null;
+
+        return super.castVote(entryId, vote);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
     public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
                                         @RequestBody Vote vote) {
-        return null;
+        return super.deleteVote(entryId, vote);
     }
 }

@@ -8,7 +8,6 @@ import com.gkenna.tullamoreqa.core.api.controllers.QuestionController;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
-import com.gkenna.tullamoreqa.domain.User;
 import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +32,8 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/question")
-public class QuestionControllerImpl implements QuestionController {
+public class QuestionControllerImpl extends EntryControllerImpl
+        implements QuestionController {
 
     /**
      * Question Controller Logger.
@@ -144,17 +144,13 @@ public class QuestionControllerImpl implements QuestionController {
     public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
                                       @RequestBody Vote vote) {
 
-        LOGGER.debug("Casting Vote {} ", vote);
-        questionService.castVote(entryId, vote);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return super.castVote(entryId, vote);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
     public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
                                         @RequestBody Vote vote) {
-        LOGGER.debug("Deleting Vote {} ", vote);
-        questionService.deleteVote(entryId, vote);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return super.deleteVote(entryId, vote);
     }
 }

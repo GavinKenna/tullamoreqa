@@ -4,7 +4,6 @@
 
 package com.gkenna.tullamoreqa.core.api.services;
 
-import com.gkenna.tullamoreqa.core.api.exceptions.EntryNotFoundException;
 import com.gkenna.tullamoreqa.domain.Vote;
 
 

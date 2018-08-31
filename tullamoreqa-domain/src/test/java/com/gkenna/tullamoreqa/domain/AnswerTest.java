@@ -39,11 +39,6 @@ public class AnswerTest {
         fullyFormedAnswer = new Answer(mockedQuestion, mockedUser, validBody);
 
         fullyFormedAnswer.setChosenAnswer(true);
-        fullyFormedAnswer.setDownvotes(100);
-        fullyFormedAnswer.setUpvotes(200);
-
-        validAnswer.setUpvotes(0);
-        validAnswer.setDownvotes(0);
     }
 
     @Test
@@ -94,14 +89,14 @@ public class AnswerTest {
         assert validAnswer.getUpvotes() == 0;
         assert fullyFormedAnswer.getUpvotes() == 200;
     }
-
+/*
     @Test
     public void setUpvotes() {
         validAnswer.setUpvotes(50);
         assert validAnswer.getUpvotes() == 50;
         validAnswer.setUpvotes(0);
         assert validAnswer.getUpvotes() == 0;
-    }
+    }*/
 
     @Test
     public void getDownvotes() {
@@ -109,7 +104,7 @@ public class AnswerTest {
         assert fullyFormedAnswer.getDownvotes() == 100;
     }
 
-    @Test
+   /* @Test
     public void setDownvotes() {
         validAnswer.setDownvotes(50);
         assert validAnswer.getDownvotes() == 50;
@@ -129,7 +124,7 @@ public class AnswerTest {
 
         validAnswer.setDownvotes(0);
         validAnswer.setUpvotes(0);
-    }
+    }*/
 
     @Test
     public void compareEquals() {

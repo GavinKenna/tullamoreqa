@@ -64,8 +64,8 @@ public class QuestionServiceImplTest {
     @Test
     public void shouldAddFullyValidQuestion() {
         final Question question = new Question();
-        question.setUpvotes(0);
-        question.setDownvotes(0);
+        /*question.setUpvotes(0);
+        question.setDownvotes(0);*/
         question.setTags(tags);
         question.setModifiedBy(user);
         question.setModifiedBy(modifiedByUser);

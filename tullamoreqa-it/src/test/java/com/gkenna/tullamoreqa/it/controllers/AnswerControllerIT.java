@@ -84,8 +84,8 @@ public class AnswerControllerIT {
         mockedQuestion.setLastUpdatedAt(Date.from(Instant.EPOCH));
         mockedQuestion.setModifiedBy(mockedUser);
         mockedQuestion.setTags(tags);
-        mockedQuestion.setDownvotes(0);
-        mockedQuestion.setUpvotes(0);
+       /* mockedQuestion.setDownvotes(0);
+        mockedQuestion.setUpvotes(0);*/
         questionRepository.save(mockedQuestion);
 
         qr.findAll();

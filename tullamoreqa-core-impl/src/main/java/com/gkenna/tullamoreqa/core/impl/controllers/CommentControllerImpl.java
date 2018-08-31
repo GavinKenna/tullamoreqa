@@ -32,7 +32,8 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/comment")
-public class CommentControllerImpl implements CommentController {
+public class CommentControllerImpl extends EntryControllerImpl
+        implements CommentController {
 
     /**
      * Comment Controller Logger.
@@ -137,13 +138,14 @@ public class CommentControllerImpl implements CommentController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
     public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
                                       @RequestBody Vote vote) {
-        return null;
+
+        return super.castVote(entryId, vote);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
     public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
                                         @RequestBody Vote vote) {
-        return null;
+        return super.deleteVote(entryId, vote);
     }
 }
