@@ -7,7 +7,16 @@ package com.gkenna.tullamoreqa.domain;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import static org.mockito.Mockito.when;
 
 public class AnswerTest {
 
@@ -30,6 +39,15 @@ public class AnswerTest {
     private Question mockedQuestionTwo;
 
     @Mock
+    private Set<Vote> votes;
+
+    @Mock
+    private Vote upVote;
+
+    @Mock
+    private Vote downVote;
+
+    @Mock
     private User mockedUser;
 
     public AnswerTest() {
@@ -39,6 +57,8 @@ public class AnswerTest {
         fullyFormedAnswer = new Answer(mockedQuestion, mockedUser, validBody);
 
         fullyFormedAnswer.setChosenAnswer(true);
+
+        validAnswer.setVotes(votes);
     }
 
     @Test
@@ -86,8 +106,19 @@ public class AnswerTest {
 
     @Test
     public void getUpvotes() {
-        assert validAnswer.getUpvotes() == 0;
-        assert fullyFormedAnswer.getUpvotes() == 200;
+        Iterator<String> mockIter = Mockito.mock(Iterator.class);
+
+        when(mockList.iterator()).thenReturn(mockIter);
+        when(mockIter.hasNext()).thenReturn(true);
+        when(mockIter.next()).thenReturn("A");
+        when(mockIter.hasNext()).thenReturn(false);
+
+        when(upVote.getVoteType()).thenReturn(VoteType.UPVOTE);
+        when(downVote.getVoteType()).thenReturn(VoteType.DOWNVOTE);
+
+        final int upvotes = validAnswer.getUpvotes();
+
+        assert upvotes == 3;
     }
 /*
     @Test

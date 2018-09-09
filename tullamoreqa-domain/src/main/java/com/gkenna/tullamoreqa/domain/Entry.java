@@ -36,7 +36,7 @@ import java.util.Set;
 public abstract class Entry implements Domain {
 
     @OneToMany
-    Set<Vote> votes;
+    private Set<Vote> votes;
     /**
      * The User who created the Entry.
      */
@@ -281,5 +281,9 @@ public abstract class Entry implements Domain {
         this.setBody(entryBody);
         this.setCreatedBy(entryCreatedBy);
         this.setModifiedBy(entryModifiedBy);
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
     }
 }
