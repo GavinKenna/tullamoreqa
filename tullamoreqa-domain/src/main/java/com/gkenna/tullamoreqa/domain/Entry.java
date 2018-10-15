@@ -152,7 +152,7 @@ public abstract class Entry implements Domain {
      */
     public final Integer getUpvotes() {
         int upvotes = 0;
-        for (Vote v : this.votes) {
+        for (Vote v : this.getVotes()) {
             if (v.getVoteType() == VoteType.UPVOTE) {
                 upvotes++;
             }
@@ -285,5 +285,9 @@ public abstract class Entry implements Domain {
 
     public void setVotes(Set<Vote> votes) {
         this.votes = votes;
+    }
+
+    public Set<Vote> getVotes() {
+        return this.votes;
     }
 }
