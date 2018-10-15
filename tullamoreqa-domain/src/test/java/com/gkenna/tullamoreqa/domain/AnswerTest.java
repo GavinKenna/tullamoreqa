@@ -7,6 +7,7 @@ package com.gkenna.tullamoreqa.domain;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockSettings;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -16,7 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 public class AnswerTest {
 
@@ -106,15 +110,29 @@ public class AnswerTest {
 
     @Test
     public void getUpvotes() {
-        Iterator<String> mockIter = Mockito.mock(Iterator.class);
 
-        when(mockList.iterator()).thenReturn(mockIter);
-        when(mockIter.hasNext()).thenReturn(true);
-        when(mockIter.next()).thenReturn("A");
-        when(mockIter.hasNext()).thenReturn(false);
+        User user1 = mock(User.class, RETURNS_DEEP_STUBS);
+        user1.setUsername("ONE");
+        User user2 = mock(User.class, RETURNS_DEEP_STUBS);
+        user2.setUsername("TWO");
+        User user3 = mock(User.class, RETURNS_DEEP_STUBS);
+        user3.setUsername("THREE");
+        User user4 = mock(User.class, RETURNS_DEEP_STUBS);
+        user4.setUsername("FOUR");
 
-        when(upVote.getVoteType()).thenReturn(VoteType.UPVOTE);
-        when(downVote.getVoteType()).thenReturn(VoteType.DOWNVOTE);
+
+        Vote a = new Vote(user1,  VoteType.UPVOTE);
+        Vote b = new Vote(user2,  VoteType.UPVOTE);
+        Vote c = new Vote(user3,  VoteType.UPVOTE);
+        Vote d = new Vote(user4,  VoteType.DOWNVOTE);
+
+        Set<Vote> mockVotes = new HashSet<>();
+        mockVotes.add(a);
+        mockVotes.add(b);
+        mockVotes.add(c);
+        mockVotes.add(d);
+
+        validAnswer.setVotes(mockVotes);
 
         final int upvotes = validAnswer.getUpvotes();
 
