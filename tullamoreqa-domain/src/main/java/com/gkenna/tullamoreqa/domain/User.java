@@ -35,7 +35,7 @@ public class User {
      * @param username The unique ID of the User.
      */
     public User(final String username) {
-        this.username = username;
+        setUsername(username);
     }
 
     /**
