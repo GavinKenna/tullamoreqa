@@ -40,7 +40,7 @@ public class Tag {
      * @param name ID of the Tag.
      */
     public Tag(final String name) {
-        this.description = "Desc";
+        setDescription("Desc");
         this.name = name;
     }
 

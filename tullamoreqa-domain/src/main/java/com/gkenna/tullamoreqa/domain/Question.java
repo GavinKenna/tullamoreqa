@@ -76,9 +76,9 @@ public class Question extends Entry {
      */
     public Question() {
         //super();
-        this.tags = new HashSet<Tag>();
-        this.createdAt = new Date();
-        this.lastUpdatedAt = new Date();
+        setTags(new HashSet<Tag>());
+        setCreatedAt(new Date());
+        setLastUpdatedAt(new Date());
     }
 
     @Override
