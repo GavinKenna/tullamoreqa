@@ -100,7 +100,7 @@ public class User implements Domain {
      * @since 0.0.0
      */
     public User(final String username) {
-        this.username = username;
+        setUsername(username);
     }
 
     /**

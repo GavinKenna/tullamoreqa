@@ -60,7 +60,7 @@ public class Answer extends Entry {
      */
     public Answer(final Question question, final User user, final String body) {
         super(user, body);
-        this.question = question;
+        setQuestion(question);
     }
 
     /**

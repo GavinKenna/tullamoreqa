@@ -87,8 +87,8 @@ public abstract class Entry implements Domain {
      */
     public Entry(final User createdBy, final @NotBlank String body) {
         this();
-        this.createdBy = createdBy;
-        this.body = body;
+        setCreatedBy(createdBy);
+        setBody(body);
     }
 
     /**
