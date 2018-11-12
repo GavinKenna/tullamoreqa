@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -98,6 +99,7 @@ public abstract class Entry implements Domain {
     protected Entry() {
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
+        setVotes(new HashSet<>());
     }
 
     /**
