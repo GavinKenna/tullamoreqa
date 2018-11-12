@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -100,6 +101,7 @@ public class User implements Domain {
      * @since 0.0.0
      */
     public User(final String username) {
+        this();
         setUsername(username);
     }
 

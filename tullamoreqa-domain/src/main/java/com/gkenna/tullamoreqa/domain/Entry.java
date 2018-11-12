@@ -99,7 +99,7 @@ public abstract class Entry implements Domain {
     protected Entry() {
         this.createdAt = new Date();
         this.lastUpdatedAt = new Date();
-        setVotes(new HashSet<>());
+        this.votes = new HashSet<>();
     }
 
     /**
@@ -285,11 +285,15 @@ public abstract class Entry implements Domain {
         this.setModifiedBy(entryModifiedBy);
     }
 
-    public void setVotes(Set<Vote> votes) {
+    public void setVotes(final Set<Vote> votes) {
         this.votes = votes;
     }
 
-    public Set<Vote> getVotes() {
+    public final Set<Vote> getVotes() {
         return this.votes;
+    }
+
+    public void addVote(final Vote vote){
+        this.votes.add(vote);
     }
 }

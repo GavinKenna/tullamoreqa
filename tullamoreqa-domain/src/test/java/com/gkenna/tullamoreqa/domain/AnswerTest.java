@@ -58,6 +58,7 @@ public class AnswerTest {
         fullyFormedAnswer.setChosenAnswer(true);
 
         validAnswer.setVotes(votes);
+        fullyFormedAnswer.setVotes(new HashSet<>());
     }
 
     @Test

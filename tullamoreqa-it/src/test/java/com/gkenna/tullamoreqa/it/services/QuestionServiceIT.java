@@ -10,9 +10,7 @@ import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.core.impl.Application;
-import com.gkenna.tullamoreqa.domain.Question;
-import com.gkenna.tullamoreqa.domain.Tag;
-import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
@@ -32,6 +30,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment =
@@ -286,8 +287,6 @@ public class QuestionServiceIT {
         originalQuestion.setCreatedBy(user);
         originalQuestion.setModifiedBy(user);
         originalQuestion.setBody("Original Body");
-        /*originalQuestion.setDownvotes(12);
-        originalQuestion.setUpvotes(12);*/
         originalQuestion.setCreatedAt(createdDate);
         originalQuestion.setLastUpdatedAt(modifiedAt);
 
@@ -296,15 +295,34 @@ public class QuestionServiceIT {
         assert questionRepository.existsById(id);
 
         final Question updatedQuestion = new Question();
-/*
-        updatedQuestion.setDownvotes(11);
-*/
+
+        User user1 = mock(User.class, RETURNS_DEEP_STUBS);
+        user1.setUsername("ONE");
+        User user2 = mock(User.class, RETURNS_DEEP_STUBS);
+        user2.setUsername("TWO");
+        User user3 = mock(User.class, RETURNS_DEEP_STUBS);
+        user3.setUsername("THREE");
+        User user4 = mock(User.class, RETURNS_DEEP_STUBS);
+        user4.setUsername("FOUR");
+
+
+        Vote a = new Vote(user1,  VoteType.UPVOTE);
+        Vote b = new Vote(user2,  VoteType.UPVOTE);
+        Vote c = new Vote(user3,  VoteType.UPVOTE);
+        Vote d = new Vote(user4,  VoteType.DOWNVOTE);
+
+        updatedQuestion.addVote(a);
+        updatedQuestion.addVote(b);
+        updatedQuestion.addVote(c);
+        updatedQuestion.addVote(d);
 
         questionService.updateQuestion(id, updatedQuestion);
 
         final Question returnQuestion = questionRepository.findById(id).get();
-        assert returnQuestion.getDownvotes() == 11;
-        assert returnQuestion.getUpvotes() == 12;
+        LOGGER.info("Returned Question is {}", returnQuestion);
+        assert returnQuestion != null;
+        assert returnQuestion.getDownvotes() == 1;
+        assert returnQuestion.getUpvotes() == 3;
         assert returnQuestion.getTitle().equals("OriginalTitle");
         assert returnQuestion.getCreatedAt().equals(createdDate);
         assert returnQuestion.getLastUpdatedAt().equals(modifiedAt);

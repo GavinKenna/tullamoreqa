@@ -80,12 +80,16 @@ public class Question extends Entry {
         final Question input = (Question) entry;
         final String title = input.getTitle();
         final Set<Tag> tags = input.tags;
+        final Set<Vote> votes = input.getVotes();
 
         if (title != null) {
             this.setTitle(title);
         }
         if (tags != null) {
             this.setTags(tags);
+        }
+        if (votes != null) {
+            this.setVotes(votes);
         }
     }
 
@@ -95,9 +99,11 @@ public class Question extends Entry {
         final Question input = (Question) entry;
         final String title = input.getTitle();
         final Set<Tag> tags = input.tags;
+        final Set<Vote> votes = input.getVotes();
 
         this.setTitle(title);
         this.setTags(tags);
+        this.setVotes(votes);
     }
 
     /**
