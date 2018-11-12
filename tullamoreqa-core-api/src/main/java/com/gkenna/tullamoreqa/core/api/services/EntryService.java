@@ -17,8 +17,19 @@ import com.gkenna.tullamoreqa.domain.Vote;
  * @since 0.0.0
  */
 public interface EntryService {
-
+    /**
+     * Cast a new Vote to a particular Entry.
+     *
+     * @param entryId Entry to cast Vote to.
+     * @param Vote Vote to cast.
+     */
     void castVote(final Long entryId, final Vote vote);
 
+    /**
+     * Delete Vote from a particular Entry.
+     *
+     * @param entryId Entry to remove Vote from.
+     * @param Vote Vote to remove..
+     */
     void deleteVote(final Long entryId, final Vote vote);
 }
