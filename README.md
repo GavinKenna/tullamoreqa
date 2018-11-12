@@ -22,6 +22,7 @@ Table of Contents
          * [Example](#example-1)
    * [Before You Commit](#before-you-commit)
    * [Windows Issues](#windows-issues)
+   * [Docker Startup Issue](#docker-startup-issue)
 
 # Components of TQA
 
