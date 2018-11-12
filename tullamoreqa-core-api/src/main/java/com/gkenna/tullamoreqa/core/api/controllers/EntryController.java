@@ -4,8 +4,6 @@
 
 package com.gkenna.tullamoreqa.core.api.controllers;
 
-import com.gkenna.tullamoreqa.domain.Entry;
-import com.gkenna.tullamoreqa.domain.User;
 import com.gkenna.tullamoreqa.domain.Vote;
 import org.springframework.http.ResponseEntity;
 
