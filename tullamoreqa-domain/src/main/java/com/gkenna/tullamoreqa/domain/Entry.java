@@ -37,6 +37,9 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entry implements Domain {
 
+    /**
+     * The list of Votes cast to this Entry.
+     */
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Vote> votes;
     /**
@@ -255,10 +258,12 @@ public abstract class Entry implements Domain {
     public abstract int hashCode();
 
     /**
-     *
-     * @param entry
-     * @param <T>
+     * Patch this Entry with the inputted Entry Object. Will only override
+     * values if the values are not NULL.
+     * @param entry Override everything with this Entries values.
+     * @param <T> The Entry sub-type, i.e. Answer, Question.
      */
+    @SuppressWarnings("checkstyle:DesignForExtension")
     public <T extends Domain> void patch(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
@@ -279,10 +284,11 @@ public abstract class Entry implements Domain {
     }
 
     /**
-     *
-     * @param entry
-     * @param <T>
+     * Update this Entry to the inputted Entry object. Override all values.
+     * @param entry Override everything with this Entries values.
+     * @param <T> The Entry sub-type, i.e. Answer, Question.
      */
+    @SuppressWarnings("checkstyle:DesignForExtension")
     public <T extends Domain> void update(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
@@ -297,26 +303,27 @@ public abstract class Entry implements Domain {
     }
 
     /**
-     *
-     * @param votes
+     * Set the Votes cast to this Entry.
+     * @param votes Votes to set.
      */
-    public void setVotes(final Set<Vote> votes) {
+    public final void setVotes(final Set<Vote> votes) {
         this.votes = votes;
     }
 
     /**
-     *
-     * @return
+     * Return the full set of Votes cast to this Entry.
+     * @return Set of Votes.
      */
     public final Set<Vote> getVotes() {
         return this.votes;
     }
 
     /**
-     *
-     * @param vote
+     * Add a {@link Vote} to this {@link Entry}, be it an Upvote
+     * or a Downvote.
+     * @param vote The Vote to add to the Entry.
      */
-    public void addVote(final Vote vote) {
+    public final void addVote(final Vote vote) {
         this.votes.add(vote);
     }
 }
