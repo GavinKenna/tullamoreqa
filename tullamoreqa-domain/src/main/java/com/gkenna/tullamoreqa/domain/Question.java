@@ -74,6 +74,7 @@ public class Question extends Entry {
                 getUpvotes(), getDownvotes(), getScore());
     }
 
+    @SuppressWarnings("checkstyle:HiddenField")
     @Override
     public final <T extends Domain> void patch(final T entry) {
         super.patch(entry);
@@ -93,6 +94,7 @@ public class Question extends Entry {
         }
     }
 
+    @SuppressWarnings("checkstyle:HiddenField")
     @Override
     public final <T extends Domain> void update(final T entry) {
         super.patch(entry);
