@@ -8,6 +8,8 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,70 +25,127 @@ import java.util.Objects;
 @Table(name = "votes")
 public class Vote implements Domain {
 
+    /**
+     *
+     */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /**
+     *
+     */
     @NotBlank
     private VoteType voteType;
 
+    /**
+     *
+     */
     @Column(nullable = false, updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date voteCastDate;
 
+    /**
+     *
+     */
     @ManyToOne
     @JoinColumn(name = "cast_by_user_username", nullable = false)
     private User voteCastBy;
 
+    /**
+     *
+     */
     @ManyToOne
-    @JoinColumn(name = "entry_id", nullable = false)
+    @JoinColumn(name = "entry_id", nullable = true)
     private Entry entry;
 
+    /**
+     *
+     * @param voteCastBy
+     * @param voteType
+     */
     public Vote(final User voteCastBy, final VoteType voteType) {
         this.setVoteCastBy(voteCastBy);
         this.setVoteType(voteType);
+        this.setVoteCastDate(Date.from(Instant.EPOCH));
+    }
+
+    /**
+     *
+     */
+    protected Vote(){
+
     }
 
     @Override
-    public <T extends Domain> void patch(T entity) {
+    public final <T extends Domain> void patch(final T entity) {
 
     }
 
     @Override
-    public <T extends Domain> void update(T entity) {
+    public final <T extends Domain> void update(final T entity) {
 
     }
 
-    public Long getId() {
+    /**
+     *
+     * @return
+     */
+    public final Long getId() {
         return id;
     }
 
-    public Date getVoteCastDate() {
+    /**
+     *
+     * @return
+     */
+    public final Date getVoteCastDate() {
         return voteCastDate;
     }
 
-    public void setVoteCastDate(Date voteCastDate) {
+    /**
+     *
+     * @param voteCastDate
+     */
+    public final void setVoteCastDate(Date voteCastDate) {
         this.voteCastDate = voteCastDate;
     }
 
-    public User getVoteCastBy() {
+    /**
+     *
+     * @return
+     */
+    public final User getVoteCastBy() {
         return voteCastBy;
     }
 
-    public void setVoteCastBy(User voteCastBy) {
+    /**
+     *
+     * @param voteCastBy
+     */
+    public void setVoteCastBy(final User voteCastBy) {
         this.voteCastBy = voteCastBy;
     }
 
-    public VoteType getVoteType() {
+    /**
+     *
+     * @return
+     */
+    public final VoteType getVoteType() {
         return voteType;
     }
 
-    public void setVoteType(VoteType voteType) {
+    /**
+     *
+     * @param voteType
+     */
+    public void setVoteType(final VoteType voteType) {
         this.voteType = voteType;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -101,13 +161,13 @@ public class Vote implements Domain {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(getId(), getVoteType(), getVoteCastDate(),
                 getVoteCastBy(), entry);
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         final StringBuilder sb = new StringBuilder("Vote{");
         sb.append("id=").append(id);
         sb.append(", voteType=").append(voteType);

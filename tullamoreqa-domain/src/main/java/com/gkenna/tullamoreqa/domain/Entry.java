@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +37,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entry implements Domain {
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Vote> votes;
     /**
      * The User who created the Entry.
@@ -253,6 +254,11 @@ public abstract class Entry implements Domain {
     @Override
     public abstract int hashCode();
 
+    /**
+     *
+     * @param entry
+     * @param <T>
+     */
     public <T extends Domain> void patch(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
@@ -272,6 +278,11 @@ public abstract class Entry implements Domain {
         }
     }
 
+    /**
+     *
+     * @param entry
+     * @param <T>
+     */
     public <T extends Domain> void update(final T entry) {
         final Entry input = (Entry) entry;
         final String entryBody = input.getBody();
@@ -285,15 +296,27 @@ public abstract class Entry implements Domain {
         this.setModifiedBy(entryModifiedBy);
     }
 
+    /**
+     *
+     * @param votes
+     */
     public void setVotes(final Set<Vote> votes) {
         this.votes = votes;
     }
 
+    /**
+     *
+     * @return
+     */
     public final Set<Vote> getVotes() {
         return this.votes;
     }
 
-    public void addVote(final Vote vote){
+    /**
+     *
+     * @param vote
+     */
+    public void addVote(final Vote vote) {
         this.votes.add(vote);
     }
 }

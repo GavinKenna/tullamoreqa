@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,8 @@ public class QuestionServiceIT {
     private Question validQuestion;
 
     private Question invalidQuestion;
+    
+    private Set<Vote> votes;
 
     @Before
     public void setup() {
@@ -79,6 +82,36 @@ public class QuestionServiceIT {
         tagRepository.flush();
         userRepository.saveAndFlush(user);
         userRepository.saveAndFlush(modifiedByUser);
+        
+        initVotes();
+    }
+
+    private void initVotes() {
+        votes = new HashSet<>();
+
+        User user1 = new User("One");
+        user1.setUsername("ONE");
+        User user2 = new User("Two");
+        user2.setUsername("TWO");
+        User user3 = new User("Three");
+        user3.setUsername("THREE");
+        User user4 = new User("Four");
+        user4.setUsername("FOUR");
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
+
+        Vote a = new Vote(user1,  VoteType.UPVOTE);
+        Vote b = new Vote(user2,  VoteType.UPVOTE);
+        Vote c = new Vote(user3,  VoteType.UPVOTE);
+        Vote d = new Vote(user4,  VoteType.DOWNVOTE);
+
+        votes.add(a);
+        votes.add(b);
+        votes.add(c);
+        votes.add(d);
     }
 
     @Test
@@ -296,27 +329,9 @@ public class QuestionServiceIT {
 
         final Question updatedQuestion = new Question();
 
-        User user1 = mock(User.class, RETURNS_DEEP_STUBS);
-        user1.setUsername("ONE");
-        User user2 = mock(User.class, RETURNS_DEEP_STUBS);
-        user2.setUsername("TWO");
-        User user3 = mock(User.class, RETURNS_DEEP_STUBS);
-        user3.setUsername("THREE");
-        User user4 = mock(User.class, RETURNS_DEEP_STUBS);
-        user4.setUsername("FOUR");
+        updatedQuestion.setVotes(votes);
 
-
-        Vote a = new Vote(user1,  VoteType.UPVOTE);
-        Vote b = new Vote(user2,  VoteType.UPVOTE);
-        Vote c = new Vote(user3,  VoteType.UPVOTE);
-        Vote d = new Vote(user4,  VoteType.DOWNVOTE);
-
-        updatedQuestion.addVote(a);
-        updatedQuestion.addVote(b);
-        updatedQuestion.addVote(c);
-        updatedQuestion.addVote(d);
-
-        questionService.updateQuestion(id, updatedQuestion);
+        questionService.patchQuestion(id, updatedQuestion);
 
         final Question returnQuestion = questionRepository.findById(id).get();
         LOGGER.info("Returned Question is {}", returnQuestion);

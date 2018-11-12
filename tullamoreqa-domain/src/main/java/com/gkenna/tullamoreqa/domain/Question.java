@@ -98,7 +98,7 @@ public class Question extends Entry {
         super.patch(entry);
         final Question input = (Question) entry;
         final String title = input.getTitle();
-        final Set<Tag> tags = input.tags;
+        final Set<Tag> tags = input.getTags();
         final Set<Vote> votes = input.getVotes();
 
         this.setTitle(title);
