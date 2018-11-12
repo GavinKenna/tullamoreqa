@@ -143,3 +143,13 @@ For Windows users I don't have a `.bat` or `.cmd` script yet so you will have to
   Sometimes when running the Integration Tests with Windows and 'Docker for Windows', you may see some Connection Timeout issues. To solve this simply execute the following (as admin) in a command prompt:
   
   ``route add 172.17.0.0 MASK 255.255.0.0 10.0.75.2``
+  
+# Docker Startup Issue
+
+You may see issues when running the Integration Tests with Docker if you haven't run Docker before. You may see this issue:
+
+``Execution prepare-it-database of goal io.fabric8:docker-maven-plugin:0.20.1:start failed: No <dockerHost> given, no DOCKER_HOST environment variable, no read/writable '/var/run/docker.sock' or '//./pipe/docker_engine' and no external provider like Docker machine configured``
+
+To solve, you must add your user to the Docker group. Execute the following
+
+``$ sudo usermod -a -G docker $USER``
