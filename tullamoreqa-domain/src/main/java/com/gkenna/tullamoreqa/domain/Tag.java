@@ -115,6 +115,8 @@ public class Tag implements Domain {
         return sb.toString();
     }
 
+    @Override
+    @SuppressWarnings("checkstyle:HiddenField")
     public final <T extends Domain> void patch(final T entity) {
         final Tag input = (Tag) entity;
         final String description = input.getDescription();
@@ -127,7 +129,6 @@ public class Tag implements Domain {
     @Override
     public final <T extends Domain> void update(final T entity) {
         final Tag input = (Tag) entity;
-        final String description = input.getDescription();
-        this.setDescription(description);
+        this.setDescription(input.getDescription());
     }
 }
