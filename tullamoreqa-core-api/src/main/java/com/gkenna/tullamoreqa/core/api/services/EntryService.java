@@ -20,16 +20,21 @@ public interface EntryService {
     /**
      * Cast a new Vote to a particular Entry.
      *
+     * TODO Should we just have one implementation of this API? On
+     * EntryServiceImpl
+     *
      * @param entryId Entry to cast Vote to.
-     * @param Vote Vote to cast.
+     * @param vote Vote to cast.
      */
     void castVote(final Long entryId, final Vote vote);
 
     /**
      * Delete Vote from a particular Entry.
      *
+     * TODO Should we just have one implementation of this API? On
+     * EntryServiceImpl
      * @param entryId Entry to remove Vote from.
-     * @param Vote Vote to remove..
+     * @param vote Vote to remove..
      */
     void deleteVote(final Long entryId, final Vote vote);
 }
