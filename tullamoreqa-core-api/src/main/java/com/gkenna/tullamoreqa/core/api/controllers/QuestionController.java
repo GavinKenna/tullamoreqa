@@ -74,6 +74,6 @@ public interface QuestionController extends EntryController {
      * @return The Response of this Request.
      * @since 0.0.11
      */
-    ResponseEntity<?> patchQuestion(final Long questionId, 
+    ResponseEntity<?> patchQuestion(final Long questionId,
                                     final Question input);
 }
