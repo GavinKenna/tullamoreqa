@@ -91,7 +91,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User patchUser(String username, User input) throws UserNotFoundException {
+    public final User patchUser(final String username, final User input)
+            throws UserNotFoundException {
+
         return null;
     }
 }

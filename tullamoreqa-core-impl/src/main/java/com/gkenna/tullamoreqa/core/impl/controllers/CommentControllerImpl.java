@@ -8,7 +8,6 @@ import com.gkenna.tullamoreqa.core.api.controllers.CommentController;
 import com.gkenna.tullamoreqa.core.api.exceptions.CommentNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.CommentService;
 import com.gkenna.tullamoreqa.domain.Comment;
-import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,22 +129,9 @@ public class CommentControllerImpl extends EntryControllerImpl
     }
 
     @Override
-    public ResponseEntity<?> patchComment(Long commentId, Comment input) {
+    public final ResponseEntity<?> patchComment(final Long commentId,
+                                                final Comment input) {
+
         return null;
-    }
-
-    @Override
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
-    public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
-                                      @RequestBody Vote vote) {
-
-        return super.castVote(entryId, vote);
-    }
-
-    @Override
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
-    public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
-                                        @RequestBody Vote vote) {
-        return super.deleteVote(entryId, vote);
     }
 }

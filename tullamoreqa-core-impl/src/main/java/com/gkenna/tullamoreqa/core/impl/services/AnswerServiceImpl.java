@@ -15,8 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-
 import java.util.Optional;
 
 /**
@@ -105,7 +103,9 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer patchAnswer(String answerId, Answer input) throws AnswerNotFoundException {
+    public final Answer patchAnswer(final String answerId, final Answer input)
+            throws AnswerNotFoundException {
+
         return null;
     }
 

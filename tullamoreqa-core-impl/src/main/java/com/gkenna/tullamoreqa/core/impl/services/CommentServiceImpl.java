@@ -64,6 +64,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public final Comment deleteComment(final Long commentId)
             throws CommentNotFoundException {
+
         return null;
     }
 
@@ -74,7 +75,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment patchComment(String commentId, Comment input) throws CommentNotFoundException {
+    public final Comment patchComment(final String commentId,
+                                      final Comment input)
+            throws CommentNotFoundException {
+
         return null;
     }
 

@@ -8,7 +8,6 @@ import com.gkenna.tullamoreqa.core.api.controllers.AnswerController;
 import com.gkenna.tullamoreqa.core.api.exceptions.AnswerNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
-import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 import java.net.URI;
 
@@ -129,22 +127,9 @@ public class AnswerControllerImpl extends EntryControllerImpl
     }
 
     @Override
-    public ResponseEntity<?> patchAnswer(Long answerId, Answer input) {
+    public final ResponseEntity<?> patchAnswer(final Long answerId,
+                                               final Answer input) {
+
         return null;
-    }
-
-    @Override
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
-    public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
-                                      @RequestBody Vote vote) {
-
-        return super.castVote(entryId, vote);
-    }
-
-    @Override
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
-    public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
-                                        @RequestBody Vote vote) {
-        return super.deleteVote(entryId, vote);
     }
 }

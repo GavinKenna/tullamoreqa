@@ -14,6 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of {@link EntryController}.
+ *
+ * @author Gavin Kenna
+ * @since 0.0.11
+ */
 @Component
 public class EntryControllerImpl implements EntryController {
 
@@ -28,19 +34,22 @@ public class EntryControllerImpl implements EntryController {
      * This object is used to interact with the Answer Repo
      * {@link com.gkenna.tullamoreqa.core.api.repositories.EntryRepository}.
      */
-
     @Autowired
     private EntryService entryService;
 
     @Override
-    public ResponseEntity<?> castVote(Long entryId, Vote vote) {
+    public final ResponseEntity<?> castVote(final Long entryId,
+                                            final Vote vote) {
+
         LOGGER.debug("Casting Vote {} ", vote);
         entryService.castVote(entryId, vote);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> deleteVote(Long entryId, Vote vote) {
+    public final ResponseEntity<?> deleteVote(final Long entryId,
+                                              final Vote vote) {
+
         LOGGER.debug("Deleting Vote {} ", vote);
         entryService.deleteVote(entryId, vote);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -155,7 +155,9 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag patchTag(String tagId, Tag input) throws TagNotFoundException {
+    public final Tag patchTag(final String tagId, final Tag input)
+            throws TagNotFoundException {
+
         return null;
     }
 }

@@ -20,16 +20,19 @@ import org.springframework.stereotype.Service;
 @Service("entryService")
 public class EntryServiceImpl implements EntryService {
 
+    /**
+     * EntryRepository object.
+     */
     @Autowired
     private EntryRepository entryRepository;
 
     @Override
-    public void castVote(Long entryId, Vote vote) {
+    public final void castVote(final Long entryId, final Vote vote) {
 
     }
 
     @Override
-    public void deleteVote(Long entryId, Vote vote) {
+    public final void deleteVote(final Long entryId, final Vote vote) {
 
     }
 }
