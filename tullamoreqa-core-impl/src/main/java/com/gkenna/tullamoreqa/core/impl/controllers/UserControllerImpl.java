@@ -130,7 +130,9 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<?> patchUser(String username, User input) {
+    public final ResponseEntity<?> patchUser(final String username,
+                                             final User input) {
+
         return null;
     }
 }
