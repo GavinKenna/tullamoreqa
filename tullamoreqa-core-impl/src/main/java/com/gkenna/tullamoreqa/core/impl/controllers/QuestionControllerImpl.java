@@ -45,8 +45,17 @@ public class QuestionControllerImpl extends EntryControllerImpl
      * This object is used to interact with the Question Repo
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      */
+    private final QuestionService questionService;
+
+    /**
+     * Constructor that Auto wires the Question Service.
+     *
+     * @param questionService Question Service implementation.
+     */
     @Autowired
-    private QuestionService questionService;
+    public QuestionControllerImpl(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
