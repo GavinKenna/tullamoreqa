@@ -141,16 +141,19 @@ public class QuestionControllerImpl extends EntryControllerImpl
 
     @Override
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}/vote")
-    public ResponseEntity<?> castVote(@PathVariable("id") final Long entryId,
-                                      @RequestBody Vote vote) {
+    public final ResponseEntity<?> castVote(
+            @PathVariable("id") final Long entryId,
+            @RequestBody final Vote vote) {
 
         return super.castVote(entryId, vote);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/vote")
-    public ResponseEntity<?> deleteVote(@PathVariable("id") final Long entryId,
-                                        @RequestBody Vote vote) {
+    public final ResponseEntity<?> deleteVote(
+            @PathVariable("id") final Long entryId,
+            @RequestBody final Vote vote) {
+
         return super.deleteVote(entryId, vote);
     }
 }
