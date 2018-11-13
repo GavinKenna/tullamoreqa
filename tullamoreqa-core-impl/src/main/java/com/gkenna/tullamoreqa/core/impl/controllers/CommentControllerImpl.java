@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import java.net.URI;
 
 /**
@@ -32,7 +31,8 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/comment")
-public class CommentControllerImpl implements CommentController {
+public class CommentControllerImpl extends EntryControllerImpl
+        implements CommentController {
 
     /**
      * Comment Controller Logger.
@@ -126,5 +126,12 @@ public class CommentControllerImpl implements CommentController {
                     + commentId + " not found"), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Comment>(output, HttpStatus.OK);
+    }
+
+    @Override
+    public final ResponseEntity<?> patchComment(final Long commentId,
+                                                final Comment input) {
+
+        return null;
     }
 }

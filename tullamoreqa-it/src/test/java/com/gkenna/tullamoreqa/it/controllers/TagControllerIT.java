@@ -24,6 +24,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
@@ -302,7 +303,7 @@ public class TagControllerIT {
                 tagEndpoint + "/Numberwang", HttpMethod.PUT, request,
                 Tag.class);
 
-        LOGGER.info("Update Entity is {}", entity.toString());
+        LOGGER.info("Update Domain is {}", entity.toString());
 
         assert (entity.getStatusCode() == HttpStatus.OK);
         assert (entity.getBody().getName().equals("Numberwang"));

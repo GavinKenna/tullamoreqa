@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import java.net.URI;
 
 /**
@@ -32,7 +31,8 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/answer")
-public class AnswerControllerImpl implements AnswerController {
+public class AnswerControllerImpl extends EntryControllerImpl
+        implements AnswerController {
 
     /**
      * Answer Controller Logger.
@@ -124,5 +124,12 @@ public class AnswerControllerImpl implements AnswerController {
                     + answerId + " not found"), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Answer>(output, HttpStatus.OK);
+    }
+
+    @Override
+    public final ResponseEntity<?> patchAnswer(final Long answerId,
+                                               final Answer input) {
+
+        return null;
     }
 }

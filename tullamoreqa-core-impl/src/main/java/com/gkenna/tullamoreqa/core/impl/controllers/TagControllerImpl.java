@@ -149,4 +149,10 @@ public class TagControllerImpl implements TagController {
 
         return new ResponseEntity<Tag>(HttpStatus.NO_CONTENT);
     }
+
+    @Override
+    public final ResponseEntity<?> patchTag(final String tagId,
+                                            final  Tag input) {
+        return null;
+    }
 }

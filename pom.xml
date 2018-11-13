@@ -67,8 +67,9 @@
             <version>${maven-checkstyle-plugin.version}</version>
             <executions>                                               
                 <execution>                                            
-                    <id>validate</id>                                  
-                    <phase>validate</phase>                            
+                    <id>validate</id>
+                    <!-- We set the phase to post-site as we don't want checkstyle at mvn clean install, only when we specify it. -->
+                    <phase>site</phase>
                     <configuration>                                    
                         <configLocation>checkstyle.xml</configLocation>
                         <encoding>UTF-8</encoding>                     

@@ -9,6 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+
 public class AnswerTest {
 
     @InjectMocks
@@ -30,17 +36,29 @@ public class AnswerTest {
     private Question mockedQuestionTwo;
 
     @Mock
+    private Set<Vote> votes;
+
+    @Mock
+    private Vote upVote;
+
+    @Mock
+    private Vote downVote;
+
+    @Mock
     private User mockedUser;
 
     public AnswerTest() {
         MockitoAnnotations.initMocks(this);
+        mockedQuestion = new Question();
+        votes = new HashSet<>();
         validAnswer = new Answer(mockedQuestion, mockedUser, validBody);
         invalidAnswer = new Answer(null, null, null);
         fullyFormedAnswer = new Answer(mockedQuestion, mockedUser, validBody);
 
         fullyFormedAnswer.setChosenAnswer(true);
-        fullyFormedAnswer.setDownvotes(100);
-        fullyFormedAnswer.setUpvotes(200);
+
+        validAnswer.setVotes(votes);
+        fullyFormedAnswer.setVotes(new HashSet<>());
     }
 
     @Test
@@ -88,44 +106,63 @@ public class AnswerTest {
 
     @Test
     public void getUpvotes() {
-        assert validAnswer.getUpvotes() == 0;
-        assert fullyFormedAnswer.getUpvotes() == 200;
-    }
 
-    @Test
-    public void setUpvotes() {
-        validAnswer.setUpvotes(50);
-        assert validAnswer.getUpvotes() == 50;
-        validAnswer.setUpvotes(0);
-        assert validAnswer.getUpvotes() == 0;
+        User user1 = mock(User.class, RETURNS_DEEP_STUBS);
+        user1.setUsername("ONE");
+        User user2 = mock(User.class, RETURNS_DEEP_STUBS);
+        user2.setUsername("TWO");
+        User user3 = mock(User.class, RETURNS_DEEP_STUBS);
+        user3.setUsername("THREE");
+        User user4 = mock(User.class, RETURNS_DEEP_STUBS);
+        user4.setUsername("FOUR");
+
+
+        Vote a = new Vote(user1,  VoteType.UPVOTE);
+        Vote b = new Vote(user2,  VoteType.UPVOTE);
+        Vote c = new Vote(user3,  VoteType.UPVOTE);
+        Vote d = new Vote(user4,  VoteType.DOWNVOTE);
+
+        Set<Vote> mockVotes = new HashSet<>();
+        mockVotes.add(a);
+        mockVotes.add(b);
+        mockVotes.add(c);
+        mockVotes.add(d);
+
+        validAnswer.setVotes(mockVotes);
+
+        final int upvotes = validAnswer.getUpvotes();
+
+        assert upvotes == 3;
     }
 
     @Test
     public void getDownvotes() {
-        assert validAnswer.getDownvotes() == 0;
-        assert fullyFormedAnswer.getDownvotes() == 100;
-    }
+        User user1 = mock(User.class, RETURNS_DEEP_STUBS);
+        user1.setUsername("ONE");
+        User user2 = mock(User.class, RETURNS_DEEP_STUBS);
+        user2.setUsername("TWO");
+        User user3 = mock(User.class, RETURNS_DEEP_STUBS);
+        user3.setUsername("THREE");
+        User user4 = mock(User.class, RETURNS_DEEP_STUBS);
+        user4.setUsername("FOUR");
 
-    @Test
-    public void setDownvotes() {
-        validAnswer.setDownvotes(50);
-        assert validAnswer.getDownvotes() == 50;
-        validAnswer.setDownvotes(0);
-        assert validAnswer.getDownvotes() == 0;
-    }
 
-    @Test
-    public void getScore() {
-        assert validAnswer.getScore() == 0;
-        assert fullyFormedAnswer.getScore() == 100;
+        Vote a = new Vote(user1,  VoteType.DOWNVOTE);
+        Vote b = new Vote(user2,  VoteType.UPVOTE);
+        Vote c = new Vote(user3,  VoteType.UPVOTE);
+        Vote d = new Vote(user4,  VoteType.DOWNVOTE);
 
-        validAnswer.setUpvotes(40);
-        assert validAnswer.getScore() == 40;
-        validAnswer.setDownvotes(60);
-        assert validAnswer.getScore() == -20;
+        Set<Vote> mockVotes = new HashSet<>();
+        mockVotes.add(a);
+        mockVotes.add(b);
+        mockVotes.add(c);
+        mockVotes.add(d);
 
-        validAnswer.setDownvotes(0);
-        validAnswer.setUpvotes(0);
+        validAnswer.setVotes(mockVotes);
+
+        final int downvotes = validAnswer.getDownvotes();
+
+        assert downvotes == 2;
     }
 
     @Test

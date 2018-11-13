@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "tags")
-public class Tag {
+public class Tag implements Domain {
 
     /**
      * The Label of the Tag. Acts as the ID of the tag.
@@ -113,5 +113,22 @@ public class Tag {
         sb.append(", description='").append(description).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:HiddenField")
+    public final <T extends Domain> void patch(final T entity) {
+        final Tag input = (Tag) entity;
+        final String description = input.getDescription();
+
+        if (description != null) {
+            this.setDescription(description);
+        }
+    }
+
+    @Override
+    public final <T extends Domain> void update(final T entity) {
+        final Tag input = (Tag) entity;
+        this.setDescription(input.getDescription());
     }
 }

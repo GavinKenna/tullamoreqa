@@ -9,12 +9,11 @@ import com.gkenna.tullamoreqa.core.api.repositories.AnswerRepository;
 import com.gkenna.tullamoreqa.core.api.services.AnswerService;
 import com.gkenna.tullamoreqa.domain.Answer;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 
 import java.util.Optional;
 
@@ -26,8 +25,7 @@ import java.util.Optional;
  * @since 0.0.0
  */
 @Service("answerService")
-public class AnswerServiceImpl extends EntryServiceImpl
-        implements AnswerService {
+public class AnswerServiceImpl implements AnswerService {
 
     /**
      * Answer Service Logger.
@@ -94,8 +92,6 @@ public class AnswerServiceImpl extends EntryServiceImpl
             output.setQuestion(input.getQuestion());
             output.setCreatedBy(input.getCreatedBy());
             output.setChosenAnswer(input.isChosenAnswer());
-            output.setDownvotes(input.getDownvotes());
-            output.setUpvotes(input.getUpvotes());
 
             LOGGER.debug("Answer after update {}", output);
 
@@ -107,79 +103,10 @@ public class AnswerServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void addUpvote(final Long answerId)
+    public final Answer patchAnswer(final String answerId, final Answer input)
             throws AnswerNotFoundException {
-        // TODO Will have to add logic to check if a user
-        // has already Upvoted this answer.
-        // If so then we will have to remove the upvote.
 
-        LOGGER.debug("Attempting to Upvote Answer {}", answerId);
-        Answer output;
-        try {
-            output = answerRepository.getOne(answerId);
-        } catch (EntityNotFoundException e) {
-            LOGGER.error("Answer not found. Reasoning {}", e.toString());
-            throw new AnswerNotFoundException(answerId + " does not exist.");
-        }
-
-        output.setUpvotes(output.getUpvotes() + 1);
-
-        LOGGER.debug("Upvoted Answer {} successfully.", answerId);
-        answerRepository.save(output);
-    }
-
-    @Override
-    public final void removeUpvote(final Long answerId)
-            throws AnswerNotFoundException {
-        LOGGER.debug("Attempting to remove Upvote on Answer {}", answerId);
-        Answer output;
-        try {
-            output = answerRepository.getOne(answerId);
-        } catch (EntityNotFoundException e) {
-            LOGGER.error("Answer not found. Reasoning {}", e.toString());
-            throw new AnswerNotFoundException(answerId + " does not exist.");
-        }
-
-        output.setUpvotes(output.getUpvotes() - 1);
-
-        LOGGER.debug("Remove Upvote on Answer {} successfully.", answerId);
-        answerRepository.save(output);
-    }
-
-    @Override
-    public final void addDownvote(final Long answerId)
-            throws AnswerNotFoundException {
-        LOGGER.debug("Attempting to Downvote Answer {}", answerId);
-        Answer output;
-        try {
-            output = answerRepository.getOne(answerId);
-        } catch (EntityNotFoundException e) {
-            LOGGER.error("Answer not found. Reasoning {}", e.toString());
-            throw new AnswerNotFoundException(answerId + " does not exist.");
-        }
-
-        output.setDownvotes(output.getDownvotes() + 1);
-
-        LOGGER.debug("Downvoted Answer {} successfully.", answerId);
-        answerRepository.save(output);
-    }
-
-    @Override
-    public final void removeDownvote(final Long answerId)
-            throws AnswerNotFoundException {
-        LOGGER.debug("Attempting to remove Downvote on Answer {}", answerId);
-        Answer output;
-        try {
-            output = answerRepository.getOne(answerId);
-        } catch (EntityNotFoundException e) {
-            LOGGER.error("Answer not found. Reasoning {}", e.toString());
-            throw new AnswerNotFoundException(answerId + " does not exist.");
-        }
-
-        output.setDownvotes(output.getDownvotes() - 1);
-
-        LOGGER.debug("Remove Downvote on Answer {} successfully.", answerId);
-        answerRepository.save(output);
+        return null;
     }
 
     @Override
@@ -220,4 +147,13 @@ public class AnswerServiceImpl extends EntryServiceImpl
         return answerRepository.findAnswersByUserUsername(username);
     }
 
+    @Override
+    public final void castVote(final Long entryId, final Vote vote) {
+
+    }
+
+    @Override
+    public final void deleteVote(final Long entryId, final Vote vote) {
+
+    }
 }

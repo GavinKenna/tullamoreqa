@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.UserNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.UserRepository;
 import com.gkenna.tullamoreqa.core.api.services.UserService;
 import com.gkenna.tullamoreqa.domain.User;
@@ -11,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Implementation of {@link UserService}.
@@ -83,7 +86,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public final User[] getAllUsers() {
-        return new User[0];
+    public final List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public final User patchUser(final String username, final User input)
+            throws UserNotFoundException {
+
+        return null;
     }
 }

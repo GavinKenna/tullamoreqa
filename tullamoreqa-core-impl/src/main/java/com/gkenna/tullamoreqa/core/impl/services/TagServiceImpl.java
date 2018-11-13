@@ -149,8 +149,15 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public Tag[] getAllTags() {
+    public List<Tag> getAllTags() {
         List<Tag> tags = tagRepository.findAll();
-        return tags.toArray(new Tag[0]);
+        return tags;
+    }
+
+    @Override
+    public final Tag patchTag(final String tagId, final Tag input)
+            throws TagNotFoundException {
+
+        return null;
     }
 }

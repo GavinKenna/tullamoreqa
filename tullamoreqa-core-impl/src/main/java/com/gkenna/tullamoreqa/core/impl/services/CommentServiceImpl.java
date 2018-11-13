@@ -9,11 +9,11 @@ import com.gkenna.tullamoreqa.core.api.repositories.CommentRepository;
 import com.gkenna.tullamoreqa.core.api.services.CommentService;
 import com.gkenna.tullamoreqa.domain.Comment;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 
 /**
@@ -24,8 +24,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service("commentService")
-public class CommentServiceImpl extends EntryServiceImpl
-        implements CommentService {
+public class CommentServiceImpl implements CommentService {
 
     /**
      * Comment Service Logger.
@@ -65,12 +64,21 @@ public class CommentServiceImpl extends EntryServiceImpl
     @Override
     public final Comment deleteComment(final Long commentId)
             throws CommentNotFoundException {
+
         return null;
     }
 
     @Override
     public final Comment updateComment(final Long commentId,
                                        final Comment input) {
+        return null;
+    }
+
+    @Override
+    public final Comment patchComment(final String commentId,
+                                      final Comment input)
+            throws CommentNotFoundException {
+
         return null;
     }
 
@@ -99,5 +107,13 @@ public class CommentServiceImpl extends EntryServiceImpl
         return new Comment[0];
     }
 
+    @Override
+    public final void castVote(final Long entryId, final Vote vote) {
 
+    }
+
+    @Override
+    public final void deleteVote(final Long entryId, final Vote vote) {
+
+    }
 }

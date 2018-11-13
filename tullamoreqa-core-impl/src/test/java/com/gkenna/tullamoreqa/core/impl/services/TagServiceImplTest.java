@@ -207,11 +207,11 @@ public class TagServiceImplTest {
 
         when(mockedTagRepository.findAll()).thenReturn(tags);
 
-        final Tag[] allTags = tagService.getAllTags();
+        final List<Tag> allTags = tagService.getAllTags();
 
-        assert allTags[0].equals(tag1);
-        assert allTags[1].equals(tag2);
-        assert allTags[2].equals(tag3);
+        assert allTags.get(0).equals(tag1);
+        assert allTags.get(1).equals(tag2);
+        assert allTags.get(2).equals(tag3);
     }
 
     @Test
@@ -220,9 +220,9 @@ public class TagServiceImplTest {
 
         when(mockedTagRepository.findAll()).thenReturn(tags);
 
-        final Tag[] allTags = tagService.getAllTags();
+        final List<Tag> allTags = tagService.getAllTags();
 
-        assert allTags.length == 0;
+        assert allTags.size() == 0;
     }
 
     @Test

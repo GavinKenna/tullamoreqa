@@ -128,4 +128,11 @@ public class UserControllerImpl implements UserController {
         }
         return new ResponseEntity<User>(output, HttpStatus.OK);
     }
+
+    @Override
+    public final ResponseEntity<?> patchUser(final String username,
+                                             final User input) {
+
+        return null;
+    }
 }

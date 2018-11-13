@@ -24,6 +24,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
@@ -35,6 +36,7 @@ import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class AnswerControllerIT {
 
     private static final Logger LOGGER = LogManager.getLogger(AnswerControllerIT.class);
@@ -84,8 +86,8 @@ public class AnswerControllerIT {
         mockedQuestion.setLastUpdatedAt(Date.from(Instant.EPOCH));
         mockedQuestion.setModifiedBy(mockedUser);
         mockedQuestion.setTags(tags);
-        mockedQuestion.setDownvotes(0);
-        mockedQuestion.setUpvotes(0);
+       /* mockedQuestion.setDownvotes(0);
+        mockedQuestion.setUpvotes(0);*/
         questionRepository.save(mockedQuestion);
 
         qr.findAll();
@@ -123,7 +125,7 @@ public class AnswerControllerIT {
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
                 "http://localhost:" + this.port + "/answer/" + id, Map.class);
 
-        LOGGER.info("Answer Entity {}", entity.toString());
+        LOGGER.info("Answer Domain {}", entity.toString());
 
         assert (entity.getStatusCode() == HttpStatus.OK);
     }

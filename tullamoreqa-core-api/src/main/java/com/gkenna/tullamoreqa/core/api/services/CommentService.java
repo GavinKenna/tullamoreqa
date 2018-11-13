@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service
-public interface CommentService {
+public interface CommentService extends EntryService {
     /**
      * Insert a new {@link Comment} to the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.CommentRepository}.
@@ -103,5 +103,19 @@ public interface CommentService {
      *                                  be found.
      */
     Comment updateComment(final Long commentId, final Comment input)
+            throws CommentNotFoundException;
+
+    /**
+     * Patch a {@link Comment} on the Database.
+     *
+     * @param commentId The ID of the {@link Comment} to patch.
+     * @param input An {@link Comment} container that holds
+     *              new values for CommentId to update to.
+     * @return The {@link Comment} that was updated.
+     * @since 0.0.11
+     * @throws CommentNotFoundException Thrown when the {@link Comment} cannot
+     *                              be found.
+     */
+    Comment patchComment(final String commentId, final Comment input)
             throws CommentNotFoundException;
 }

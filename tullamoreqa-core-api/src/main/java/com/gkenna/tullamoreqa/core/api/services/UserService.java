@@ -8,6 +8,8 @@ import com.gkenna.tullamoreqa.core.api.exceptions.UserNotFoundException;
 import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.User}.
  * This API communicates directly with the
@@ -93,6 +95,20 @@ public interface UserService {
      *
      * @return All {@link User}s in the DB.
      */
-    User[] getAllUsers();
+    List<User> getAllUsers();
+
+    /**
+     * Patch a {@link User} on the Database.
+     *
+     * @param username The username of the {@link User} to patch.
+     * @param input An {@link User} container that holds
+     *              new values for username to update to.
+     * @return The {@link User} that was updated.
+     * @since 0.0.11
+     * @throws UserNotFoundException Thrown when the {@link User} cannot
+     *                              be found.
+     */
+    User patchUser(final String username, final User input)
+            throws UserNotFoundException;
 
 }

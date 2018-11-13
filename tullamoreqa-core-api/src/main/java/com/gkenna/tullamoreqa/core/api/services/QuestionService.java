@@ -11,6 +11,8 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * API for interacting with {@link com.gkenna.tullamoreqa.domain.Question}.
@@ -21,7 +23,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.0
  */
 @Service
-public interface QuestionService {
+public interface QuestionService extends EntryService {
     /**
      * Insert a new {@link Question} to the
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
@@ -103,7 +105,7 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return All {@link Question}s in the DB.
      */
-    Question[] getAllQuestions(final Pageable pageable);
+    List<Question> getAllQuestions(final Pageable pageable);
 
     /**
      * Retrieve list of {@link Question}s whose Title matches the
@@ -113,7 +115,7 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsByTitle(final String title,
+    List<Question> findQuestionsByTitle(final String title,
                                     final Pageable pageable);
 
     /**
@@ -125,20 +127,8 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsAskedByUser(final User user,
+    List<Question> findQuestionsAskedByUser(final User user,
                                         final Pageable pageable);
-
-    /**
-     * Return a list of all {@link Question}s answered by a particular
-     * {@link com.gkenna.tullamoreqa.domain.User}.
-     *
-     * @param user     Filter all  {@link Question}s based on this
-     *                 {@link com.gkenna.tullamoreqa.domain.User}.
-     * @param pageable Potentially add Pagination.
-     * @return Array of {@link Question}s.
-     */
-    Question[] findQuestionsAnsweredByUser(final User user,
-                                           final Pageable pageable);
 
     /**
      * Return a list of all {@link Question}s that are tagged by a particular
@@ -149,5 +139,19 @@ public interface QuestionService {
      * @param pageable Potentially add Pagination.
      * @return Array of {@link Question}s.
      */
-    Question[] findQuestionsByTag(final Tag tag, final Pageable pageable);
+    List<Question> findQuestionsByTag(final Tag tag, final Pageable pageable);
+
+    /**
+     * Patch a {@link Question} on the Database.
+     *
+     * @param questionId The ID of the {@link Question} to patch.
+     * @param input A {@link Question} container that holds
+     *              new values for questionId to update to.
+     * @return The {@link Question} that was updated.
+     * @since 0.0.11
+     * @throws QuestionNotFoundException Thrown when the {@link Question} cannot
+     *                              be found.
+     */
+    Question patchQuestion(final Long questionId, final Question input)
+            throws QuestionNotFoundException;
 }

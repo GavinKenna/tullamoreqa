@@ -64,8 +64,8 @@ public class QuestionServiceImplTest {
     @Test
     public void shouldAddFullyValidQuestion() {
         final Question question = new Question();
-        question.setUpvotes(0);
-        question.setDownvotes(0);
+        /*question.setUpvotes(0);
+        question.setDownvotes(0);*/
         question.setTags(tags);
         question.setModifiedBy(user);
         question.setModifiedBy(modifiedByUser);
@@ -187,11 +187,11 @@ public class QuestionServiceImplTest {
 
         when(mockedQuestionRepository.findAll()).thenReturn(questions);
 
-        Question[] allQuestions = questionService.getAllQuestions(Pageable.unpaged());
+        List<Question> allQuestions = questionService.getAllQuestions(Pageable.unpaged());
 
-        assert allQuestions[0].equals(question1);
-        assert allQuestions[1].equals(question2);
-        assert allQuestions[2].equals(question3);
+        assert allQuestions.get(0).equals(question1);
+        assert allQuestions.get(1).equals(question2);
+        assert allQuestions.get(2).equals(question3);
 
     }
 

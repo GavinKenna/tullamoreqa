@@ -121,4 +121,17 @@ public interface AnswerService extends EntryService {
     Answer updateAnswer(final Long answerId,
                         final Answer input) throws AnswerNotFoundException;
 
+    /**
+     * Patch a {@link Answer} on the Database.
+     *
+     * @param answerId The ID of the {@link Answer} to patch.
+     * @param input An {@link Answer} container that holds
+     *              new values for AnswerId to update to.
+     * @return The {@link Answer} that was updated.
+     * @since 0.0.11
+     * @throws AnswerNotFoundException Thrown when the {@link Answer} cannot
+     *                              be found.
+     */
+    Answer patchAnswer(final String answerId, final Answer input)
+            throws AnswerNotFoundException;
 }

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import java.net.URI;
 
 /**
@@ -32,7 +31,8 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/question")
-public class QuestionControllerImpl implements QuestionController {
+public class QuestionControllerImpl extends EntryControllerImpl
+        implements QuestionController {
 
     /**
      * Question Controller Logger.
@@ -71,22 +71,16 @@ public class QuestionControllerImpl implements QuestionController {
             @PathVariable("id") final Long questionId) {
 
         LOGGER.debug("Attempting to get Question {}", questionId);
-        Question output = null;
+        Question output;
+
         try {
             output = questionService.getQuestion(questionId);
         } catch (QuestionNotFoundException e) {
-            /*
-            TODO Implement correct error handling.
-             */
-            e.printStackTrace();
+            LOGGER.error(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (output == null) {
-            LOGGER.error("Question with id {} not found.", questionId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Question with id "
-                    + questionId + " not found"), HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Question>(output, HttpStatus.OK);
+
+        return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
     @Override
@@ -102,12 +96,29 @@ public class QuestionControllerImpl implements QuestionController {
         try {
             output = questionService.updateQuestion(questionId, input);
         } catch (QuestionNotFoundException e) {
-            LOGGER.error("Question with id {} not found.", questionId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Answer with id "
-                    + questionId + " not found"), HttpStatus.NOT_FOUND);
+            LOGGER.error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Question>(output, HttpStatus.OK);
+        return new ResponseEntity<>(output, HttpStatus.OK);
+    }
+
+    @Override
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{id}")
+    public final ResponseEntity<?> patchQuestion(
+            @PathVariable("id") final Long questionId,
+            @RequestBody final Question input) {
+
+        LOGGER.debug("Patching Question {} with the following details {}",
+                questionId, input);
+
+        Question output;
+        try {
+            output = questionService.patchQuestion(questionId, input);
+        } catch (QuestionNotFoundException e) {
+            LOGGER.error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
     @Override
@@ -120,11 +131,10 @@ public class QuestionControllerImpl implements QuestionController {
         try {
             questionService.deleteQuestion(questionId);
         } catch (QuestionNotFoundException e) {
-            LOGGER.error("Question with id {} not found.", questionId);
-            // TODO Replace this exception with custom exception
-            return new ResponseEntity(new Exception("Question with id "
-                    + questionId + " not found"), HttpStatus.NO_CONTENT);
+            LOGGER.error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Question>(HttpStatus.OK);
+
+        return new ResponseEntity<Question>(HttpStatus.NO_CONTENT);
     }
 }

@@ -43,6 +43,27 @@ public final class Comment extends Entry {
     private Comment() {
     }
 
+    /**
+     * Constructor for Comment.
+     *
+     * @param parent The parent Entry this "Comment" is commenting on.
+     * @param user   The User who wrote this Comment
+     * @param body   The body of this Comment.
+     */
+    public Comment(final Entry parent, final User user, final String body) {
+        super(user, body);
+        this.parent = parent;
+    }
+
+    @Override
+    public <T extends Domain> void patch(final T entry) {
+        super.patch(entry);
+    }
+
+    @Override
+    public <T extends Domain> void update(final T entry) {
+        super.update(entry);
+    }
 
     @Override
     public boolean equals(final Object o) {
@@ -73,4 +94,5 @@ public final class Comment extends Entry {
         sb.append('}');
         return sb.toString();
     }
+
 }

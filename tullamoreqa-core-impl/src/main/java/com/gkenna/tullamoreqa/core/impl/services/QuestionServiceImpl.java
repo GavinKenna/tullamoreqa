@@ -10,6 +10,7 @@ import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
 import com.gkenna.tullamoreqa.domain.User;
+import com.gkenna.tullamoreqa.domain.Vote;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -28,8 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("questionService")
 @Transactional
-public class QuestionServiceImpl extends EntryServiceImpl
-        implements QuestionService {
+public class QuestionServiceImpl implements QuestionService {
 
     /**
      * Question Service Logger.
@@ -67,14 +69,18 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final void deleteQuestion(final Question question)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void deleteQuestion(final Question question)
             throws QuestionNotFoundException {
 
         this.deleteQuestion(question.getId());
     }
 
     @Override
-    public final void deleteQuestion(final Long questionId)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public void deleteQuestion(final Long questionId)
             throws QuestionNotFoundException {
 
         LOGGER.debug("Deleting Question with ID {}", questionId);
@@ -89,8 +95,10 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question updateQuestion(final Long questionId,
-                                         final Question input)
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question updateQuestion(final Long questionId,
+                                   final Question input)
             throws QuestionNotFoundException {
 
         LOGGER.debug("Updating {} to {}", questionId, input);
@@ -99,25 +107,13 @@ public class QuestionServiceImpl extends EntryServiceImpl
             final Question output =
                     questionRepository.findById(questionId).get();
 
-            LOGGER.debug("Question before update {}", output);
+            LOGGER.info("Question before update {}", output);
 
-            /*
-            TODO How should we update Questions?
-            Say if we send a request and only send in an update
-            to the description, everything below would be set,
-            which could result in nulls.
-             */
-            output.setBody(input.getBody());
-            output.setTitle(input.getTitle());
-            output.setCreatedAt(input.getCreatedAt());
-            output.setLastUpdatedAt(input.getLastUpdatedAt());
-            output.setModifiedBy(input.getModifiedBy());
-            output.setTags(input.getTags());
-            output.setCreatedAt(input.getCreatedAt());
-            output.setDownvotes(input.getDownvotes());
-            output.setUpvotes(input.getUpvotes());
+            output.update(input);
 
-            LOGGER.debug("Question after update {}", output);
+            questionRepository.save(output);
+
+            LOGGER.info("Question after update {}", output);
 
             questionRepository.saveAndFlush(output);
             return output;
@@ -129,17 +125,49 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final boolean doesQuestionExist(final Question question) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question patchQuestion(final Long questionId, final Question input)
+            throws QuestionNotFoundException {
+        LOGGER.debug("Patching {} to {}", questionId, input);
+
+        if (questionRepository.existsById(questionId)) {
+            final Question output =
+                    questionRepository.findById(questionId).get();
+
+            LOGGER.info("Question before patch {}", output);
+
+            output.patch(input);
+
+            LOGGER.info("Question after patch {}", output);
+
+            questionRepository.saveAndFlush(output);
+            return output;
+        }
+
+        LOGGER.error("Question {} does not exist. Cannot patch.",
+                questionId);
+        throw new QuestionNotFoundException(questionId + " does not exist.");
+    }
+
+    @Override
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public boolean doesQuestionExist(final Question question) {
         return this.doesQuestionExist(question.getId());
     }
 
     @Override
-    public final boolean doesQuestionExist(final Long questionId) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public boolean doesQuestionExist(final Long questionId) {
         return questionRepository.existsById(questionId);
     }
 
     @Override
-    public final Question getQuestion(final Long questionId) throws
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Question getQuestion(final Long questionId) throws
             QuestionNotFoundException {
         LOGGER.info("QuestionRepo is {}", questionRepository.toString());
 
@@ -156,13 +184,17 @@ public class QuestionServiceImpl extends EntryServiceImpl
     }
 
     @Override
-    public final Question[] getAllQuestions(final Pageable pageable) {
-        return questionRepository.findAll().toArray(new Question[0]);
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public List<Question> getAllQuestions(final Pageable pageable) {
+        return questionRepository.findAll();
     }
 
     @Override
-    public final Question[] findQuestionsByTitle(final String title,
-                                                 final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public List<Question> findQuestionsByTitle(final String title,
+                                               final Pageable pageable) {
 
         /*
         TODO Assert Title isn't null, throw exception if it is.
@@ -175,12 +207,14 @@ public class QuestionServiceImpl extends EntryServiceImpl
          */
         final Page<Question> pageableQuestions =
                 this.questionRepository.findByTitle(title, Pageable.unpaged());
-        return pageableQuestions.getContent().toArray(new Question[0]);
+        return pageableQuestions.getContent();
     }
 
     @Override
-    public final Question[] findQuestionsAskedByUser(final User user,
-                                                     final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public List<Question> findQuestionsAskedByUser(final User user,
+                                                   final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
          */
@@ -193,22 +227,14 @@ public class QuestionServiceImpl extends EntryServiceImpl
         final Page<Question> pageableQuestions =
                 this.questionRepository.findQuestionsByCreatedByUsername(
                         user.getUsername(), pageable);
-        return pageableQuestions.getContent().toArray(new Question[0]);
+        return pageableQuestions.getContent();
     }
 
     @Override
-    public final Question[] findQuestionsAnsweredByUser(
-            final User user, final Pageable pageable) {
-
-        /*
-        TODO Should this API be supported?
-         */
-        return new Question[0];
-    }
-
-    @Override
-    public final Question[] findQuestionsByTag(final Tag tag,
-                                               final Pageable pageable) {
+    @Transactional
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public List<Question> findQuestionsByTag(final Tag tag,
+                                             final Pageable pageable) {
         /*
         TODO Assert Title isn't null, throw exception if it is.
         TODO Choose strategy on how we Page.
@@ -217,7 +243,16 @@ public class QuestionServiceImpl extends EntryServiceImpl
         final Page<Question> pageableQuestions =
                 this.questionRepository.findAllByTagsName(tag.getId(),
                         Pageable.unpaged());
-        return pageableQuestions.getContent().toArray(new Question[0]);
+        return pageableQuestions.getContent();
     }
 
+    @Override
+    public final void castVote(final Long entryId, final Vote vote) {
+
+    }
+
+    @Override
+    public final void deleteVote(final Long entryId, final Vote vote) {
+
+    }
 }

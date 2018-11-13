@@ -8,7 +8,7 @@ import com.gkenna.tullamoreqa.domain.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Repository for containing {@link Tag}s. Will be called by the responsible
@@ -26,5 +26,5 @@ public interface TagRepository extends JpaRepository<Tag, String> {
      * @param description Description to filter Tags by.
      * @return Collection of relevant Tags.
      */
-    Collection<Tag> findByDescription(String description);
+    List<Tag> findByDescription(String description);
 }

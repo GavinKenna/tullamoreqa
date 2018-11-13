@@ -8,7 +8,7 @@ import com.gkenna.tullamoreqa.domain.User;
 import org.springframework.http.ResponseEntity;
 
 /**
- * API Controller for the {@link User} Entity. This API will allow
+ * API Controller for the {@link User} Domain. This API will allow
  * external parties, i.e. UI or CLI, to Get/Add/Update/Delete Users.
  * <p>
  * The Implementation of this API will in turn call the
@@ -60,4 +60,17 @@ public interface UserController {
      * @return The Response of this Request.
      */
     ResponseEntity<?> deleteUser(final String username);
+
+    /**
+     * HTTP PATCH Method
+     * <p>
+     * Update an {@link User} on the Database.
+     *
+     * @param username The ID of the {@link User} to update.
+     * @param input An {@link User} container that holds
+     *              new values for userId to update to.
+     * @since 0.0.11
+     * @return The Response of this Request.
+     */
+    ResponseEntity<?> patchUser(final String username, final User input);
 }

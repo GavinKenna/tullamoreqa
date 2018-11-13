@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -124,9 +125,10 @@ public class EndToEndIT {
 
         Optional<Tag> java = tagRepository.findById("Java");
         Optional<Tag> help = tagRepository.findById("Help");
-        Optional<Tag> some = tagRepository.findById("SoemthingElse");
+        Optional<Tag> some = tagRepository.findById("SomethingNewEntirely");
 
-        assert questionRepository.findAll().size() == 0;
+        List<?> findAllQuestions = questionRepository.findAll();
+        assert findAllQuestions.size() == 0;
 
         Question question = new Question();
         question.setBody("Help help help");
