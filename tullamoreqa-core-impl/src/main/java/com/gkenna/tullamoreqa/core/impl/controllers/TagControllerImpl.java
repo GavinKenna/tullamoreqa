@@ -151,7 +151,8 @@ public class TagControllerImpl implements TagController {
     }
 
     @Override
-    public ResponseEntity<?> patchTag(String tagId, Tag input) {
+    public final ResponseEntity<?> patchTag(final String tagId,
+                                            final  Tag input) {
         return null;
     }
 }
