@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.api.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionInvalidException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.domain.Question;
 import com.gkenna.tullamoreqa.domain.Tag;
@@ -29,8 +30,10 @@ public interface QuestionService extends EntryService {
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      *
      * @param question {@link Question} to Add.
+     * @exception QuestionInvalidException Thrown when a {@link Question} isn't
+     *                                     fully formed or invalid.
      */
-    void addQuestion(final Question question);
+    void addQuestion(final Question question) throws QuestionInvalidException;
 
     /**
      * Delete a {@link Question} from the

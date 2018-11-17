@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.core.impl.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionInvalidException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
@@ -59,9 +60,21 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public void addQuestion(final Question question) {
+    public void addQuestion(final Question question) throws QuestionInvalidException {
 
         LOGGER.debug("Adding New Question {}", question);
+
+        if (question.getTitle() == null || question.getTitle().trim().isEmpty()) {
+            LOGGER.error("Question does not contain a valid Title.");
+            throw new QuestionInvalidException("Question does not " +
+                    "contain a valid Title.");
+        }
+
+        if (question.getBody() == null || question.getBody().trim().isEmpty()) {
+            LOGGER.error("Question does not contain a valid Body.");
+            throw new QuestionInvalidException("Question does not " +
+                    "contain a valid Body.");
+        }
 
         questionRepository.saveAndFlush(question);
 
