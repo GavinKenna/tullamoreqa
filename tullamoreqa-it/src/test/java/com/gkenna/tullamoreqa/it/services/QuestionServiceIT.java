@@ -4,6 +4,7 @@
 
 package com.gkenna.tullamoreqa.it.services;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionInvalidException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.core.api.repositories.TagRepository;
@@ -116,7 +117,7 @@ public class QuestionServiceIT {
 
     @Test
     @Transactional
-    public void addValidQuestion() {
+    public void addValidQuestion() throws QuestionInvalidException {
         validQuestion = new Question();
         /*validQuestion.setUpvotes(0);
         validQuestion.setDownvotes(0);*/

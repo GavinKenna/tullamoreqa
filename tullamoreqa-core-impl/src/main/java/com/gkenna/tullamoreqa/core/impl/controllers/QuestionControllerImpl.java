@@ -54,7 +54,7 @@ public class QuestionControllerImpl extends EntryControllerImpl
      * @param questionService Question Service implementation.
      */
     @Autowired
-    public QuestionControllerImpl(QuestionService questionService) {
+    public QuestionControllerImpl(final QuestionService questionService) {
         this.questionService = questionService;
     }
 

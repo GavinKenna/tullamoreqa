@@ -57,6 +57,9 @@ public class QuestionServiceImplTest {
 
         when(mockedQuestionRepository.existsById(question.getId())).thenReturn(false);
 
+        question.setTitle("How much mayo is too much mayo?");
+        question.setBody("Please advise...");
+
         questionService.addQuestion(question);
 
         verify(mockedQuestionRepository).saveAndFlush(question);

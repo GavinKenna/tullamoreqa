@@ -60,20 +60,22 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public void addQuestion(final Question question) throws QuestionInvalidException {
+    public void addQuestion(final Question question)
+            throws QuestionInvalidException {
 
         LOGGER.debug("Adding New Question {}", question);
 
-        if (question.getTitle() == null || question.getTitle().trim().isEmpty()) {
+        if (question.getTitle() == null
+               || question.getTitle().trim().isEmpty()) {
             LOGGER.error("Question does not contain a valid Title.");
-            throw new QuestionInvalidException("Question does not " +
-                    "contain a valid Title.");
+            throw new QuestionInvalidException("Question does not "
+                    + "contain a valid Title.");
         }
 
         if (question.getBody() == null || question.getBody().trim().isEmpty()) {
             LOGGER.error("Question does not contain a valid Body.");
-            throw new QuestionInvalidException("Question does not " +
-                    "contain a valid Body.");
+            throw new QuestionInvalidException("Question does not "
+                    + "contain a valid Body.");
         }
 
         questionRepository.saveAndFlush(question);
