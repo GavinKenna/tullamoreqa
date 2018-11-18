@@ -117,6 +117,7 @@ public class QuestionControllerImpl extends EntryControllerImpl
 
         Question output;
         try {
+            // TODO may need to check for InvalidQuestion
             output = questionService.updateQuestion(questionId, input);
         } catch (QuestionNotFoundException e) {
             LOGGER.error(e);
@@ -136,6 +137,7 @@ public class QuestionControllerImpl extends EntryControllerImpl
 
         Question output;
         try {
+            // TODO may need to check for InvalidQuestions
             output = questionService.patchQuestion(questionId, input);
         } catch (QuestionNotFoundException e) {
             LOGGER.error(e);
