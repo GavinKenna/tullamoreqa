@@ -5,6 +5,7 @@
 package com.gkenna.tullamoreqa.core.impl.controllers;
 
 import com.gkenna.tullamoreqa.core.api.controllers.QuestionController;
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionInvalidException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.services.QuestionService;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -45,8 +46,17 @@ public class QuestionControllerImpl extends EntryControllerImpl
      * This object is used to interact with the Question Repo
      * {@link com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository}.
      */
+    private final QuestionService questionService;
+
+    /**
+     * Constructor that Auto wires the Question Service.
+     *
+     * @param questionService Question Service implementation.
+     */
     @Autowired
-    private QuestionService questionService;
+    public QuestionControllerImpl(final QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
@@ -54,12 +64,25 @@ public class QuestionControllerImpl extends EntryControllerImpl
             @RequestBody final Question input) {
 
         LOGGER.info("Add Question : {}", input);
-        questionService.addQuestion(input);
 
         HttpHeaders headers = new HttpHeaders();
+
+        /*
+         * Check if the Question contains valid data.
+         * If so add the Question. If invalid return a 400.
+         */
+        try {
+            questionService.addQuestion(input);
+        } catch (QuestionInvalidException e) {
+            LOGGER.error(e);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+
+        final Long questionId = input.getId();
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(input.getId()).toUri();
+                .buildAndExpand(questionId).toUri();
 
         headers.setLocation(location);
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
@@ -94,6 +117,7 @@ public class QuestionControllerImpl extends EntryControllerImpl
 
         Question output;
         try {
+            // TODO may need to check for InvalidQuestion
             output = questionService.updateQuestion(questionId, input);
         } catch (QuestionNotFoundException e) {
             LOGGER.error(e);
@@ -113,6 +137,7 @@ public class QuestionControllerImpl extends EntryControllerImpl
 
         Question output;
         try {
+            // TODO may need to check for InvalidQuestions
             output = questionService.patchQuestion(questionId, input);
         } catch (QuestionNotFoundException e) {
             LOGGER.error(e);

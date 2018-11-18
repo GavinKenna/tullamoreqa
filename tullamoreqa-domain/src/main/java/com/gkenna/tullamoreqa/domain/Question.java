@@ -173,10 +173,10 @@ public class Question extends Entry {
         final StringBuilder sb = new StringBuilder("Question{");
         sb.append("modifiedBy=").append(getModifiedBy());
         sb.append(", id=").append(getId());
-        sb.append(", tags=").append(tags);
+        sb.append(", tags=").append(getTags());
         sb.append(", createdAt=").append(getCreatedAt());
         sb.append(", lastUpdatedAt=").append(getLastUpdatedAt());
-        sb.append(", title='").append(title).append('\'');
+        sb.append(", title='").append(getTitle()).append('\'');
         sb.append(", createdBy=").append(getCreatedBy());
         sb.append(", body='").append(getBody()).append('\'');
         sb.append(", upvotes=").append(getUpvotes());

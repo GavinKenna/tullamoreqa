@@ -6,6 +6,7 @@ package com.gkenna.tullamoreqa.core.impl.services;
 
 //import com.gkenna.tullamoreqa.core.api.exceptions.QuestionAlreadyExistsException;
 
+import com.gkenna.tullamoreqa.core.api.exceptions.QuestionInvalidException;
 import com.gkenna.tullamoreqa.core.api.exceptions.QuestionNotFoundException;
 import com.gkenna.tullamoreqa.core.api.repositories.QuestionRepository;
 import com.gkenna.tullamoreqa.domain.Question;
@@ -51,10 +52,13 @@ public class QuestionServiceImplTest {
     }
 
     @Test
-    public void shouldAddValidQuestion() {
+    public void shouldAddValidQuestion() throws QuestionInvalidException {
         final Question question = new Question();
 
         when(mockedQuestionRepository.existsById(question.getId())).thenReturn(false);
+
+        question.setTitle("How much mayo is too much mayo?");
+        question.setBody("Please advise...");
 
         questionService.addQuestion(question);
 
@@ -62,7 +66,7 @@ public class QuestionServiceImplTest {
     }
 
     @Test
-    public void shouldAddFullyValidQuestion() {
+    public void shouldAddFullyValidQuestion() throws QuestionInvalidException {
         final Question question = new Question();
         /*question.setUpvotes(0);
         question.setDownvotes(0);*/
