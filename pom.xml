@@ -42,7 +42,7 @@
         <project.reporting.outputEncoding>UTF-8
         </project.reporting.outputEncoding>
         <hibernate.version>5.2.3.Final</hibernate.version>
-        <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <postgresql.version>42.2.4.jre7</postgresql.version>
         <spring-data-jpa.version>2.0.8.RELEASE</spring-data-jpa.version>
         <log4j.version>2.11.1</log4j.version>
