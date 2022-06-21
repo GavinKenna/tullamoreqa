@@ -55,7 +55,7 @@
         <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
-        <mysql-connector-java.version>8.0.12</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <h2.version>1.4.193</h2.version>
     </properties>
 
